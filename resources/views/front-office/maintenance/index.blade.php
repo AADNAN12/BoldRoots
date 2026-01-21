@@ -128,7 +128,7 @@
         }
 
         .password-form {
-            display: none;
+            display: none;  
         }
 
         .password-form.active {
@@ -334,8 +334,8 @@
         }
 
         .newsletter-submit:hover {
-            background: #00b8e6;
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+            background: #ff0000;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
         }
 
         .newsletter-message {
@@ -522,20 +522,28 @@
             submitBtn.textContent = 'Subscribing...';
 
             try {
+                console.log('Sending request to:', '{{ route('newsletter.subscribe') }}');
+                console.log('Email:', email);
+                
                 const response = await fetch('{{ route('newsletter.subscribe') }}', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json'
                     },
                     body: JSON.stringify({
                         email: email
                     })
                 });
 
-                const data = await response.json();
+                console.log('Response status:', response.status);
+                console.log('Response ok:', response.ok);
 
-                if (data.success) {
+                const data = await response.json();
+                console.log('Response data:', data);
+
+                if (response.ok && data.success) {
                     messageDiv.className = 'newsletter-message success';
                     messageDiv.textContent = data.message;
                     document.getElementById('newsletterForm').reset();
@@ -549,8 +557,9 @@
                     messageDiv.textContent = data.message || 'An error occurred.';
                 }
             } catch (error) {
+                console.error('Newsletter subscription error:', error);
                 messageDiv.className = 'newsletter-message error';
-                messageDiv.textContent = 'An error occurred. Please try again.';
+                messageDiv.textContent = 'An error occurred. Please try again. (Error: ' + error.message + ')';
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Subscribe';

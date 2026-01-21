@@ -19,11 +19,12 @@ class CheckMaintenanceMode
         // Vérifier si le mode maintenance est activé
         $maintenanceMode = SiteSetting::get('maintenance_mode', '0');
         
-        // Exclure les routes admin et la route de maintenance
+        // Exclure les routes admin, la route de maintenance et la newsletter
         if ($maintenanceMode == '1' && 
             !$request->is('admin/*') && 
             !$request->is('maintenance') && 
             !$request->is('maintenance/verify') &&
+            !$request->is('newsletter/*') &&
             !session('maintenance_access')) {
             return redirect()->route('maintenance.index');
         }

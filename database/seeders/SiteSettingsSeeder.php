@@ -134,6 +134,18 @@ class SiteSettingsSeeder extends Seeder
                 'type' => 'datetime',
                 'group' => 'maintenance'
             ],
+            [
+                'key' => 'cursor_normal',
+                'value' => null,
+                'type' => 'image',
+                'group' => 'appearance'
+            ],
+            [
+                'key' => 'cursor_hover',
+                'value' => null,
+                'type' => 'image',
+                'group' => 'appearance'
+            ],
         ];
 
         foreach ($settings as $setting) {

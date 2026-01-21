@@ -150,8 +150,58 @@
                                 </div>
                             </div>
                         </div>
+
                         
-                        <div class="d-grid gap-2">
+                        
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="bg-info bg-opacity-10 rounded p-2 me-2">
+                                        <i class="mdi mdi-cursor-default text-info fs-4"></i>
+                                    </div>
+                                    <h5 class="mb-0">Curseurs Personnalisés</h5>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="cursor_normal" class="form-label">Curseur Normal</label>
+                                    <input type="file" class="form-control @error('cursor_normal') is-invalid @enderror" 
+                                           id="cursor_normal" name="cursor_normal" accept="image/png,image/webp,image/x-icon,.cur">
+                                    @error('cursor_normal')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                    <small class="text-muted">Format: PNG, ICO, CUR (Max: 1MB, Taille recommandée: 32x32px)</small>
+                                    
+                                    @if(isset($settings['cursor_normal']) && $settings['cursor_normal']->value)
+                                        <div class="mt-2">
+                                            <img src="{{ asset('storage/' . $settings['cursor_normal']->value) }}" 
+                                                 alt="Cursor Normal" class="img-thumbnail" style="max-height: 50px; background: #f0f0f0;">
+                                            <small class="d-block text-muted mt-1">Curseur actuel</small>
+                                        </div>
+                                    @endif
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="cursor_hover" class="form-label">Curseur Hover (au survol des liens/boutons)</label>
+                                    <input type="file" class="form-control @error('cursor_hover') is-invalid @enderror" 
+                                           id="cursor_hover" name="cursor_hover" accept="image/png,image/webp,image/x-icon,.cur">
+                                    <small class="text-muted">Format: PNG, ICO, CUR, WEBP (Max: 1MB, Taille recommandée: 32x32px)</small>
+                                    @error('cursor_hover')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                    <small class="text-muted">Format: PNG, ICO, CUR (Max: 1MB, Taille recommandée: 32x32px)</small>
+                                    
+                                    @if(isset($settings['cursor_hover']) && $settings['cursor_hover']->value)
+                                        <div class="mt-2">
+                                            <img src="{{ asset('storage/' . $settings['cursor_hover']->value) }}" 
+                                                 alt="Cursor Hover" class="img-thumbnail" style="max-height: 50px; background: #f0f0f0;">
+                                            <small class="d-block text-muted mt-1">Curseur actuel</small>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2 mb-4">
                             <button type="submit" class="btn btn-primary btn-lg">
                                 <i class="mdi mdi-content-save me-2"></i> Enregistrer les Paramètres Généraux
                             </button>
@@ -267,7 +317,7 @@
                             </div>
                         </div>
                         
-                        <div class="d-grid gap-2">
+                        <div class="d-grid gap-2 mb-4">
                             <button type="submit" class="btn btn-primary btn-lg">
                                 <i class="mdi mdi-content-save me-2"></i> Enregistrer les Réseaux Sociaux
                             </button>
@@ -279,7 +329,7 @@
                 <div class="tab-pane fade" id="v-pills-maintenance" role="tabpanel" aria-labelledby="v-pills-maintenance-tab">
                     <form action="{{ route('admin.settings.update') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        
+
                         <div class="card border-0 shadow-sm mb-4">
                             <div class="card-body">
                                 <div class="d-flex align-items-center mb-3">
@@ -364,7 +414,7 @@
                             </div>
                         </div>
                         
-                        <div class="d-grid gap-2">
+                        <div class="d-grid gap-2 mb-4">
                             <button type="submit" class="btn btn-primary btn-lg">
                                 <i class="mdi mdi-content-save me-2"></i> Enregistrer les Paramètres de Maintenance
                             </button>
@@ -430,7 +480,7 @@
                             </div>
                         </div>
                         
-                        <div class="d-grid gap-2">
+                        <div class="d-grid gap-2 mb-4">
                             <button type="submit" class="btn btn-primary btn-lg">
                                 <i class="mdi mdi-content-save me-2"></i> Enregistrer les Paramètres Audio
                             </button>

@@ -111,4 +111,8 @@
             </a>
         @endif
     </div>
+    <div class="footer-copyright">
+        <span style="color:white;">&copy; {{ date('Y') }} BOLDROOTS. Tous droits réservés.</span>
+    </div>
+    
 </footer>

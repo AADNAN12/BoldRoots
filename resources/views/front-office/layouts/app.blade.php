@@ -21,6 +21,23 @@
             overflow-x: hidden;
         }
 
+        @php
+            $cursorNormal = \App\Models\SiteSetting::get('cursor_normal');
+            $cursorHover = \App\Models\SiteSetting::get('cursor_hover');
+        @endphp
+
+        @if($cursorNormal)
+            * {
+                cursor: url('{{ asset('storage/' . $cursorNormal) }}'), auto !important;
+            }
+        @endif
+
+        @if($cursorHover)
+            a, button, .btn, input[type="submit"], input[type="button"], [role="button"], .clickable {
+                cursor: url('{{ asset('storage/' . $cursorHover) }}'), pointer !important;
+            }
+        @endif
+
         .menu-toggle {
             color: #000000ff !important;
         }

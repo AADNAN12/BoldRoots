@@ -770,9 +770,7 @@
             <li>
                 <a href="{{ route('home') }}">HOME</a>
             </li>
-            <li>
-                <a href="{{ route('about') }}">ABOUT US</a>
-            </li>
+            
             <li>
                 <a href="{{ route('products.index') }}">ALL PRODUCTS</a>
             </li>
@@ -793,6 +791,9 @@
                         </ul>
                 </li>
             @endforeach
+            <li>
+                <a href="{{ route('about') }}">ABOUT US</a>
+            </li>
         </ul>
     </div>
 </nav>

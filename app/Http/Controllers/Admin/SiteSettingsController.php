@@ -39,6 +39,8 @@ class SiteSettingsController extends Controller
             'maintenance_message' => 'nullable|string',
             'maintenance_end_date' => 'nullable|date',
             'maintenance_bg_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'cursor_normal' => 'nullable|image|mimes:png,ico,cur,webp|max:1024',
+            'cursor_hover' => 'nullable|image|mimes:png,ico,cur,webp|max:1024',
         ]);
 
         if ($request->filled('top_bar_text')) {
@@ -141,6 +143,28 @@ class SiteSettingsController extends Controller
             
             $path = $request->file('maintenance_bg_image')->store('maintenance', 'public');
             SiteSetting::set('maintenance_bg_image', $path, 'image', 'maintenance');
+        }
+
+        // Gestion du curseur normal
+        if ($request->hasFile('cursor_normal')) {
+            $oldCursor = SiteSetting::where('key', 'cursor_normal')->first();
+            if ($oldCursor && $oldCursor->value) {
+                Storage::disk('public')->delete($oldCursor->value);
+            }
+            
+            $path = $request->file('cursor_normal')->store('cursors', 'public');
+            SiteSetting::set('cursor_normal', $path, 'image', 'appearance');
+        }
+
+        // Gestion du curseur hover
+        if ($request->hasFile('cursor_hover')) {
+            $oldCursor = SiteSetting::where('key', 'cursor_hover')->first();
+            if ($oldCursor && $oldCursor->value) {
+                Storage::disk('public')->delete($oldCursor->value);
+            }
+            
+            $path = $request->file('cursor_hover')->store('cursors', 'public');
+            SiteSetting::set('cursor_hover', $path, 'image', 'appearance');
         }
 
         return redirect()->route('admin.settings.index')->with('success', 'Paramètres mis à jour avec succès');

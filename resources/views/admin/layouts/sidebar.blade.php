@@ -146,7 +146,7 @@
                 </a>
                 <div class="collapse" id="sidebarNewsletter">
                     <ul class="side-nav-second-level">
-                        <li><a href="#">Tous les abonnés</a></li>
+                        <li><a href="{{ route('admin.newsletters.index') }}">Tous les abonnés</a></li>
                     </ul>
                 </div>
             </li>
@@ -233,9 +233,8 @@
                 </a>
                 <div class="collapse" id="sidebarAdmin">
                     <ul class="side-nav-second-level">
-                        <li><a href="#">Tous les admins</a></li>
-                        <li><a href="#">Ajouter un admin</a></li>
-                        <li><a href="#">Rôles & Permissions</a></li>
+                        <li><a href="{{ route('admin.users.index') }}">Tous les admins</a></li>
+                        <li><a href="{{route('admin.roles.index')}}">Rôles & Permissions</a></li>
                     </ul>
                 </div>
             </li>

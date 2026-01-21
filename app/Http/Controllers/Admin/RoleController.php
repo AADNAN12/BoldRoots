@@ -9,10 +9,10 @@ use Spatie\Permission\Models\Permission;
 
 class RoleController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('permission:manage_roles')->only('index', 'store', 'edit', 'update', 'destroy', 'show');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('permission:manage_roles')->only('index', 'store', 'edit', 'update', 'destroy', 'show');
+    // }
     public function index()
     {
         $roles = Role::with('permissions')
@@ -20,7 +20,7 @@ class RoleController extends Controller
 
         $permissions = Permission::all();
 
-        return view('Admin.Roles.index', compact('roles', 'permissions'));
+        return view('admin.roles.index', compact('roles', 'permissions'));
     }
 
     public function store(Request $request)
@@ -33,7 +33,6 @@ class RoleController extends Controller
 
         $role = Role::create([
             'name' => $request->name,
-            'company_id' => auth()->user()->company_id,
         ]);
 
         $role->syncPermissions($request->permissions);
@@ -44,10 +43,6 @@ class RoleController extends Controller
 
     public function update(Request $request, Role $role)
     {
-        // Vérifier que le rôle appartient à la même entreprise
-        if ($role->company_id !== auth()->user()->company_id) {
-            abort(403);
-        }
 
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -64,10 +59,6 @@ class RoleController extends Controller
 
     public function destroy(Role $role)
     {
-        // Vérifier que le rôle appartient à la même entreprise
-        if ($role->company_id !== auth()->user()->company_id) {
-            abort(403);
-        }
 
         // Empêcher la suppression du rôle Super Admin
         if ($role->name === 'Super Admin') {
