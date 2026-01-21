@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rules;
 use App\Models\User;
-use App\Helpers\LogActivity;
 use App\Models\Client;
 use Illuminate\Auth\Events\Registered;
 
@@ -153,11 +152,6 @@ class AdminAuthController extends Controller
             // Connecter automatiquement l'utilisateur avec le guard 'web' (client)
             Auth::guard('web')->login($user);
 
-            // Authentification réussie
-            $userName = Auth::guard('web')->user()->name;
-            $action = 'Inscription';
-            $desc = 'Le client' . ' ' . $userName . ' ' . 's\'est inscrit au réseau';
-            LogActivity::addToLog($action, $desc, $request);
             // Rediriger vers la page d'accueil avec un message de succès
             return redirect()->route('home')->with('success', 'Your account has been created successfully! Welcome to BOLDROOTS.');
         } catch (\Exception $e) {

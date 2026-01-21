@@ -4,7 +4,6 @@
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
-use App\Helpers\LogActivity;
 // Front-Office Controllers
 use App\Http\Controllers\FrontOffice\HomeController;
 use App\Http\Controllers\FrontOffice\ProductController;
@@ -157,8 +156,6 @@ Route::middleware(['admin.auth'])->prefix('admin')->name('admin.')->group(functi
     // Gestion des pages CMS
     Route::resource('cms-pages', \App\Http\Controllers\Admin\CmsPagesController::class);
 
-    //Routes LogActivity
-    Route::get('/logActivity', [LogActivity::class, 'index'])->name('logActivity');
 });
 
 // ===================================
