@@ -72,12 +72,14 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="float-end">
+                                @if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->can('create_coupons'))
                                 <a href="{{ route('admin.coupons.bulk-create') }}" class="btn btn-secondary mb-3 me-1">
                                     <i class="mdi mdi-content-duplicate me-1"></i> Création en masse
                                 </a>
                                 <a href="{{ route('admin.coupons.create') }}" class="btn btn-info mb-3">
                                     <i class="mdi mdi-plus-circle me-1"></i> Nouveau coupon
                                 </a>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -168,19 +170,25 @@
                                         @endif
                                     </td>
                                     <td>
+                                        @if(Auth::guard('admin')->user()->can('view_coupons'))
                                         <a href="{{ route('admin.coupons.show', $coupon->id) }}" class="action-icon"
                                             title="Détails">
                                             <i class="mdi mdi-eye"></i>
                                         </a>
+                                        @endif
+                                        @if(Auth::guard('admin')->user()->can('edit_coupons'))
                                         <a href="{{ route('admin.coupons.edit', $coupon->id) }}" class="action-icon"
                                             title="Modifier">
                                             <i class="mdi mdi-pencil"></i>
                                         </a>
+                                        @endif
+                                        @if(Auth::guard('admin')->user()->can('delete_coupons'))
                                         <a href="javascript:void(0);" class="action-icon delete-coupon"
                                             data-id="{{ $coupon->id }}" data-code="{{ $coupon->code }}"
                                             title="Supprimer">
                                             <i class="mdi mdi-delete"></i>
                                         </a>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

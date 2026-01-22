@@ -72,37 +72,20 @@
         <div class="col-12">
             <div class="page-title-box d-flex align-items-center justify-content-between">
                 <div>
-                    <a href="{{ route('admin.orders.index') }}" class="btn btn-outline-secondary mb-2">
-                        <i class="mdi mdi-arrow-left"></i> Retour
-                    </a>
+                    
                     <h4 class="page-title mb-0">Commande #{{ $order->order_number }}</h4>
                 </div>
                 <div>
-                    @if($stats['can_generate_invoice'])
-                        <form action="{{ route('admin.orders.generate-invoice', $order) }}" method="POST" class="d-inline">
-                            @csrf
-                            <button type="submit" class="btn btn-success">
-                                <i class="mdi mdi-file-document"></i> Générer Facture
-                            </button>
-                        </form>
-                    @endif
-                    @if($stats['can_generate_delivery_note'])
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deliveryNoteModal">
-                            <i class="mdi mdi-truck-delivery"></i> Générer BL
-                        </button>
-                    @endif
-                    @if($stats['can_cancel'])
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelOrderModal">
-                            <i class="mdi mdi-close-circle"></i> Annuler
-                        </button>
-                    @endif
+                    <a href="{{ route('admin.orders.index') }}" class="btn btn-outline-secondary mb-2">
+                        <i class="mdi mdi-arrow-left"></i> Retour
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-12   ">
             <div class="card mb-3">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -184,13 +167,13 @@
             </div>
 
             <div class="card mb-3">
-                <div class="card-header bg-light">
+                <div class="card-header">
                     <h5 class="mb-0"><i class="mdi mdi-cart me-2"></i>Articles Commandés</h5>
                 </div>
                 <div class="card-body p-0">
                     <div class="table-responsive">
                         <table class="table table-hover mb-0">
-                            <thead class="table-light">
+                            <thead class="table">
                                 <tr>
                                     <th>Produit</th>
                                     <th>SKU</th>
@@ -267,7 +250,7 @@
             </div>
 
             <div class="card">
-                <div class="card-header bg-light">
+                <div class="card-header">
                     <h5 class="mb-0"><i class="mdi mdi-map-marker me-2"></i>Informations Client</h5>
                 </div>
                 <div class="card-body">
@@ -326,126 +309,6 @@
                     @endif
                 </div>
             </div>
-        </div>
-
-        <div class="col-lg-4">
-            <div class="card mb-3">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0 text-white"><i class="mdi mdi-swap-horizontal me-2"></i>Changer le Statut</h5>
-                </div>
-                <div class="card-body">
-                    <form id="statusForm">
-                        @csrf
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Statut de la commande</label>
-                            <select name="status" class="form-select" id="orderStatus">
-                                <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>En attente</option>
-                                <option value="processing" {{ $order->status == 'processing' ? 'selected' : '' }}>En traitement</option>
-                                <option value="shipped" {{ $order->status == 'shipped' ? 'selected' : '' }}>Expédiée</option>
-                                <option value="delivered" {{ $order->status == 'delivered' ? 'selected' : '' }}>Livrée</option>
-                                <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>Annulée</option>
-                            </select>
-                        </div>
-                        <button type="button" class="btn btn-primary w-100" onclick="updateOrderStatus()">
-                            <i class="mdi mdi-check"></i> Mettre à jour
-                        </button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="card mb-3">
-                <div class="card-header bg-success text-white">
-                    <h5 class="mb-0 text-white"><i class="mdi mdi-cash me-2"></i>Statut Paiement</h5>
-                </div>
-                <div class="card-body">
-                    <form id="paymentStatusForm">
-                        @csrf
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Statut du paiement</label>
-                            <select name="payment_status" class="form-select" id="paymentStatus">
-                                <option value="pending" {{ $order->payment_status == 'pending' ? 'selected' : '' }}>En attente</option>
-                                <option value="paid" {{ $order->payment_status == 'paid' ? 'selected' : '' }}>Payé</option>
-                                <option value="failed" {{ $order->payment_status == 'failed' ? 'selected' : '' }}>Échoué</option>
-                            </select>
-                        </div>
-                        <button type="button" class="btn btn-success w-100" onclick="updatePaymentStatus()">
-                            <i class="mdi mdi-check"></i> Mettre à jour
-                        </button>
-                    </form>
-                </div>
-            </div>
-
-            @if($order->invoice)
-                <div class="card mb-3 info-card">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center mb-3">
-                            <div class="flex-shrink-0">
-                                <div class="avatar-md bg-success-subtle rounded d-flex align-items-center justify-content-center">
-                                    <i class="mdi mdi-file-document mdi-24px text-success"></i>
-                                </div>
-                            </div>
-                            <div class="flex-grow-1 ms-3">
-                                <h6 class="mb-1">Facture</h6>
-                                <p class="text-muted mb-0">{{ $order->invoice->invoice_number }}</p>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <small class="text-muted">Date:</small>
-                            <p class="mb-0">{{ $order->invoice->invoice_date->format('d/m/Y') }}</p>
-                        </div>
-                        <div class="mb-3">
-                            <small class="text-muted">Statut:</small>
-                            <p class="mb-0">
-                                <span class="badge bg-{{ $order->invoice->status == 'paid' ? 'success' : 'warning' }}">
-                                    {{ ucfirst($order->invoice->status) }}
-                                </span>
-                            </p>
-                        </div>
-                        <a href="{{ route('admin.invoices.show', $order->invoice) }}" class="btn btn-sm btn-outline-success w-100">
-                            <i class="mdi mdi-eye"></i> Voir Facture
-                        </a>
-                    </div>
-                </div>
-            @endif
-
-            @if($order->deliveryNote)
-                <div class="card info-card">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center mb-3">
-                            <div class="flex-shrink-0">
-                                <div class="avatar-md bg-primary-subtle rounded d-flex align-items-center justify-content-center">
-                                    <i class="mdi mdi-truck-delivery mdi-24px text-primary"></i>
-                                </div>
-                            </div>
-                            <div class="flex-grow-1 ms-3">
-                                <h6 class="mb-1">Bon de Livraison</h6>
-                                <p class="text-muted mb-0">{{ $order->deliveryNote->delivery_note_number }}</p>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <small class="text-muted">Date:</small>
-                            <p class="mb-0">{{ $order->deliveryNote->created_at->format('d/m/Y') }}</p>
-                        </div>
-                        @if($order->deliveryNote->tracking_number)
-                            <div class="mb-3">
-                                <small class="text-muted">N° Suivi:</small>
-                                <p class="mb-0"><code>{{ $order->deliveryNote->tracking_number }}</code></p>
-                            </div>
-                        @endif
-                        <div class="mb-3">
-                            <small class="text-muted">Statut:</small>
-                            <p class="mb-0">
-                                <span class="badge bg-{{ $order->deliveryNote->status == 'delivered' ? 'success' : 'info' }}">
-                                    {{ ucfirst($order->deliveryNote->status) }}
-                                </span>
-                            </p>
-                        </div>
-                        <a href="{{ route('admin.delivery-notes.show', $order->deliveryNote) }}" class="btn btn-sm btn-outline-primary w-100">
-                            <i class="mdi mdi-eye"></i> Voir Bon de Livraison
-                        </a>
-                    </div>
-                </div>
-            @endif
         </div>
     </div>
 </div>

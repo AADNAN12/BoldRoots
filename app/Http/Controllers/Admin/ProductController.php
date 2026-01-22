@@ -18,10 +18,13 @@ use Exception;
 
 class ProductController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('permission:manage_products,admin')->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
-    // }
+    public function __construct()
+    {
+        $this->middleware('permission:view_products,admin')->only(['index']);
+        $this->middleware('permission:create_products,admin')->only(['create', 'store']);
+        $this->middleware('permission:edit_products,admin')->only(['edit', 'update', 'deleteImage', 'setHomepageImage']);
+        $this->middleware('permission:delete_products,admin')->only(['destroy']);
+    }
 
     public function index()
     {

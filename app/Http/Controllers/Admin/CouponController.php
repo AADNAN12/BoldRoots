@@ -20,6 +20,14 @@ class CouponController extends Controller
     public function __construct(CouponService $couponService)
     {
         $this->couponService = $couponService;
+        
+        $this->middleware('permission:view_coupons,admin')->only(['index', 'stats']);
+        $this->middleware('permission:create_coupons,admin')->only(['create', 'store', 'bulkCreate', 'bulkStore']);
+        $this->middleware('permission:edit_coupons,admin')->only(['edit', 'update']);
+        $this->middleware('permission:delete_coupons,admin')->only(['destroy']);
+        $this->middleware('permission:toggle_coupon_status,admin')->only(['toggleStatus']);
+        $this->middleware('permission:duplicate_coupons,admin')->only(['duplicate']);
+        $this->middleware('permission:export_coupons,admin')->only(['export']);
     }
 
     public function index()

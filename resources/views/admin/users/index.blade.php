@@ -176,9 +176,11 @@
                                     </h3>
                                 </div>
                                 <div class="col-md-6 d-flex justify-content-end p-0 ">
+                                    @if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->can('create_users'))
                                     <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
                                         data-bs-target="#AjouterUtilisateur"><i
                                             class="mdi mdi-account-plus me-2"></i>Nouveau utilisateur</button>
+                                    @endif
                                     <a href="#" class="btn btn-light d-flex align-items-center"><i
                                             class="mdi mdi-arrow-left me-1"></i>
                                         Retour</a>
@@ -223,20 +225,24 @@
                                                 <td>{{ $user->last_login ? $user->last_login->format('d/m/Y H:i') : 'Jamais' }}
                                                 </td>
                                                 <td>
+                                                    @if(Auth::guard('admin')->user()->can('edit_users'))
                                                     <a class="action-icon edit-user" data-bs-toggle="modal"
                                                         data-bs-target="#ModifierUtilisateur" data-id="{{ $user->id }}"
                                                         data-name="{{ $user->name }}" data-email="{{ $user->email }}"
                                                         data-phone="{{ $user->phone }}"
-                                                        data-roles="{{ $user->roles->pluck('name') }}"
+                                                        data-roles="{{ json_encode($user->roles->pluck('name')) }}"
                                                         data-is-active="{{ $user->is_active ? 'active' : 'inactive' }}">
                                                         <i class="mdi mdi-pencil"></i>
                                                     </a>
+                                                    @endif
+                                                    @if(Auth::guard('admin')->user()->can('delete_users'))
                                                     @if ($user->id !== auth()->id())
                                                         <a class="action-icon delete-user" data-bs-toggle="modal"
                                                             data-bs-target="#deleteModal" data-id="{{ $user->id }}"
                                                             data-name="{{ $user->name }}">
                                                             <i class="mdi mdi-delete"></i>
                                                         </a>
+                                                    @endif
                                                     @endif
                                                 </td>
                                             </tr>

@@ -62,22 +62,14 @@
                             </button>
                         </form>
                     @else
-                        <a href="{{ route('admin.invoices.download-pdf', $invoice) }}" class="btn btn-success">
-                            <i class="mdi mdi-download"></i> Télécharger PDF
+                        <a href="{{ route('admin.invoices.generate-pdf', $invoice) }}" class="btn btn-success">
+                            <i class="mdi mdi-download"></i> Voir PDF
                         </a>
                     @endif
                     @if($invoice->status != 'paid')
                         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#markPaidModal">
                             <i class="mdi mdi-check-circle"></i> Marquer Payée
                         </button>
-                    @endif
-                    @if($invoice->status == 'draft')
-                        <form action="{{ route('admin.invoices.send-email', $invoice) }}" method="POST" class="d-inline">
-                            @csrf
-                            <button type="submit" class="btn btn-info">
-                                <i class="mdi mdi-email-send"></i> Envoyer par Email
-                            </button>
-                        </form>
                     @endif
                     @if($invoice->status != 'paid' && $invoice->status != 'cancelled')
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelInvoiceModal">
@@ -273,27 +265,6 @@
                 </div>
             </div>
 
-            <div class="card mb-3">
-                <div class="card-header bg-primary text-white">
-                    <h6 class="mb-0 text-white"><i class="mdi mdi-swap-horizontal me-2"></i>Changer le Statut</h6>
-                </div>
-                <div class="card-body">
-                    <form id="statusForm">
-                        @csrf
-                        <div class="mb-3">
-                            <select name="status" class="form-select" id="invoiceStatus">
-                                <option value="draft" {{ $invoice->status == 'draft' ? 'selected' : '' }}>Brouillon</option>
-                                <option value="sent" {{ $invoice->status == 'sent' ? 'selected' : '' }}>Envoyée</option>
-                                <option value="paid" {{ $invoice->status == 'paid' ? 'selected' : '' }}>Payée</option>
-                                <option value="cancelled" {{ $invoice->status == 'cancelled' ? 'selected' : '' }}>Annulée</option>
-                            </select>
-                        </div>
-                        <button type="button" class="btn btn-primary w-100" onclick="updateInvoiceStatus()">
-                            <i class="mdi mdi-check"></i> Mettre à jour
-                        </button>
-                    </form>
-                </div>
-            </div>
 
             <div class="card">
                 <div class="card-header bg-light">

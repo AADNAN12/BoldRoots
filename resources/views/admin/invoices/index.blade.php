@@ -9,19 +9,7 @@
 
 @section('content')
     <div class="container-fluid">
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        @endif
-
-        @if (session('error'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        @endif
+        
 
         <div class="row">
             <div class="col-12">
@@ -38,6 +26,20 @@
                 </div>
             </div>
         </div>
+
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
 
         <div class="card">
             <div class="card-body">
@@ -171,22 +173,20 @@
                                             <td>{{ $invoice->invoice_date->format('d/m/Y') }}</td>
                                             <td><strong>{{ number_format($invoice->total, 2) }} DH</strong></td>
                                             <td class="text-center">
+                                                @if(Auth::guard('admin')->user()->can('show_invoices'))
                                                 <a href="{{ route('admin.invoices.show', $invoice) }}" class="action-icon"
                                                     title="Voir">
                                                     <i class="mdi mdi-eye"></i>
                                                 </a>
+                                                @endif
                                                 @if ($invoice->status !== 'cancelled')
-                                                    @if (!$invoice->pdf_path)
+                                                    @if(Auth::guard('admin')->user()->can('generate_invoices'))
                                                         <a href="{{ route('admin.invoices.generate-pdf', $invoice) }}"
-                                                            class="action-icon text-primary" title="Générer PDF">
+                                                            class="action-icon text-danger" title="Générer PDF">
                                                             <i class="mdi mdi-file-pdf-box"></i>
                                                         </a>
-                                                    @else
-                                                        <a href="{{ route('admin.invoices.download-pdf', $invoice) }}"
-                                                            class="action-icon text-success" title="Télécharger PDF">
-                                                            <i class="mdi mdi-download"></i>
-                                                        </a>
                                                     @endif
+                                                    @if(Auth::guard('admin')->user()->can('update_invoice_status'))
                                                     @if ($invoice->status === 'sent')
                                                         <a href="#"
                                                             class="action-icon text-success mark-invoice-paid-btn"
@@ -203,6 +203,7 @@
                                                         title="Changer statut">
                                                         <i class="mdi mdi-swap-horizontal"></i>
                                                     </a>
+                                                    @endif
                                                 @endif
                                             </td>
                                         </tr>
@@ -253,17 +254,10 @@
                                                     class="action-icon" title="Voir">
                                                     <i class="mdi mdi-eye"></i>
                                                 </a>
-                                                @if (!$invoice->pdf_path)
                                                     <a href="{{ route('admin.invoices.generate-pdf', $invoice) }}"
-                                                        class="action-icon text-primary" title="Générer PDF">
+                                                        class="action-icon text-danger" title="Générer PDF">
                                                         <i class="mdi mdi-file-pdf-box"></i>
                                                     </a>
-                                                @else
-                                                    <a href="{{ route('admin.invoices.download-pdf', $invoice) }}"
-                                                        class="action-icon text-success" title="Télécharger PDF">
-                                                        <i class="mdi mdi-download"></i>
-                                                    </a>
-                                                @endif
                                                 <a href="#" class="action-icon change-invoice-status-btn"
                                                     data-bs-toggle="modal" data-bs-target="#changeInvoiceStatusModal"
                                                     data-invoice-id="{{ $invoice->id }}"

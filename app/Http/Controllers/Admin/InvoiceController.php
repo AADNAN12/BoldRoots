@@ -17,6 +17,13 @@ class InvoiceController extends Controller
     public function __construct(InvoiceService $invoiceService)
     {
         $this->invoiceService = $invoiceService;
+        
+        $this->middleware('permission:view_invoices,admin')->only(['index']);
+        $this->middleware('permission:show_invoices,admin')->only(['show']);
+        $this->middleware('permission:generate_invoices,admin')->only(['generatePDF']);
+        $this->middleware('permission:download_invoices,admin')->only(['downloadPDF']);
+        $this->middleware('permission:update_invoice_status,admin')->only(['updateStatus', 'markAsPaid']);
+        $this->middleware('permission:cancel_invoices,admin')->only(['cancel']);
     }
 
     public function index(Request $request)
@@ -107,10 +114,7 @@ class InvoiceController extends Controller
 
             $this->invoiceService->updateInvoiceStatus($invoice->id, $validated['status']);
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Statut de la facture mis à jour avec succès',
-            ]);
+            return redirect()->route('admin.invoices.index')->with('success',"Statut de la facture mis à jour avec succès");
 
         } catch (Exception $e) {
             Log::error('Erreur lors de la mise à jour du statut de facture', [

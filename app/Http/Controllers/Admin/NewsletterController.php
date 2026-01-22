@@ -8,6 +8,13 @@ use App\Models\Newsletter;
 
 class NewsletterController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:view_newsletters,admin')->only(['index']);
+        $this->middleware('permission:delete_newsletters,admin')->only(['destroy', 'toggleStatus']);
+        $this->middleware('permission:export_newsletters,admin')->only(['export']);
+    }
+
     public function index(Request $request)
     {
         $query = Newsletter::query();

@@ -25,11 +25,20 @@ class OrderController extends Controller
         $this->orderService = $orderService;
         $this->invoiceService = $invoiceService;
         $this->deliveryNoteService = $deliveryNoteService;
+        
+        $this->middleware('permission:view_orders,admin')->only(['index']);
+        $this->middleware('permission:show_orders,admin')->only(['show']);
+        $this->middleware('permission:update_order_status,admin')->only(['updateStatus']);
+        $this->middleware('permission:update_payment_status,admin')->only(['updatePaymentStatus']);
+        $this->middleware('permission:cancel_orders,admin')->only(['cancel']);
+        $this->middleware('permission:generate_invoices,admin')->only(['generateInvoice']);
+        $this->middleware('permission:generate_delivery_notes,admin')->only(['generateDeliveryNote']);
+        $this->middleware('permission:export_orders,admin')->only(['export']);
     }
 
     public function index(Request $request)
     {
-        $orders = Order::with('user')->latest()->paginate(20);
+        $orders = Order::with('user')->latest()->get();
         $stats = $this->orderService->getSalesStats();
 
         $ordersPending = Order::with('user')->where('status', 'pending')->latest()->get();
@@ -169,17 +178,17 @@ class OrderController extends Controller
         }
     }
 
-    public function stats(Request $request)
-    {
-        $startDate = $request->input('start_date');
-        $endDate = $request->input('end_date');
+    // public function stats(Request $request)
+    // {
+    //     $startDate = $request->input('start_date');
+    //     $endDate = $request->input('end_date');
 
-        $stats = $this->orderService->getSalesStats($startDate, $endDate);
-        $bestSelling = $this->orderService->getBestSellingProducts(10, $startDate, $endDate);
-        $recentOrders = $this->orderService->getRecentOrders(10);
+    //     $stats = $this->orderService->getSalesStats($startDate, $endDate);
+    //     $bestSelling = $this->orderService->getBestSellingProducts(10, $startDate, $endDate);
+    //     $recentOrders = $this->orderService->getRecentOrders(10);
 
-        return view('admin.orders.stats', compact('stats', 'bestSelling', 'recentOrders'));
-    }
+    //     return view('admin.orders.stats', compact('stats', 'bestSelling', 'recentOrders'));
+    // }
 
     public function export(Request $request)
     {

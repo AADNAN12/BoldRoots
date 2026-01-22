@@ -14,7 +14,11 @@ class CategoryController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('permission:manage_categories')->only('index', 'create', 'store', 'edit', 'update', 'destroy', 'show');
+        $this->middleware('permission:view_categories,admin')->only(['index']);
+        $this->middleware('permission:create_categories,admin')->only(['store']);
+        $this->middleware('permission:edit_categories,admin')->only(['update']);
+        $this->middleware('permission:delete_categories,admin')->only(['destroy']);
+        $this->middleware('permission:manage_categories,admin')->only(['show']);
     }
     /**
      * Display a listing of the resource.

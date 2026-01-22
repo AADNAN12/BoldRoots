@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Storage;
 
 class SiteSettingsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:view_settings,admin')->only(['index']);
+        $this->middleware('permission:edit_settings,admin')->only(['update']);
+    }
+
     public function index()
     {
         $settings = SiteSetting::all()->keyBy('key');

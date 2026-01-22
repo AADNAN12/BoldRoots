@@ -175,9 +175,12 @@
                                     <i class="mdi mdi-shield-account me-2 fs-4"></i>Liste des rôles
                                 </h3>
                             </div>
-                            <div class="col-md-6 d-flex justify-content-end p-0">
+                            <div class="col-md-6 d-flex justify-content-end p-0 ">
+                                @if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->can('create_roles'))
                                 <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
-                                    data-bs-target="#AjouterRole"><i class="mdi mdi-shield-plus me-2"></i>Nouveau rôle</button>
+                                    data-bs-target="#AjouterRole"><i
+                                        class="mdi mdi-shield-plus me-2"></i>Nouveau rôle</button>
+                                @endif
                                 <a href="#" class="btn btn-light d-flex align-items-center"><i
                                         class="mdi mdi-arrow-left me-1"></i>
                                     Retour</a>
@@ -205,17 +208,21 @@
                                             @endforeach
                                         </td>
                                         <td>
+                                            @if(Auth::guard('admin')->user()->can('edit_roles'))
                                             <a class="action-icon edit-role" data-bs-toggle="modal"
                                                 data-bs-target="#ModifierRole" data-id="{{ $role->id }}"
                                                 data-name="{{ $role->name }}"
                                                 data-permissions="{{ $role->permissions->pluck('name') }}">
                                                 <i class="mdi mdi-pencil"></i>
                                             </a>
+                                            @endif
+                                            @if(Auth::guard('admin')->user()->can('delete_roles'))
                                             @if(!in_array($role->name, ['admin', 'user']))
                                             <a class="action-icon delete-role" data-bs-toggle="modal"
                                                 data-bs-target="#deleteModal" data-id="{{ $role->id }}">
                                                 <i class="mdi mdi-delete"></i>
                                             </a>
+                                            @endif
                                             @endif
                                         </td>
                                     </tr>

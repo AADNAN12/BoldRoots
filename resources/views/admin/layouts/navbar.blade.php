@@ -6,7 +6,7 @@
                 aria-haspopup="false" aria-expanded="false">
                 <i class="dripicons-search noti-icon"></i>
             </a>
-            <div class="dropdown-menu dropdown-menu-animated dropdown-lg p-0">
+            <div class="dropdown-menu dropdown-menu-animated dropdown-lg p-0" style="width:70%;">
                 <form class="p-3">
                     <input type="text" class="form-control mobile-search-input" placeholder="Rechercher..." aria-label="Rechercher">
                 </form>
@@ -14,35 +14,7 @@
             </div>
         </li>
 
-        <!-- Notifications -->
-        <li class="dropdown notification-list">
-            <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button"
-                aria-haspopup="false" aria-expanded="false">
-                <i class="dripicons-bell noti-icon"></i>
-                <span class="noti-icon-badge"></span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated dropdown-lg">
-                <div class="dropdown-item noti-title">
-                    <h5 class="m-0">
-                        <span class="float-end">
-                            <a href="javascript:void(0);" class="text-dark">
-                                <small>Tout effacer</small>
-                            </a>
-                        </span>Notifications
-                    </h5>
-                </div>
-                <div style="max-height: 230px;" data-simplebar>
-                    <!-- Les notifications seront chargées dynamiquement -->
-                    <div class="text-center py-3 text-muted">
-                        <i class="mdi mdi-bell-outline font-24"></i>
-                        <p class="mb-0">Aucune notification</p>
-                    </div>
-                </div>
-                <a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item notify-all">
-                    Voir tout
-                </a>
-            </div>
-        </li>
+
 
         <!-- Menu utilisateur -->
         <li class="dropdown notification-list">
@@ -89,20 +61,12 @@
     </button>
 
     <!-- Barre de recherche -->
-    <div class="app-search dropdown d-none d-lg-block">
-        <form id="search-form" autocomplete="off">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Rechercher équipements, interventions, produits..." id="top-search" autocomplete="off">
-                <span class="mdi mdi-magnify search-icon"></span>
-            </div>
-        </form>
-        <div class="dropdown-menu dropdown-menu-animated dropdown-lg" id="search-dropdown">
-            <div id="search-results">
-                <div class="text-center py-3 text-muted">
-                    <p class="mb-0">Tapez pour rechercher...</p>
-                </div>
-            </div>
+    <div class="app-search dropdown d-none d-lg-block" style="margin-top:16px;">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Rechercher produits, commandes, factures, BL..." id="admin-search-input" autocomplete="off">
+            <span class="mdi mdi-magnify search-icon"></span>
         </div>
+        <div class="dropdown-menu dropdown-menu-animated dropdown-lg" id="admin-search-dropdown"></div>
     </div>
 </div>
 

@@ -9,6 +9,14 @@ use Illuminate\Support\Str;
 
 class CmsPagesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:view_cms_pages,admin')->only(['index']);
+        $this->middleware('permission:create_cms_pages,admin')->only(['create', 'store']);
+        $this->middleware('permission:edit_cms_pages,admin')->only(['edit', 'update']);
+        $this->middleware('permission:delete_cms_pages,admin')->only(['destroy']);
+    }
+
     /**
      * Display a listing of the resource.
      */

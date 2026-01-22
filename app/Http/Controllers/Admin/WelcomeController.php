@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 class WelcomeController extends Controller
 {
+
+
     /**
      * Display the admin welcome page.
      */

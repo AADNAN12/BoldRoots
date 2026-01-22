@@ -19,6 +19,13 @@ class PromotionController extends Controller
     public function __construct(PromotionService $promotionService)
     {
         $this->promotionService = $promotionService;
+        
+        $this->middleware('permission:view_promotions,admin')->only(['index', 'show', 'stats']);
+        $this->middleware('permission:create_promotions,admin')->only(['create', 'store']);
+        $this->middleware('permission:edit_promotions,admin')->only(['edit', 'update']);
+        $this->middleware('permission:delete_promotions,admin')->only(['destroy']);
+        $this->middleware('permission:toggle_promotion_status,admin')->only(['toggleStatus']);
+        $this->middleware('permission:duplicate_promotions,admin')->only(['duplicate']);
     }
 
     public function index()

@@ -52,9 +52,11 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="float-end">
+                            @if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->can('create_categories'))
                             <button type="button" class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#createCategoryModal">
                                 <i class="mdi mdi-plus-circle me-1"></i> Nouvelle catégorie
                             </button>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -81,12 +83,16 @@
                                 <td>{{ Str::limit($category->description, 50) }}</td>
                                 <td>{{ $category->created_at->format('d/m/Y') }}</td>
                                 <td>
+                                    @if(Auth::guard('admin')->user()->can('edit_categories'))
                                     <a href="javascript:void(0);" class="action-icon edit-category" data-id="{{ $category->id }}" title="Modifier">
                                         <i class="mdi mdi-pencil"></i>
                                     </a>
+                                    @endif
+                                    @if(Auth::guard('admin')->user()->can('delete_categories'))
                                     <a href="javascript:void(0);" class="action-icon delete-category" data-id="{{ $category->id }}" data-name="{{ $category->name }}" title="Supprimer">
                                         <i class="mdi mdi-delete"></i>
                                     </a>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach

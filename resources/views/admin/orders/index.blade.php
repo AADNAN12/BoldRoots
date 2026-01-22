@@ -9,19 +9,7 @@
 
 @section('content')
     <div class="container-fluid">
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        @endif
-
-        @if (session('error'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        @endif
+        
 
         <div class="row">
             <div class="col-12">
@@ -38,6 +26,19 @@
                 </div>
             </div>
         </div>
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
         
         <div class="card">
             <div class="card-body">
@@ -94,7 +95,7 @@
                         <a href="#tabAll" data-bs-toggle="tab" class="nav-link active">
                             <i class="mdi mdi-clipboard-list-outline d-md-none"></i>
                             <span class="d-none d-md-inline">Toutes</span>
-                            <span class="badge bg-secondary ms-1">{{ $orders->total() }}</span>
+                            <span class="badge bg-secondary ms-1">{{ $orders->count() }}</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -201,11 +202,14 @@
                                                 </span>
                                             </td>
                                             <td class="text-center">
+                                                @if(Auth::guard('admin')->user()->can('show_orders'))
                                                 <a href="{{ route('admin.orders.show', $order) }}" class="action-icon"
                                                     title="Voir">
                                                     <i class="mdi mdi-eye"></i>
                                                 </a>
+                                                @endif
                                                 @if ($order->status !== 'cancelled')
+                                                    @if(Auth::guard('admin')->user()->can('update_payment_status'))
                                                     @if ($order->payment_status !== 'paid')
                                                         <a href="#" class="action-icon text-success mark-paid-btn"
                                                             data-bs-toggle="modal" data-bs-target="#markPaidModal"
@@ -214,6 +218,8 @@
                                                             <i class="mdi mdi-cash-check"></i>
                                                         </a>
                                                     @endif
+                                                    @endif
+                                                    @if(Auth::guard('admin')->user()->can('update_order_status'))
                                                     <a href="#" class="action-icon change-status-btn"
                                                         data-bs-toggle="modal" data-bs-target="#changeStatusModal"
                                                         data-order-id="{{ $order->id }}"
@@ -221,39 +227,38 @@
                                                         title="Changer statut">
                                                         <i class="mdi mdi-swap-horizontal"></i>
                                                     </a>
+                                                    @endif
+                                                    @if(Auth::guard('admin')->user()->can('generate_invoices'))
                                                     @if (!$order->invoice_generated)
                                                         <a href="{{ route('admin.orders.generate-invoice', $order) }}"
                                                             class="action-icon" title="Générer facture">
                                                             <i class="mdi mdi-file-document"></i>
                                                         </a>
                                                     @endif
+                                                    @endif
+                                                    @if(Auth::guard('admin')->user()->can('generate_delivery_notes'))
                                                     @if (!$order->delivery_note_generated)
                                                         <a href="{{ route('admin.orders.generate-delivery-note', $order) }}"
                                                             class="action-icon" title="Générer BL">
                                                             <i class="mdi mdi-truck-delivery"></i>
                                                         </a>
                                                     @endif
+                                                    @endif
+                                                    @if(Auth::guard('admin')->user()->can('cancel_orders'))
                                                     <a href="#" class="action-icon cancel-order-btn"
                                                         data-bs-toggle="modal" data-bs-target="#cancelOrderModal"
                                                         data-order-id="{{ $order->id }}" title="Annuler">
                                                         <i class="mdi mdi-cancel"></i>
                                                     </a>
+                                                    @endif
                                                 @endif
                                             </td>
                                         </tr>
                                     @empty
-                                        <tr>
-                                            <td colspan="6" class="text-center py-4">
-                                                <i class="mdi mdi-inbox mdi-48px text-muted mb-3 d-block"></i>
-                                                <p class="text-muted">Aucune commande trouvée</p>
-                                            </td>
-                                        </tr>
+                                       
                                     @endforelse
                                 </tbody>
                             </table>
-                        </div>
-                        <div class="d-flex justify-content-center mt-4">
-                            {{ $orders->links() }}
                         </div>
                     </div>
 
@@ -335,12 +340,7 @@
                                             </td>
                                         </tr>
                                     @empty
-                                        <tr>
-                                            <td colspan="6" class="text-center py-4">
-                                                <i class="mdi mdi-inbox mdi-48px text-muted mb-3 d-block"></i>
-                                                <p class="text-muted">Aucune commande en attente</p>
-                                            </td>
-                                        </tr>
+                                        
                                     @endforelse
                                 </tbody>
                             </table>
@@ -425,12 +425,7 @@
                                             </td>
                                         </tr>
                                     @empty
-                                        <tr>
-                                            <td colspan="6" class="text-center py-4">
-                                                <i class="mdi mdi-inbox mdi-48px text-muted mb-3 d-block"></i>
-                                                <p class="text-muted">Aucune commande en traitement</p>
-                                            </td>
-                                        </tr>
+                                        
                                     @endforelse
                                 </tbody>
                             </table>
@@ -503,12 +498,7 @@
                                             </td>
                                         </tr>
                                     @empty
-                                        <tr>
-                                            <td colspan="6" class="text-center py-4">
-                                                <i class="mdi mdi-inbox mdi-48px text-muted mb-3 d-block"></i>
-                                                <p class="text-muted">Aucune commande expédiée</p>
-                                            </td>
-                                        </tr>
+                                        
                                     @endforelse
                                 </tbody>
                             </table>
@@ -570,12 +560,7 @@
                                             </td>
                                         </tr>
                                     @empty
-                                        <tr>
-                                            <td colspan="6" class="text-center py-4">
-                                                <i class="mdi mdi-inbox mdi-48px text-muted mb-3 d-block"></i>
-                                                <p class="text-muted">Aucune commande livrée</p>
-                                            </td>
-                                        </tr>
+                                        
                                     @endforelse
                                 </tbody>
                             </table>
@@ -637,12 +622,7 @@
                                             </td>
                                         </tr>
                                     @empty
-                                        <tr>
-                                            <td colspan="6" class="text-center py-4">
-                                                <i class="mdi mdi-inbox mdi-48px text-muted mb-3 d-block"></i>
-                                                <p class="text-muted">Aucune commande annulée</p>
-                                            </td>
-                                        </tr>
+                                        
                                     @endforelse
                                 </tbody>
                             </table>
@@ -743,26 +723,32 @@
                 "{{ route('admin.orders.update-payment-status', ['order' => ':orderId']) }}";
 
             // Initialize DataTables
-            $("#table_commande_tout, #table_commande_attente, #table_commande_traitement, #table_commande_expedie, #table_commande_livre, #table_commande_annule")
-                .DataTable({
-                    order: [],
-                    scrollX: true,
-                    pageLength: 10,
-                    lengthMenu: [
-                        [5, 10, 20, -1],
-                        [5, 10, 25, "Tous"],
-                    ],
-                    language: {
-                        url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/fr-FR.json",
-                        paginate: {
-                            previous: "<i class='mdi mdi-chevron-left'>",
-                            next: "<i class='mdi mdi-chevron-right'>",
-                        },
+            const dataTableConfig = {
+                order: [],
+                scrollX: true,
+                pageLength: 10,
+                lengthMenu: [
+                    [5, 10, 20, -1],
+                    [5, 10, 25, "Tous"],
+                ],
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/fr-FR.json",
+                    paginate: {
+                        previous: "<i class='mdi mdi-chevron-left'>",
+                        next: "<i class='mdi mdi-chevron-right'>",
                     },
-                    drawCallback: function() {
-                        $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
-                    },
-                });
+                },
+                drawCallback: function() {
+                    $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
+                },
+            };
+
+            $("#table_commande_tout").DataTable(dataTableConfig);
+            $("#table_commande_attente").DataTable(dataTableConfig);
+            $("#table_commande_traitement").DataTable(dataTableConfig);
+            $("#table_commande_expedie").DataTable(dataTableConfig);
+            $("#table_commande_livre").DataTable(dataTableConfig);
+            $("#table_commande_annule").DataTable(dataTableConfig);
 
             // Adjust DataTables on tab change
             $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function(e) {
@@ -792,6 +778,7 @@
 
             document.querySelectorAll('.mark-paid-btn').forEach(function(btn) {
                 btn.addEventListener('click', function() {
+                    alert('test');
                     var orderId = this.dataset.orderId;
                     var form = document.getElementById('markPaidForm');
                     form.action = paymentRouteTemplate.replace(':orderId', orderId);

@@ -56,6 +56,9 @@ Route::middleware(['admin.auth'])->prefix('admin')->name('admin.')->group(functi
     // Page de bienvenue admin
     Route::get('/welcome', [\App\Http\Controllers\Admin\WelcomeController::class, 'index'])->name('welcome');
 
+    // API de recherche admin
+    Route::get('/api/search', [\App\Http\Controllers\Admin\AdminSearchController::class, 'search'])->name('api.search');
+
     // Gestion des utilisateurs
     Route::resource('users', UserController::class);
     Route::post('/users/{user}/activate', [UserController::class, 'activate'])->name('users.activate');
@@ -137,21 +140,13 @@ Route::middleware(['admin.auth'])->prefix('admin')->name('admin.')->group(functi
     Route::resource('shipping-methods', \App\Http\Controllers\Admin\ShippingMethodController::class);
     Route::post('shipping-methods/{shippingMethod}/toggle-status', [\App\Http\Controllers\Admin\ShippingMethodController::class, 'toggleStatus'])->name('shipping-methods.toggle-status');
 
-    // Gestion des clients
-    Route::get('customers', [\App\Http\Controllers\Admin\CustomerController::class, 'index'])->name('customers.index');
-    Route::get('customers/{customer}', [\App\Http\Controllers\Admin\CustomerController::class, 'show'])->name('customers.show');
-    Route::post('customers/{customer}/toggle-status', [\App\Http\Controllers\Admin\CustomerController::class, 'toggleStatus'])->name('customers.toggle-status');
-
     // Gestion des newsletters
     Route::get('newsletters', [\App\Http\Controllers\Admin\NewsletterController::class, 'index'])->name('newsletters.index');
     Route::patch('newsletters/{newsletter}/toggle', [\App\Http\Controllers\Admin\NewsletterController::class, 'toggleStatus'])->name('newsletters.toggle');
     Route::delete('newsletters/{newsletter}', [\App\Http\Controllers\Admin\NewsletterController::class, 'destroy'])->name('newsletters.destroy');
     Route::get('newsletters/export', [\App\Http\Controllers\Admin\NewsletterController::class, 'export'])->name('newsletters.export');
 
-    Route::put('customers/{customer}', [\App\Http\Controllers\Admin\CustomerController::class, 'update'])->name('customers.update');
-    Route::delete('customers/{customer}', [\App\Http\Controllers\Admin\CustomerController::class, 'destroy'])->name('customers.destroy');
-    Route::patch('customers/{customer}/toggle-status', [\App\Http\Controllers\Admin\CustomerController::class, 'toggleStatus'])->name('customers.toggle-status');
-
+   
     // Gestion des informations d'entreprise
     Route::get('company-info', [\App\Http\Controllers\Admin\CompanyInfoController::class, 'index'])->name('company-info.index');
     Route::put('company-info', [\App\Http\Controllers\Admin\CompanyInfoController::class, 'update'])->name('company-info.update');

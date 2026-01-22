@@ -28,6 +28,7 @@
             <li class="side-nav-title side-nav-item mt-1">Catalogue</li>
 
             <!-- PRODUITS -->
+            @if(Auth::guard('admin')->check() && (Auth::guard('admin')->user()->can('view_products') || Auth::guard('admin')->user()->can('view_categories')))
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarProduits" aria-expanded="false"
                     aria-controls="sidebarProduits" class="side-nav-link">
@@ -37,28 +38,34 @@
                 </a>
                 <div class="collapse" id="sidebarProduits">
                     <ul class="side-nav-second-level">
+                        @if(Auth::guard('admin')->user()->can('view_products'))
                         <li><a href="{{ route('admin.products.index') }}">Liste des produits</a></li>
+                        @endif
                     </ul>
                     <ul class="side-nav-second-level">
+                        @if(Auth::guard('admin')->user()->can('view_categories'))
                         <li><a href="{{ route('admin.categories.index') }}">Liste des Categories</a></li>
+                        @endif
                     </ul>
                 </div>
             </li>
-
-            
+            @endif
 
             <!-- ATTRIBUTS (Couleurs, Tailles) -->
+            @if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->can('view_attributes'))
             <li class="side-nav-item">
                 <a href="{{ route('admin.attributes.index') }}" class="side-nav-link">
                     <i class="uil-palette"></i>
                     <span> Couleurs & Tailles</span>
                 </a>
             </li>
+            @endif
 
             <!-- VENTES & COMMANDES -->
             <li class="side-nav-title side-nav-item mt-1">Ventes</li>
 
             <!-- COMMANDES -->
+            @if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->can('view_orders'))
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarCommandes" aria-expanded="false"
                     aria-controls="sidebarCommandes" class="side-nav-link">
@@ -72,8 +79,10 @@
                     </ul>
                 </div>
             </li>
+            @endif
 
             <!-- FACTURES -->
+            @if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->can('view_invoices'))
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarFactures" aria-expanded="false"
                     aria-controls="sidebarFactures" class="side-nav-link">
@@ -87,8 +96,10 @@
                     </ul>
                 </div>
             </li>
+            @endif
 
             <!-- BONS DE LIVRAISON -->
+            @if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->can('view_delivery_notes'))
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarLivraison" aria-expanded="false"
                     aria-controls="sidebarLivraison" class="side-nav-link">
@@ -102,11 +113,13 @@
                     </ul>
                 </div>
             </li>
+            @endif
 
             <!-- MARKETING & PROMOTIONS -->
             <li class="side-nav-title side-nav-item mt-1">Marketing</li>
 
             <!-- PROMOTIONS & FLASH DEALS -->
+            @if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->can('view_promotions'))
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarPromotions" aria-expanded="false"
                     aria-controls="sidebarPromotions" class="side-nav-link">
@@ -120,8 +133,10 @@
                     </ul>
                 </div>
             </li>
+            @endif
 
             <!-- COUPONS -->
+            @if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->can('view_coupons'))
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarCoupons" aria-expanded="false"
                     aria-controls="sidebarCoupons" class="side-nav-link">
@@ -135,8 +150,10 @@
                     </ul>
                 </div>
             </li>
+            @endif
 
             <!-- NEWSLETTER -->
+            @if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->can('view_newsletters'))
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarNewsletter" aria-expanded="false"
                     aria-controls="sidebarNewsletter" class="side-nav-link">
@@ -150,37 +167,23 @@
                     </ul>
                 </div>
             </li>
-
-            <!-- CLIENTS -->
-            <li class="side-nav-title side-nav-item mt-1">Clients</li>
-
-            <!-- UTILISATEURS CLIENTS -->
-            <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#sidebarClients" aria-expanded="false"
-                    aria-controls="sidebarClients" class="side-nav-link">
-                    <i class="uil-users-alt"></i>
-                    <span> Clients </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <div class="collapse" id="sidebarClients">
-                    <ul class="side-nav-second-level">
-                        <li><a href="{{ route('admin.customers.index') }}">Liste des clients</a></li>
-                    </ul>
-                </div>
-            </li>
+            @endif
 
             <!-- CONFIGURATION -->
             <li class="side-nav-title side-nav-item mt-1">Configuration</li>
 
             <!-- PARAMÈTRES DU SITE -->
+            @if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->can('view_settings'))
             <li class="side-nav-item">
                 <a href="{{ route('admin.settings.index') }}" class="side-nav-link">
                     <i class="uil-sliders-v-alt"></i>
                     <span> Paramètres du Site </span>
                 </a>
             </li>
+            @endif
 
             <!-- PAGES CMS -->
+            @if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->can('view_cms_pages'))
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarCMS" aria-expanded="false"
                     aria-controls="sidebarCMS" class="side-nav-link">
@@ -191,12 +194,16 @@
                 <div class="collapse" id="sidebarCMS">
                     <ul class="side-nav-second-level">
                         <li><a href="{{ route('admin.cms-pages.index') }}">Toutes les pages</a></li>
+                        @if(Auth::guard('admin')->user()->can('create_cms_pages'))
                         <li><a href="{{ route('admin.cms-pages.create') }}">Créer une page</a></li>
+                        @endif
                     </ul>
                 </div>
             </li>
+            @endif
 
             <!-- MÉTHODES DE LIVRAISON -->
+            @if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->can('view_shipping_methods'))
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarShipping" aria-expanded="false"
                     aria-controls="sidebarShipping" class="side-nav-link">
@@ -207,23 +214,29 @@
                 <div class="collapse" id="sidebarShipping">
                     <ul class="side-nav-second-level">
                         <li><a href="{{ route('admin.shipping-methods.index') }}">Toutes les méthodes</a></li>
+                        @if(Auth::guard('admin')->user()->can('create_shipping_methods'))
                         <li><a href="{{ route('admin.shipping-methods.create') }}">Ajouter une méthode</a></li>
+                        @endif
                     </ul>
                 </div>
             </li>
+            @endif
 
             <!-- INFORMATIONS ENTREPRISE -->
+            @if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->can('view_company_info'))
             <li class="side-nav-item">
                 <a href="{{ route('admin.company-info.index') }}" class="side-nav-link">
                     <i class="uil-building"></i>
                     <span> Infos Entreprise </span>
                 </a>
             </li>
+            @endif
 
             <!-- SYSTÈME -->
             <li class="side-nav-title side-nav-item mt-1">Système</li>
 
             <!-- ADMINISTRATEURS -->
+            @if(Auth::guard('admin')->check() && (Auth::guard('admin')->user()->can('view_users') || Auth::guard('admin')->user()->can('view_roles')))
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarAdmin" aria-expanded="false"
                     aria-controls="sidebarAdmin" class="side-nav-link">
@@ -233,11 +246,16 @@
                 </a>
                 <div class="collapse" id="sidebarAdmin">
                     <ul class="side-nav-second-level">
+                        @if(Auth::guard('admin')->user()->can('view_users'))
                         <li><a href="{{ route('admin.users.index') }}">Tous les admins</a></li>
+                        @endif
+                        @if(Auth::guard('admin')->user()->can('view_roles'))
                         <li><a href="{{route('admin.roles.index')}}">Rôles & Permissions</a></li>
+                        @endif
                     </ul>
                 </div>
             </li>
+            @endif
 
         </ul>
     </div>

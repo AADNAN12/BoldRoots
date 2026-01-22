@@ -16,6 +16,11 @@ class DeliveryNoteController extends Controller
     public function __construct(DeliveryNoteService $deliveryNoteService)
     {
         $this->deliveryNoteService = $deliveryNoteService;
+        
+        $this->middleware('permission:view_delivery_notes,admin')->only(['index', 'show']);
+        $this->middleware('permission:generate_delivery_notes,admin')->only(['generatePDF']);
+        $this->middleware('permission:download_delivery_notes,admin')->only(['downloadPDF']);
+        $this->middleware('permission:manage_delivery_notes,admin')->only(['updateStatus', 'updateTracking', 'markAsDelivered']);
     }
 
     public function index(Request $request)

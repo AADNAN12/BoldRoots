@@ -78,9 +78,11 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="float-end">
+                                @if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->can('create_products'))
                                 <a href="{{ route('admin.products.create') }}" class="btn btn-info mb-3">
                                     <i class="mdi mdi-plus-circle me-1"></i> Nouveau produit
                                 </a>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -173,15 +175,19 @@
                                     </td>
                                     <td>
                                         <div class="action-buttons">
+                                            @if(Auth::guard('admin')->user()->can('edit_products'))
                                             <a href="{{ route('admin.products.edit', $product->id) }}" class="action-icon"
                                                 title="Modifier">
                                                 <i class="mdi mdi-pencil"></i>
                                             </a>
+                                            @endif
+                                            @if(Auth::guard('admin')->user()->can('delete_products'))
                                             <a type="button" class="action-icon delete-product"
                                                 data-id="{{ $product->id }}" data-name="{{ $product->name }}"
                                                 title="Supprimer">
                                                 <i class="mdi mdi-delete"></i>
                                             </a>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>

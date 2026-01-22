@@ -9,6 +9,14 @@ use Illuminate\Support\Str;
 
 class AttributeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:view_attributes,admin')->only(['index']);
+        $this->middleware('permission:create_attributes,admin')->only(['store']);
+        $this->middleware('permission:edit_attributes,admin')->only(['update']);
+        $this->middleware('permission:delete_attributes,admin')->only(['destroy']);
+    }
+
     public function index()
     {
         $attributes = Attribute::withCount('values')->orderBy('id', 'desc')->get();

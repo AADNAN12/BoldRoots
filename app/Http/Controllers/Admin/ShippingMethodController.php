@@ -10,6 +10,14 @@ use Exception;
 
 class ShippingMethodController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:view_shipping_methods,admin')->only(['index', 'show']);
+        $this->middleware('permission:create_shipping_methods,admin')->only(['create', 'store']);
+        $this->middleware('permission:edit_shipping_methods,admin')->only(['edit', 'update', 'toggleStatus']);
+        $this->middleware('permission:delete_shipping_methods,admin')->only(['destroy']);
+    }
+
     public function index()
     {
         $shippingMethods = ShippingMethod::orderBy('name')->get();

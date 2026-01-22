@@ -86,9 +86,11 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="float-end">
+                                @if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->can('create_promotions'))
                                 <a href="{{ route('admin.promotions.create') }}" class="btn btn-info mb-3">
                                     <i class="mdi mdi-plus-circle me-1"></i> Nouvelle promotion
                                 </a>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -184,19 +186,25 @@
                                         @endif
                                     </td>
                                     <td>
+                                        @if(Auth::guard('admin')->user()->can('view_promotions'))
                                         <a href="{{ route('admin.promotions.show', $promotion->id) }}" class="action-icon"
                                             title="Détails">
                                             <i class="mdi mdi-eye"></i>
                                         </a>
+                                        @endif
+                                        @if(Auth::guard('admin')->user()->can('edit_promotions'))
                                         <a href="{{ route('admin.promotions.edit', $promotion->id) }}" class="action-icon"
                                             title="Modifier">
                                             <i class="mdi mdi-pencil"></i>
                                         </a>
+                                        @endif
+                                        @if(Auth::guard('admin')->user()->can('delete_promotions'))
                                         <a href="javascript:void(0);" class="action-icon delete-promotion"
                                             data-id="{{ $promotion->id }}" data-name="{{ $promotion->name }}"
                                             title="Supprimer">
                                             <i class="mdi mdi-delete"></i>
                                         </a>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

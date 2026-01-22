@@ -19,6 +19,7 @@
         body {
             font-family: 'Arial', sans-serif;
             overflow-x: hidden;
+            
         }
 
         @php
@@ -33,7 +34,7 @@
         @endif
 
         @if($cursorHover)
-            a, button, .btn, input[type="submit"], input[type="button"], [role="button"], .clickable {
+            a, button, .btn,img, input, [role="button"], .clickable {
                 cursor: url('{{ asset('storage/' . $cursorHover) }}'), pointer !important;
             }
         @endif

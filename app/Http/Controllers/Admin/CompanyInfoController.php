@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Storage;
 
 class CompanyInfoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:view_company_info,admin')->only(['index']);
+        $this->middleware('permission:edit_company_info,admin')->only(['update']);
+    }
+
     public function index()
     {
         $companyInfo = CompanyInfo::first();

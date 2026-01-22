@@ -52,9 +52,11 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="float-end">
+                            @if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->can('create_attributes'))
                             <button type="button" class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#createAttributeModal">
                                 <i class="mdi mdi-plus-circle me-1"></i> Nouvel attribut
                             </button>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -89,15 +91,21 @@
                                 </td>
                                 <td>{{ $attribute->created_at->format('d/m/Y') }}</td>
                                 <td>
+                                    @if(Auth::guard('admin')->user()->can('view_attributes'))
                                     <a href="{{ route('admin.attribute-values.index', $attribute) }}" class="action-icon" title="Gérer les valeurs">
                                         <i class="mdi mdi-format-list-bulleted"></i>
                                     </a>
+                                    @endif
+                                    @if(Auth::guard('admin')->user()->can('edit_attributes'))
                                     <a href="javascript:void(0);" class="action-icon edit-attribute" data-id="{{ $attribute->id }}" title="Modifier">
                                         <i class="mdi mdi-pencil"></i>
                                     </a>
+                                    @endif
+                                    @if(Auth::guard('admin')->user()->can('delete_attributes'))
                                     <a href="javascript:void(0);" class="action-icon delete-attribute" data-id="{{ $attribute->id }}" data-name="{{ $attribute->name }}" title="Supprimer">
                                         <i class="mdi mdi-delete"></i>
                                     </a>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach
