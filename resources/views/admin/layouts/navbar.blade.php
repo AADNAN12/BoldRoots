@@ -21,7 +21,9 @@
             <a class="nav-link dropdown-toggle nav-user arrow-none me-0" data-bs-toggle="dropdown" href="#"
                 role="button" aria-haspopup="false" aria-expanded="false">
                 <span class="account-user-avatar">
-                    <img src="{{ asset('assets/images/users/avatar-1.jpg') }}" alt="user-image" class="rounded-circle">
+                    <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; font-size: 14px; font-weight: bold;">
+                        {{ strtoupper(substr(Auth::guard('admin')->user()->name, 0, 1)) }}
+                    </div>
                 </span>
                 <span>
                     <span class="account-user-name">{{ Auth::guard('admin')->user()->name }}</span>
