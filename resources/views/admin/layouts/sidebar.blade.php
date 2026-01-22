@@ -24,11 +24,11 @@
         <!--- Sidemenu -->
         <ul class="side-nav mt-2">
 
+            @if(Auth::guard('admin')->check() && (Auth::guard('admin')->user()->can('view_products') || Auth::guard('admin')->user()->can('view_categories')))
             <!-- CATALOGUE -->
             <li class="side-nav-title side-nav-item mt-1">Catalogue</li>
 
             <!-- PRODUITS -->
-            @if(Auth::guard('admin')->check() && (Auth::guard('admin')->user()->can('view_products') || Auth::guard('admin')->user()->can('view_categories')))
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarProduits" aria-expanded="false"
                     aria-controls="sidebarProduits" class="side-nav-link">
@@ -61,11 +61,11 @@
             </li>
             @endif
 
+            @if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->can('view_orders'))
             <!-- VENTES & COMMANDES -->
             <li class="side-nav-title side-nav-item mt-1">Ventes</li>
 
             <!-- COMMANDES -->
-            @if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->can('view_orders'))
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarCommandes" aria-expanded="false"
                     aria-controls="sidebarCommandes" class="side-nav-link">
@@ -115,11 +115,11 @@
             </li>
             @endif
 
+            @if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->can('view_promotions'))
             <!-- MARKETING & PROMOTIONS -->
             <li class="side-nav-title side-nav-item mt-1">Marketing</li>
 
             <!-- PROMOTIONS & FLASH DEALS -->
-            @if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->can('view_promotions'))
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarPromotions" aria-expanded="false"
                     aria-controls="sidebarPromotions" class="side-nav-link">
@@ -169,11 +169,11 @@
             </li>
             @endif
 
+            @if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->can('view_settings'))
             <!-- CONFIGURATION -->
             <li class="side-nav-title side-nav-item mt-1">Configuration</li>
 
             <!-- PARAMÈTRES DU SITE -->
-            @if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->can('view_settings'))
             <li class="side-nav-item">
                 <a href="{{ route('admin.settings.index') }}" class="side-nav-link">
                     <i class="uil-sliders-v-alt"></i>
@@ -232,11 +232,11 @@
             </li>
             @endif
 
+            @if(Auth::guard('admin')->check() && (Auth::guard('admin')->user()->can('view_users') || Auth::guard('admin')->user()->can('view_roles')))
             <!-- SYSTÈME -->
             <li class="side-nav-title side-nav-item mt-1">Système</li>
 
             <!-- ADMINISTRATEURS -->
-            @if(Auth::guard('admin')->check() && (Auth::guard('admin')->user()->can('view_users') || Auth::guard('admin')->user()->can('view_roles')))
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarAdmin" aria-expanded="false"
                     aria-controls="sidebarAdmin" class="side-nav-link">
