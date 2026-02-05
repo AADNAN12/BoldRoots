@@ -70,13 +70,13 @@ class UserController extends Controller
     {
         // Vérification de sécurité : seuls les admins peuvent modifier tous les profils
         // Les autres utilisateurs ne peuvent modifier que leur propre profil
-        if (!Auth::user()->hasAnyRole(['Super Admin', 'Admin']) && Auth::user()->id !== $user->id) {
+        if (!Auth::guard('admin')->user()->hasAnyRole(['Super Admin', 'Admin']) && Auth::guard('admin')->user()->id !== $user->id) {
             return redirect()->route('admin.users.index')
                 ->with('error', 'Vous n\'avez pas l\'autorisation de modifier ce profil.');
         }
         
         // Empêcher la modification du Super Admin par les non Super Admin
-        if ($user->hasRole('Super Admin') && !Auth::user()->hasRole('Super Admin')) {
+        if ($user->hasRole('Super Admin') && !Auth::guard('admin')->user()->hasRole('Super Admin')) {
             return redirect()->route('admin.users.index')
                 ->with('error', 'Vous n\'avez pas les droits pour modifier un Super Admin.');
         }

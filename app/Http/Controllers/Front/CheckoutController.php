@@ -9,11 +9,13 @@ use App\Models\ShippingMethod;
 use App\Models\User;
 use App\Services\CartService;
 use App\Services\OrderService;
+use App\Notifications\NewOrderNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
 use Exception;
 
 class CheckoutController extends Controller
@@ -229,6 +231,16 @@ class CheckoutController extends Controller
             );
             
             Log::info('Commande créée avec succès', ['order_id' => $order->id]);
+
+            // Envoyer notification au Super Admin
+            $order->load(['items.product', 'user']);
+            $superAdmin = User::role('Super Admin')->first();
+            if ($superAdmin) {
+                $superAdmin->notify(new NewOrderNotification($order));
+            } else {
+                Notification::route('mail', config('mail.from.address'))
+                    ->notify(new NewOrderNotification($order));
+            }
 
             // Process payment based on method
             if ($validated['payment_method'] === 'cash_on_delivery') {

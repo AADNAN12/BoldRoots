@@ -792,6 +792,9 @@
                 </li>
             @endforeach
             <li>
+                <a href="{{ route('artists-collabs') }}">ARTISTS COLLABS</a>
+            </li>
+            <li>
                 <a href="{{ route('about') }}">ABOUT US</a>
             </li>
         </ul>

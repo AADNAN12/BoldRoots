@@ -9,6 +9,7 @@ use App\Http\Controllers\FrontOffice\HomeController;
 use App\Http\Controllers\FrontOffice\ProductController;
 use App\Http\Controllers\FrontOffice\AboutController;
 use App\Http\Controllers\FrontOffice\ContactController;
+use App\Http\Controllers\FrontOffice\ArtistsCollabsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,6 +31,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact/send', [ContactController::class, 'send'])->name('contact.send');
+Route::get('/artists-collabs', [ArtistsCollabsController::class, 'index'])->name('artists-collabs');
+Route::post('/artists-collabs/send', [ArtistsCollabsController::class, 'send'])->name('artists-collabs.send');
 Route::get('/packs', [HomeController::class, 'packs'])->name('packs');
 Route::get('/terms-conditions', [HomeController::class, 'terms_conditions'])->name('terms-conditions');
 Route::get('/privacy-policy', [HomeController::class, 'privacy_policy'])->name('privacy-policy');
