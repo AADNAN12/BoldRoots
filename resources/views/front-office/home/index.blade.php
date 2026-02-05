@@ -259,22 +259,22 @@
                 <!-- Fallback si pas assez de produits en vedette -->
                 <div class="product-group left">
                     <a href="#" class="product-item">
-                        <img src="https://theboldroots.com/cdn/shop/files/Berserker3_1080x1080.png?v=1767189463"
+                        <img src="{{ asset('storage/products/default_1.webp') }}"
                             alt="T-shirt Left 1">
                     </a>
                     <a href="#" class="product-item">
-                        <img src="https://theboldroots.com/cdn/shop/files/Berserker5_900x900.png?v=1767189607"
+                        <img src="{{ asset('storage/products/default_2.webp') }}"
                             alt="T-shirt Left 2">
                     </a>
                 </div>
 
                 <div class="product-group right">
                     <a href="#" class="product-item">
-                        <img src="https://theboldroots.com/cdn/shop/files/Berserker12_900x900.png?v=1766076968"
+                        <img src="{{ asset('storage/products/default_3.webp') }}"
                             alt="T-shirt Right 1">
                     </a>
                     <a href="#" class="product-item">
-                        <img src="https://theboldroots.com/cdn/shop/files/Swordofvalorwashed_900x900.png?v=1767195481"
+                        <img src="{{ asset('storage/products/default_4.webp') }}"
                             alt="T-shirt Right 2">
                     </a>
                 </div>
