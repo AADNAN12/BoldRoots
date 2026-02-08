@@ -957,7 +957,7 @@ function generateImageSections() {
                     <div class="mb-3">
                         <label class="form-label">Sélectionner les images</label>
                         <input type="file" class="form-control image-upload" data-color-id="${colorId}" multiple accept="image/jpeg,image/jpg,image/png,image/webp">
-                        <small class="text-muted">JPG, PNG, WEBP - Max 5MB par image - Sélection multiple possible</small>
+                        <small class="text-muted">JPG, PNG, WEBP - Sélection multiple possible</small>
                     </div>
                     <div class="image-preview-container mt-3" id="preview_${colorId}"></div>
                     <div class="mt-2" id="primary_selector_container_${colorId}" style="display:none;">
@@ -987,11 +987,6 @@ function handleImageUpload(input) {
     }
     
     Array.from(files).forEach(file => {
-        if (file.size > 5 * 1024 * 1024) {
-            alert(`Le fichier ${file.name} dépasse 5MB`);
-            return;
-        }
-        
         const reader = new FileReader();
         reader.onload = function(e) {
             imagesData[colorId].push({
