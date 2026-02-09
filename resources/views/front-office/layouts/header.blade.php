@@ -681,11 +681,323 @@
         opacity: 1;
         transform: translateX(0);
     }
+
+    /* Sidebar Auth Buttons */
+    .sidebar-auth-section {
+        padding: 20px 30px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        margin-top: 20px;
+        display: none;
+    }
+
+    @media (max-width: 768px) {
+        .sidebar-auth-section {
+            display: block;
+        }
+    }
+
+    .sidebar-auth-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .sidebar-auth-btn {
+        padding: 12px 20px;
+        text-align: center;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        text-decoration: none;
+        border: 2px solid #fff;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .sidebar-auth-btn.login {
+        background: transparent;
+        color: #fff;
+        border-color: #fff;
+    }
+
+    .sidebar-auth-btn.login:hover {
+        background: #fff;
+        color: #000;
+    }
+
+    .sidebar-auth-btn.register {
+        background: #ff0000;
+        color: #fff;
+        border-color: #ff0000;
+    }
+
+    .sidebar-auth-btn.register:hover {
+        background: transparent;
+        color: #ff0000;
+        border-color: #ff0000;
+    }
+
+    .sidebar-user-section {
+        padding: 20px 30px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        margin-top: 20px;
+        display: none;
+    }
+
+    @media (max-width: 768px) {
+        .sidebar-user-section {
+            display: block;
+        }
+    }
+
+    .sidebar-user-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar-user-icon {
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 0, 0, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ff0000;
+        font-size: 18px;
+    }
+
+    .sidebar-user-name {
+        color: #fff;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    .sidebar-user-links {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .sidebar-user-link {
+        color: #999;
+        text-decoration: none;
+        font-size: 13px;
+        letter-spacing: 1px;
+        padding: 8px 0;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .sidebar-user-link:hover {
+        color: #ff0000;
+        padding-left: 10px;
+    }
+
+    .sidebar-user-link i {
+        width: 20px;
+    }
+
+    .sidebar-logout-btn {
+        margin-top: 10px;
+        padding: 10px;
+        background: transparent;
+        border: 1px solid rgba(255, 0, 0, 0.5);
+        color: #ff0000;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.3s;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .sidebar-logout-btn:hover {
+        background: #ff0000;
+        color: #fff;
+        border-color: #ff0000;
+    }
+
+    /* Media Queries pour masquer uniquement les éléments d'authentification sur mobile */
+    @media (max-width: 768px) {
+        .header-right .user-dropdown,
+        .header-right .header-link,
+        .header-right a.cart-icon:has(.fa-user) {
+            display: none !important;
+        }
+    }
+
+    /* Media Queries pour la responsivité du Cart Sidebar */
+    @media (max-width: 768px) {
+        .cart-sidebar {
+            width: 100%;
+            right: -100%;
+        }
+
+        .cart-sidebar-header {
+            padding: 20px;
+        }
+
+        .cart-sidebar-header h3 {
+            font-size: 18px;
+            letter-spacing: 1.5px;
+        }
+
+        .cart-sidebar-body {
+            padding: 15px 20px;
+        }
+
+        .cart-empty {
+            padding: 40px 15px;
+        }
+
+        .cart-empty i {
+            font-size: 60px;
+        }
+
+        .cart-empty p {
+            font-size: 14px;
+        }
+
+        .cart-item {
+            padding: 15px 0;
+        }
+
+        .cart-item-image {
+            width: 80px;
+            height: 80px;
+        }
+
+        .cart-item-title {
+            font-size: 14px;
+        }
+
+        .cart-item-options {
+            font-size: 12px;
+        }
+
+        .cart-item-price {
+            font-size: 14px;
+        }
+
+        .cart-sidebar-footer {
+            padding: 20px;
+        }
+
+        .cart-subtotal {
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .cart-subtotal-amount {
+            font-size: 18px;
+        }
+
+        .cart-btn {
+            padding: 12px;
+            font-size: 12px;
+            letter-spacing: 1.5px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .cart-sidebar-header {
+            padding: 15px;
+        }
+
+        .cart-sidebar-header h3 {
+            font-size: 16px;
+        }
+
+        .cart-sidebar-body {
+            padding: 10px 15px;
+        }
+
+        .cart-empty {
+            padding: 30px 10px;
+        }
+
+        .cart-empty i {
+            font-size: 50px;
+        }
+
+        .cart-item-image {
+            width: 70px;
+            height: 70px;
+        }
+
+        .cart-item-title {
+            font-size: 13px;
+        }
+
+        .cart-item-price {
+            font-size: 13px;
+        }
+
+        .qty-btn {
+            width: 24px;
+            height: 24px;
+            font-size: 12px;
+        }
+
+        .qty-value {
+            font-size: 13px;
+            min-width: 25px;
+        }
+
+        .cart-sidebar-footer {
+            padding: 15px;
+        }
+
+        .cart-subtotal-amount {
+            font-size: 16px;
+        }
+
+        .cart-btn {
+            padding: 10px;
+            font-size: 11px;
+        }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+        .cart-sidebar {
+            width: 400px;
+            right: -400px;
+        }
+
+        .cart-sidebar-header {
+            padding: 25px;
+        }
+
+        .cart-sidebar-body {
+            padding: 18px 25px;
+        }
+
+        .cart-sidebar-footer {
+            padding: 22px 25px;
+        }
+    }
 </style>
 
 <!-- Animated Top Menu -->
 <div class="top-menu" style="background: {{ \App\Models\SiteSetting::get('top_bar_bg_color', '#000000') }}; @if(\App\Models\SiteSetting::where('key', 'top_bar_bg_image')->first() && \App\Models\SiteSetting::where('key', 'top_bar_bg_image')->first()->value) background-image: url('{{ asset('storage/' . \App\Models\SiteSetting::where('key', 'top_bar_bg_image')->first()->value) }}'); background-size: cover; background-position: center; @endif">
-    <div class="top-menu-text">
+    <div class="top-menu-text" style="color: {{ \App\Models\SiteSetting::get('top_bar_text_color', '#FFFFFF') }};">
         {{ \App\Models\SiteSetting::get('top_bar_text', 'DEVOTE YOURSELF TO THE BOLD ROOTS') }}
     </div>
 </div>
@@ -703,7 +1015,7 @@
     <div class="header-right">
         @auth('web')
             <!-- Utilisateur connecté -->
-            <div class="user-dropdown">
+            <div class="user-dropdown auth-element">
                 <button class="user-dropdown-btn">
                     <i class="fas fa-user"></i>
                     <span>{{ Auth::guard('web')->user()->name }}</span>
@@ -744,8 +1056,8 @@
             </div>
         @else
             <!-- Utilisateur non connecté -->
-            <a href="{{ route('register') }}" class="header-link">REGISTER</a>
-            <a href="{{ route('login') }}" class="cart-icon">
+            <a href="{{ route('register') }}" class="header-link auth-element">REGISTER</a>
+            <a href="{{ route('login') }}" class="cart-icon auth-element">
                 <i class="fas fa-user"></i>
             </a>
         @endauth
@@ -764,7 +1076,8 @@
     <button class="sidebar-close" id="sidebarClose">
         <i class="fas fa-times"></i>
     </button>
-    <div class="sidebar-tagline">STRUGGLE | ENDURE | WIN</div>
+    <div class="sidebar-tagline"></div>
+
     <div class="sidebar-menu-container">
         <ul class="sidebar-menu">
             <li>
@@ -799,6 +1112,50 @@
             </li>
         </ul>
     </div>
+    
+    <!-- Auth Section for Mobile -->
+    @guest('web')
+        <div class="sidebar-auth-section">
+            <div class="sidebar-auth-buttons">
+                <a href="{{ route('login') }}" class="sidebar-auth-btn login">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Login
+                </a>
+                <a href="{{ route('register') }}" class="sidebar-auth-btn register">
+                    <i class="fas fa-user-plus"></i>
+                    Register
+                </a>
+            </div>
+        </div>
+    @else
+        <div class="sidebar-user-section">
+            <div class="sidebar-user-info">
+                <div class="sidebar-user-icon">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="sidebar-user-name">
+                    {{ Auth::guard('web')->user()->name }}
+                </div>
+            </div>
+            <div class="sidebar-user-links">
+                <a href="{{ route('account.orders') }}" class="sidebar-user-link">
+                    <i class="fas fa-shopping-bag"></i>
+                    Mes Commandes
+                </a>
+                <a href="{{ route('account.profile') }}" class="sidebar-user-link">
+                    <i class="fas fa-user-circle"></i>
+                    Mon Profil
+                </a>
+            </div>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="sidebar-logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Déconnexion
+                </button>
+            </form>
+        </div>
+    @endguest
 </nav>
 
 <!-- Cart Sidebar -->

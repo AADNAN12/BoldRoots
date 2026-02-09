@@ -100,6 +100,17 @@
                                 </div>
 
                                 <div class="mb-3">
+                                    <label for="top_bar_text_color" class="form-label">Couleur du Texte</label>
+                                    <input type="color" class="form-control form-control-color @error('top_bar_text_color') is-invalid @enderror" 
+                                           id="top_bar_text_color" name="top_bar_text_color" 
+                                           value="{{ old('top_bar_text_color', $settings['top_bar_text_color']->value ?? '#FFFFFF') }}">
+                                    @error('top_bar_text_color')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                    <small class="text-muted">Choisissez une couleur de texte pour le bandeau supérieur</small>
+                                </div>
+
+                                <div class="mb-3">
                                     <label for="top_bar_bg_image" class="form-label">Image de Fond (Optionnel)</label>
                                     <input type="file" class="form-control @error('top_bar_bg_image') is-invalid @enderror" 
                                            id="top_bar_bg_image" name="top_bar_bg_image" accept="image/*">

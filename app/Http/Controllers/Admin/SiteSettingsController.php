@@ -27,6 +27,7 @@ class SiteSettingsController extends Controller
         $request->validate([
             'top_bar_text' => 'nullable|string|max:255',
             'top_bar_bg_color' => 'nullable|string|max:7',
+            'top_bar_text_color' => 'nullable|string|max:7',
             'top_bar_bg_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'hero_bg_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'background_audio' => 'nullable|file|mimes:mp3,wav,ogg|max:10240',
@@ -55,6 +56,10 @@ class SiteSettingsController extends Controller
 
         if ($request->filled('top_bar_bg_color')) {
             SiteSetting::set('top_bar_bg_color', $request->top_bar_bg_color, 'color', 'top_bar');
+        }
+
+        if ($request->filled('top_bar_text_color')) {
+            SiteSetting::set('top_bar_text_color', $request->top_bar_text_color, 'color', 'top_bar');
         }
 
         if ($request->hasFile('top_bar_bg_image')) {
