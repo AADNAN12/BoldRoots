@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SiteSetting;
 use Illuminate\Support\Facades\Storage;
+use App\Services\ImageService;
 
 class SiteSettingsController extends Controller
 {
@@ -28,8 +29,8 @@ class SiteSettingsController extends Controller
             'top_bar_text' => 'nullable|string|max:255',
             'top_bar_bg_color' => 'nullable|string|max:7',
             'top_bar_text_color' => 'nullable|string|max:7',
-            'top_bar_bg_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'hero_bg_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'top_bar_bg_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'hero_bg_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'background_audio' => 'nullable|file|mimes:mp3,wav,ogg|max:10240',
             'background_audio_enabled' => 'nullable|boolean',
             'background_audio_volume' => 'nullable|integer|min:0|max:100',
@@ -45,7 +46,7 @@ class SiteSettingsController extends Controller
             'maintenance_title' => 'nullable|string|max:255',
             'maintenance_message' => 'nullable|string',
             'maintenance_end_date' => 'nullable|date',
-            'maintenance_bg_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'maintenance_bg_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'cursor_normal' => 'nullable|image|mimes:png,ico,cur,webp|max:1024',
             'cursor_hover' => 'nullable|image|mimes:png,ico,cur,webp|max:1024',
         ]);
@@ -62,13 +63,15 @@ class SiteSettingsController extends Controller
             SiteSetting::set('top_bar_text_color', $request->top_bar_text_color, 'color', 'top_bar');
         }
 
+        $imageService = app(ImageService::class);
+
         if ($request->hasFile('top_bar_bg_image')) {
             $oldImage = SiteSetting::where('key', 'top_bar_bg_image')->first();
             if ($oldImage && $oldImage->value) {
                 Storage::disk('public')->delete($oldImage->value);
             }
             
-            $path = $request->file('top_bar_bg_image')->store('settings', 'public');
+            $path = $imageService->convertAndOptimize($request->file('top_bar_bg_image'), 'settings', 'top_bar_');
             SiteSetting::set('top_bar_bg_image', $path, 'image', 'top_bar');
         }
 
@@ -78,7 +81,7 @@ class SiteSettingsController extends Controller
                 Storage::disk('public')->delete($oldImage->value);
             }
             
-            $path = $request->file('hero_bg_image')->store('settings', 'public');
+            $path = $imageService->convertAndOptimize($request->file('hero_bg_image'), 'settings', 'hero_', 1920);
             SiteSetting::set('hero_bg_image', $path, 'image', 'hero');
         }
 
@@ -152,7 +155,7 @@ class SiteSettingsController extends Controller
                 Storage::disk('public')->delete($oldImage->value);
             }
             
-            $path = $request->file('maintenance_bg_image')->store('maintenance', 'public');
+            $path = $imageService->convertAndOptimize($request->file('maintenance_bg_image'), 'maintenance', 'bg_', 1920);
             SiteSetting::set('maintenance_bg_image', $path, 'image', 'maintenance');
         }
 

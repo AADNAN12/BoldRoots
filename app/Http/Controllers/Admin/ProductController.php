@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Exception;
+use App\Services\ImageService;
 
 class ProductController extends Controller
 {
@@ -126,15 +127,17 @@ class ProductController extends Controller
             }
             
             // Gestion des images
+            $imageService = app(ImageService::class);
             if ($request->has('images')) {
                 foreach ($request->file('images') as $colorId => $colorImages) {
                     if (is_array($colorImages)) {
                         foreach ($colorImages as $index => $imageFile) {
-                            // Générer un nom unique pour l'image
-                            $filename = time() . '_' . $colorId . '_' . $index . '.' . $imageFile->getClientOriginalExtension();
-                            
-                            // Stocker l'image dans storage/app/public/products
-                            $imagePath = Storage::disk('public')->putFileAs('products', $imageFile, $filename);
+                            // Convertir en WebP, redimensionner et optimiser
+                            $imagePath = $imageService->convertAndOptimize(
+                                $imageFile,
+                                'products',
+                                $colorId . '_' . $index . '_'
+                            );
                             
                             // Vérifier si c'est l'image principale
                             $isPrimary = $request->input("images_primary.{$colorId}") == $index;
@@ -285,16 +288,18 @@ class ProductController extends Controller
             }
             
             // Gestion des nouvelles images
+            $imageService = app(ImageService::class);
             $newImageIds = [];
             if ($request->has('images')) {
                 foreach ($request->file('images') as $colorId => $colorImages) {
                     if (is_array($colorImages)) {
                         foreach ($colorImages as $index => $imageFile) {
-                            // Générer un nom unique pour l'image
-                            $filename = time() . '_' . $colorId . '_' . $index . '.' . $imageFile->getClientOriginalExtension();
-                            
-                            // Stocker l'image dans storage/app/public/products
-                            $imagePath = Storage::disk('public')->putFileAs('products', $imageFile, $filename);
+                            // Convertir en WebP, redimensionner et optimiser
+                            $imagePath = $imageService->convertAndOptimize(
+                                $imageFile,
+                                'products',
+                                $colorId . '_' . $index . '_'
+                            );
                             
                             // Vérifier si c'est l'image principale
                             $isPrimary = $request->input("images_primary.{$colorId}") == $index;

@@ -10,6 +10,58 @@
     <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/slicknav.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" type="text/css">
+    <style>
+        .product__pagination a.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+            background-color: #f5f5f5;
+        }
+        
+        .product__pagination a.disabled:hover {
+            border-color: #e5e5e5;
+        }
+
+        .product__item__pic {
+            overflow: hidden;
+        }
+
+        .product__item__pic .product-img-front,
+        .product__item__pic .product-img-back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center center;
+            transition: opacity 0.5s ease;
+        }
+
+        .product__item__pic .product-img-front {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        .product__item__pic .product-img-back {
+            opacity: 0;
+            z-index: 2;
+        }
+
+        .product__item__pic:hover .product-img-front {
+            opacity: 0;
+        }
+
+        .product__item__pic:hover .product-img-back {
+            opacity: 1;
+        }
+
+        .product__item__pic .label,
+        .product__item__pic .label-new {
+            z-index: 3;
+        }
+    </style>
 @endsection
 @section('content')
     <!-- Breadcrumb Section Begin -->
@@ -102,14 +154,29 @@
                                     }
                                 }
                                 
-                                $imageUrl = $product->images->where('is_homepage_image', 1)->first() 
-                                    ? asset('storage/' . $product->images->where('is_homepage_image', 1)->first()->image_path) 
+                                $homepageImg = $product->images->where('is_homepage_image', 1)->first();
+                                $imageUrl = $homepageImg 
+                                    ? asset('storage/' . $homepageImg->image_path) 
                                     : asset('images/No-Product-Image-Available.webp');
+                                
+                                $backImg = null;
+                                if ($homepageImg) {
+                                    $backImg = $product->images
+                                        ->where('color_id', $homepageImg->color_id)
+                                        ->where('id', '!=', $homepageImg->id)
+                                        ->sortBy('sort_order')
+                                        ->first();
+                                }
+                                $backImageUrl = $backImg ? asset('storage/' . $backImg->image_path) : null;
                             @endphp
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="product__item {{ $hasPromotion ? 'sale' : '' }}">
                                     <a href="{{ route('products.show', $product) }}">
-                                    <div class="product__item__pic set-bg" data-setbg="{{ $imageUrl }}">
+                                    <div class="product__item__pic" style="position: relative;">
+                                        <div class="product-img-front" style="background-image: url('{{ $imageUrl }}');"></div>
+                                        @if($backImageUrl)
+                                            <div class="product-img-back" style="background-image: url('{{ $backImageUrl }}');"></div>
+                                        @endif
                                         @if($hasPromotion)
                                             <span class="label">-{{ number_format($discountPercent, 0) }}%</span>
                                         @endif
@@ -141,10 +208,28 @@
                         @endforelse
                     </div>
                     @if($products->hasPages())
-                        <div class="row">
+                        <div class="row mb-4">
                             <div class="col-lg-12">
                                 <div class="product__pagination">
-                                    {{ $products->links() }}
+                                    @if ($products->onFirstPage())
+                                        <a href="#" class="disabled"><i class="fa fa-long-arrow-left"></i></a>
+                                    @else
+                                        <a href="{{ $products->previousPageUrl() }}"><i class="fa fa-long-arrow-left"></i></a>
+                                    @endif
+
+                                    @foreach ($products->getUrlRange(1, $products->lastPage()) as $page => $url)
+                                        @if ($page == $products->currentPage())
+                                            <a href="#" class="active">{{ $page }}</a>
+                                        @else
+                                            <a href="{{ $url }}">{{ $page }}</a>
+                                        @endif
+                                    @endforeach
+
+                                    @if ($products->hasMorePages())
+                                        <a href="{{ $products->nextPageUrl() }}"><i class="fa fa-long-arrow-right"></i></a>
+                                    @else
+                                        <a href="#" class="disabled"><i class="fa fa-long-arrow-right"></i></a>
+                                    @endif
                                 </div>
                             </div>
                         </div>
