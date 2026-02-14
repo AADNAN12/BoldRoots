@@ -131,12 +131,19 @@ class ProductController extends Controller
             if ($request->has('images')) {
                 foreach ($request->file('images') as $colorId => $colorImages) {
                     if (is_array($colorImages)) {
+                        // Calculer le prochain sort_order en fonction des images existantes pour cette couleur
+                        $maxSortOrder = ProductImage::where('product_id', $product->id)
+                            ->where('color_id', $colorId)
+                            ->max('sort_order') ?? -1;
+
                         foreach ($colorImages as $index => $imageFile) {
+                            $sortOrder = $maxSortOrder + 1 + $index;
+
                             // Convertir en WebP, redimensionner et optimiser
                             $imagePath = $imageService->convertAndOptimize(
                                 $imageFile,
                                 'products',
-                                $colorId . '_' . $index . '_'
+                                $colorId . '_' . $sortOrder . '_'
                             );
                             
                             // Vérifier si c'est l'image principale
@@ -156,7 +163,7 @@ class ProductController extends Controller
                                 'image_path' => $imagePath,
                                 'is_primary' => $isPrimary,
                                 'is_homepage_image' => $isHomepage,
-                                'sort_order' => $index,
+                                'sort_order' => $sortOrder,
                             ]);
                         }
                     }
@@ -293,12 +300,19 @@ class ProductController extends Controller
             if ($request->has('images')) {
                 foreach ($request->file('images') as $colorId => $colorImages) {
                     if (is_array($colorImages)) {
+                        // Calculer le prochain sort_order en fonction des images existantes pour cette couleur
+                        $maxSortOrder = ProductImage::where('product_id', $product->id)
+                            ->where('color_id', $colorId)
+                            ->max('sort_order') ?? -1;
+
                         foreach ($colorImages as $index => $imageFile) {
+                            $sortOrder = $maxSortOrder + 1 + $index;
+
                             // Convertir en WebP, redimensionner et optimiser
                             $imagePath = $imageService->convertAndOptimize(
                                 $imageFile,
                                 'products',
-                                $colorId . '_' . $index . '_'
+                                $colorId . '_' . $sortOrder . '_'
                             );
                             
                             // Vérifier si c'est l'image principale
@@ -319,7 +333,7 @@ class ProductController extends Controller
                                 'image_path' => $imagePath,
                                 'is_primary' => $isPrimary,
                                 'is_homepage_image' => $isHomepage,
-                                'sort_order' => $index,
+                                'sort_order' => $sortOrder,
                             ]);
                             
                             // Stocker l'ID pour référence
