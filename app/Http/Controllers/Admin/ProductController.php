@@ -405,6 +405,7 @@ class ProductController extends Controller
     public function deleteImage(Product $product, ProductImage $image)
     {
         try {
+            dd($image->product_id,$product->id);
             if ($image->product_id !== $product->id) {
                 return response()->json(['error' => 'Image non trouvée pour ce produit'], 404);
             }
