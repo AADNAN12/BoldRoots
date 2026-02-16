@@ -232,14 +232,16 @@ class CheckoutController extends Controller
             
             Log::info('Commande créée avec succès', ['order_id' => $order->id]);
 
-            // Envoyer notification au Super Admin
+            // Envoyer notification à TOUS les Super Admins
             $order->load(['items.product', 'user']);
-            $superAdmin = User::role('Super Admin')->first();
-            if ($superAdmin) {
-                $superAdmin->notify(new NewOrderNotification($order));
-            } else {
+            $superAdmins = User::role('Super Admin')->get();
+            if ($superAdmins->isEmpty()) {
                 Notification::route('mail', config('mail.from.address'))
                     ->notify(new NewOrderNotification($order));
+            } else {
+                foreach ($superAdmins as $admin) {
+                    $admin->notify(new NewOrderNotification($order));
+                }
             }
 
             // Process payment based on method

@@ -27,15 +27,18 @@ class ContactController extends Controller
             'message' => 'required|string|max:5000',
         ]);
 
-        // Récupérer le Super Admin
-        $superAdmin = User::role('Super Admin')->first();
+        // Récupérer TOUS les Super Admins
+        $superAdmins = User::role('Super Admin')->get();
 
         // Envoyer la notification
-        if (!$superAdmin) {
+        if ($superAdmins->isEmpty()) {
             Notification::route('mail', config('mail.from.address'))
                 ->notify(new NewContactNotification($request->all()));
         } else {
-            $superAdmin->notify(new NewContactNotification($request->all()));
+            // Envoyer à TOUS les Super Admins
+            foreach ($superAdmins as $admin) {
+                $admin->notify(new NewContactNotification($request->all()));
+            }
         }
 
         return redirect()->route('contact')->with('success', 'Your message has been sent successfully! We will get back to you soon.');

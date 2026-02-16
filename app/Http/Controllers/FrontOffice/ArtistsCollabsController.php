@@ -26,19 +26,18 @@ class ArtistsCollabsController extends Controller
             'message' => 'required|string|max:5000',
         ]);
 
-        // 1. Récupérer le Super Admin
-        // Attention: Assurez-vous que le package 'spatie/laravel-permission' est installé
-        // Sinon, faites : User::where('email', 'votre@email.com')->first();
-        $superAdmin = User::role('Super Admin')->first();
+        // 1. Récupérer TOUS les Super Admins
+        $superAdmins = User::role('Super Admin')->get();
 
-        // Si aucun admin trouvé, on peut envoyer à une adresse en dur (fallback)
-        if (!$superAdmin) {
-            // Optionnel : Logique de secours ou envoi via Notification::route
-             Notification::route('mail', config('mail.from.address'))
+        // Si aucun admin trouvé, envoyer à une adresse de secours
+        if ($superAdmins->isEmpty()) {
+            Notification::route('mail', config('mail.from.address'))
                 ->notify(new NewArtistCollabNotification($request->all()));
         } else {
-            // 2. Envoyer la notification à l'admin
-            $superAdmin->notify(new NewArtistCollabNotification($request->all()));
+            // 2. Envoyer la notification à TOUS les Super Admins
+            foreach ($superAdmins as $admin) {
+                $admin->notify(new NewArtistCollabNotification($request->all()));
+            }
         }
 
         return redirect()->route('artists-collabs')
