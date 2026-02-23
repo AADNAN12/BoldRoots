@@ -182,6 +182,18 @@
             </li>
             @endif
 
+            
+            @if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->can('manage_faqs'))  
+
+            {{-- FAQs --}}
+            <li class="side-nav-item">
+                <a href="{{ route('admin.faqs.index') }}" class="side-nav-link">
+                    <i class="mdi mdi-frequently-asked-questions"></i>
+                    <span> FAQs </span>
+                </a>
+            </li>
+            @endif
+
             <!-- PAGES CMS -->
             @if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->can('view_cms_pages'))
             <li class="side-nav-item">

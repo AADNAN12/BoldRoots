@@ -70,6 +70,7 @@
         $socialLinkedin = \App\Models\SiteSetting::get('social_linkedin');
     @endphp
     <a href="{{ route('contact')}}">Contact Us</a>
+    <a href="{{ route('faq.index')}}">FAQs</a>
     @foreach($cmsPages as $page)
         <a href="{{ route('cms.show', $page->slug) }}">{{ $page->title }}</a>
     @endforeach
