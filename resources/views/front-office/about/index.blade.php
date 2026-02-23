@@ -60,61 +60,14 @@
             color: #666;
             margin-bottom: 15px;
         }
-        
-        .value-card {
-            background: #f8f9fa;
-            border-left: 4px solid #cc0000;
-            padding: 25px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-        }
-        
-        .value-card h4 {
-            font-weight: bold;
-            font-size: 18px;
-            margin-bottom: 10px;
-            color: #000;
-        }
-        
-        .value-card p {
-            font-size: 14px;
+        .about-content {
+            line-height: 1.8;
             color: #666;
-            margin: 0;
-            line-height: 1.6;
+            font-size: 16px;
         }
         
-        .team-member {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .team-member img {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 5px solid #000;
+        .about-content p {
             margin-bottom: 20px;
-        }
-        
-        .team-member h5 {
-            font-weight: bold;
-            font-size: 18px;
-            margin-bottom: 5px;
-        }
-        
-        .team-member .position {
-            color: #cc0000;
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-        }
-        
-        .team-member p {
-            font-size: 13px;
-            color: #666;
-            line-height: 1.6;
         }
         
         .stats-section {
@@ -205,76 +158,20 @@
                 <div class="col-lg-12">
                     <div class="info-box">
                         <h3>OUR STORY</h3>
-                        <p>
+                        <div class="about-content">
+                            {!! \App\Models\SiteSetting::get('about_text', '
                             BOLDROOTS was born from a vision to create more than just clothing – we create a lifestyle. 
                             Our journey began with a simple belief: that fashion should empower, inspire, and reflect 
                             the bold spirit within each of us.
-                        </p>
-                        <p>
+                            <br><br>
                             Every piece we design carries the essence of strength, resilience, and authenticity. 
-                            We don't just follow trends; we set them. Our collections are crafted for those who dare 
+                            We don\'t just follow trends; we set them. Our collections are crafted for those who dare 
                             to be different, who embrace challenges, and who live by the mantra: Struggle, Endure, Win.
-                        </p>
-                        <p>
+                            <br><br>
                             From our humble beginnings to becoming a recognized name in urban fashion, BOLDROOTS has 
                             remained committed to quality, innovation, and the relentless pursuit of excellence. 
                             We are more than a brand – we are a movement.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Mission & Vision -->
-                <div class="col-lg-6">
-                    <div class="info-box">
-                        <h3>OUR MISSION</h3>
-                        <p>
-                            To empower individuals through bold, high-quality fashion that reflects their inner strength 
-                            and unique identity. We strive to create clothing that inspires confidence and celebrates 
-                            the journey of every person who wears our brand.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="col-lg-6">
-                    <div class="info-box">
-                        <h3>OUR VISION</h3>
-                        <p>
-                            To become the global leader in urban streetwear, recognized for our commitment to quality, 
-                            innovation, and authenticity. We envision a world where BOLDROOTS is synonymous with 
-                            courage, resilience, and the relentless pursuit of greatness.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Our Values -->
-                <div class="col-lg-12">
-                    <div class="info-box">
-                        <h3>OUR VALUES</h3>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="value-card">
-                                    <h4><i class="fa fa-bolt"></i> BOLDNESS</h4>
-                                    <p>We encourage taking risks, standing out, and being unapologetically yourself.</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="value-card">
-                                    <h4><i class="fa fa-star"></i> QUALITY</h4>
-                                    <p>Every product is crafted with premium materials and meticulous attention to detail.</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="value-card">
-                                    <h4><i class="fa fa-users"></i> COMMUNITY</h4>
-                                    <p>We build a family of like-minded individuals who support and inspire each other.</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="value-card">
-                                    <h4><i class="fa fa-lightbulb-o"></i> INNOVATION</h4>
-                                    <p>We constantly push boundaries and explore new designs, styles, and technologies.</p>
-                                </div>
-                            </div>
+                            ') !!}
                         </div>
                     </div>
                 </div>

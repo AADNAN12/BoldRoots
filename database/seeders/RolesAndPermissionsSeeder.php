@@ -137,6 +137,13 @@ class RolesAndPermissionsSeeder extends Seeder
             ['name' => 'edit_company_info', 'name_fr' => 'Modifier les infos entreprise', 'name_en' => 'Edit Company Info', 'group' => 'Entreprise'],
             ['name' => 'manage_company_info', 'name_fr' => 'Gérer les infos entreprise', 'name_en' => 'Manage Company Info', 'group' => 'Entreprise'],
 
+            // Gestion des FAQs
+            ['name' => 'view_faqs', 'name_fr' => 'Voir les FAQs', 'name_en' => 'View FAQs', 'group' => 'FAQs'],
+            ['name' => 'create_faqs', 'name_fr' => 'Créer des FAQs', 'name_en' => 'Create FAQs', 'group' => 'FAQs'],
+            ['name' => 'edit_faqs', 'name_fr' => 'Modifier les FAQs', 'name_en' => 'Edit FAQs', 'group' => 'FAQs'],
+            ['name' => 'delete_faqs', 'name_fr' => 'Supprimer les FAQs', 'name_en' => 'Delete FAQs', 'group' => 'FAQs'],
+            ['name' => 'manage_faqs', 'name_fr' => 'Gérer les FAQs', 'name_en' => 'Manage FAQs', 'group' => 'FAQs'],
+
         ];
         
         foreach ($permissions as $permissionData) {

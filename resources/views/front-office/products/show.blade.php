@@ -247,6 +247,67 @@
         .related-products {
             margin-top: 60px;
         }
+        
+        /* PDF Viewer Styles */
+        .pdf-viewer-container {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .pdf-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .pdf-info h5 {
+            color: #ca1515;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .pdf-info p {
+            font-size: 14px;
+            margin: 0;
+        }
+        
+        .pdf-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .pdf-viewer {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .pdf-embed {
+            border: none;
+            background: white;
+        }
+        
+        @media (max-width: 768px) {
+            .pdf-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .pdf-actions {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .pdf-viewer {
+                height: 400px !important;
+            }
+        }
     </style>
 @endsection
 @section('content')
@@ -414,10 +475,50 @@
                                     <a class="nav-link active" data-toggle="tab" href="#tabs-5"
                                     role="tab">Description</a>
                                 </li>
+                                @if($product->product_details_pdf)
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#tabs-6"
+                                        role="tab">
+                                            <i class="fas fa-file-pdf"></i> PDF Détails
+                                        </a>
+                                    </li>
+                                @endif
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane active" id="tabs-5" role="tabpanel">
                                    <p>{!! $product->description !!}</p>
+                                </div>
+                                @if($product->product_details_pdf)
+                                    <div class="tab-pane" id="tabs-6" role="tabpanel">
+                                        <div class="pdf-viewer-container">
+                                            <div class="pdf-header">
+                                                <div class="pdf-info">
+                                                    <h5><i class="fas fa-file-pdf"></i> Document PDF des détails du produit</h5>
+                                                    <p class="text-muted mb-0">Consultez le PDF pour plus d'informations sur ce produit</p>
+                                                </div>
+                                                <div class="pdf-actions">
+                                                    <a href="{{ asset('storage/' . $product->product_details_pdf) }}" 
+                                                       target="_blank" 
+                                                       class="btn btn-outline-primary btn-sm">
+                                                        <i class="fas fa-external-link-alt"></i> Ouvrir dans un nouvel onglet
+                                                    </a>
+                                                    <a href="{{ asset('storage/' . $product->product_details_pdf) }}" 
+                                                       download="{{ $product->name }}-details.pdf" 
+                                                       class="btn btn-primary btn-sm">
+                                                        <i class="fas fa-download"></i> Télécharger
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="pdf-viewer">
+                                                <embed src="{{ asset('storage/' . $product->product_details_pdf) }}" 
+                                                       type="application/pdf" 
+                                                       width="100%" 
+                                                       height="600px"
+                                                       class="pdf-embed">
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
                                 </div>
                             </div>
                         </div>
@@ -464,14 +565,10 @@
                                     @if($relatedHasPromo)
                                         <span class="label">-{{ number_format($relatedDiscountPercent, 0) }}%</span>
                                     @endif
-                                    <ul class="product__hover">
-                                        <li><a href="#" onclick="addToWishlist({{ $related->id }}); return false;"><img src="{{ asset('img/icon/heart.png') }}" alt=""></a></li>
-                                        <li><a href="{{ route('products.show', $related->id) }}"><img src="{{ asset('img/icon/search.png') }}" alt=""></a></li>
-                                    </ul>
                                 </div>
                                 <div class="product__item__text">
                                     <h6><a href="{{ route('products.show', $related->id) }}">{{ $related->name }}</a></h6>
-                                    <a href="#" class="add-cart" onclick="addToCart({{ $related->id }}); return false;">+ Add To Cart</a>
+                                    <a href="{{ route("products.show", $related->id) }}" class="add-cart" >View Details</a>
                                     @if($relatedHasPromo)
                                         <h5>{{ number_format($relatedFinalPrice, 2) }} DH</h5>
                                         <span class="text-muted" style="text-decoration: line-through; font-size: 12px;">{{ number_format($related->price, 2) }} DH</span>

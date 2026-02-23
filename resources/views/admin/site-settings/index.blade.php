@@ -73,6 +73,62 @@
                             <div class="card-body">
                                 <div class="d-flex align-items-center mb-3">
                                     <div class="bg-primary bg-opacity-10 rounded p-2 me-2">
+                                        <i class="mdi mdi-image-area text-primary fs-4"></i>
+                                    </div>
+                                    <h5 class="mb-0">Identité du Site</h5>
+                                </div>
+                        
+                                <div class="mb-3">
+                                    <label for="site_logo" class="form-label">Logo du Site</label>
+                                    <input type="file" class="form-control @error('site_logo') is-invalid @enderror" 
+                                           id="site_logo" name="site_logo" accept="image/*">
+                                    @error('site_logo')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                    <small class="text-muted">Format: JPG, PNG, GIF, WEBP (Max: 2MB). Recommandé: 200x60px</small>
+                                    
+                                    @if(isset($settings['site_logo']) && $settings['site_logo']->value)
+                                        <div class="mt-2">
+                                            @if(str_starts_with($settings['site_logo']->value, 'images/'))
+                                                <img src="{{ asset($settings['site_logo']->value) }}" 
+                                                     alt="Site Logo" class="img-thumbnail" style="max-height: 60px;">
+                                            @else
+                                                <img src="{{ asset('storage/' . $settings['site_logo']->value) }}" 
+                                                     alt="Site Logo" class="img-thumbnail" style="max-height: 60px;">
+                                            @endif
+                                        </div>
+                                    @endif
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="footer_copyright" class="form-label">Texte du Copyright (Footer)</label>
+                                    <input type="text" class="form-control @error('footer_copyright') is-invalid @enderror" 
+                                           id="footer_copyright" name="footer_copyright" 
+                                           value="{{ old('footer_copyright', $settings['footer_copyright']->value ?? '&copy; ' . date('Y') . ' BOLDROOTS. Tous droits réservés.') }}"
+                                           placeholder="&copy; 2024 BOLDROOTS. Tous droits réservés.">
+                                    @error('footer_copyright')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                    <small class="text-muted">Texte qui apparaîtra dans le footer. Vous pouvez utiliser le HTML.</small>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="about_text" class="form-label">Texte "About Us"</label>
+                                    <textarea class="form-control @error('about_text') is-invalid @enderror" 
+                                              id="about_text" name="about_text" rows="6"
+                                              placeholder="Texte décrivant votre entreprise...">{{ old('about_text', $settings['about_text']->value ?? '') }}</textarea>
+                                    @error('about_text')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                    <small class="text-muted">Texte qui apparaîtra dans la page "About Us". Vous pouvez utiliser le HTML.</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="bg-primary bg-opacity-10 rounded p-2 me-2">
                                         <i class="mdi mdi-format-align-top text-primary fs-4"></i>
                                     </div>
                                     <h5 class="mb-0">Bandeau Supérieur (Top Bar)</h5>
@@ -164,6 +220,43 @@
 
                         
                         
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="bg-warning bg-opacity-10 rounded p-2 me-2">
+                                        <i class="mdi mdi-home text-warning fs-4"></i>
+                                    </div>
+                                    <h5 class="mb-0">Page d'Accueil</h5>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label">Choisir la page d'accueil à afficher</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="home_page_type" id="home_page_default" value="default"
+                                               {{ old('home_page_type', $settings['home_page_type']->value ?? 'default') == 'default' ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="home_page_default">
+                                            <strong>Page par défaut</strong> - Design original avec produits superposés
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="home_page_type" id="home_page_alternative" value="alternative"
+                                               {{ old('home_page_type', $settings['home_page_type']->value ?? 'default') == 'alternative' ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="home_page_alternative">
+                                            <strong>Page alternative</strong> - Design en grille avec contenu hero
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="home_page_type" id="home_page_premium" value="premium"
+                                               {{ old('home_page_type', $settings['home_page_type']->value ?? 'default') == 'premium' ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="home_page_premium">
+                                            <strong>Page premium</strong> - Design luxueux avec animations 3D
+                                        </label>
+                                    </div>
+                                    <small class="text-muted">Sélectionnez le design de la page d'accueil qui sera affiché aux visiteurs</small>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="card border-0 shadow-sm mb-4">
                             <div class="card-body">
                                 <div class="d-flex align-items-center mb-3">

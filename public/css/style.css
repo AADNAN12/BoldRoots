@@ -958,7 +958,7 @@ ol {
 }
 
 .product__item:hover .product__item__text a {
-	top: 22px;
+	top: 12px;
 	opacity: 1;
 	visibility: visible;
 }

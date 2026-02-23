@@ -10,7 +10,7 @@ use App\Models\Product;
 class HomeController extends Controller
 {
     /**
-     * Affichage de la page d'accueil RAPIDOTEX
+     * Affichage de la page d'accueil BOLDROOTS
      */
     public function index()
     {
@@ -22,7 +22,22 @@ class HomeController extends Controller
         $audioPath = SiteSetting::get('background_audio');
         $audioVolume = SiteSetting::get('background_audio_volume', '50');
         
-        return view('front-office.home.index', compact('settings', 'featuredProducts', 'audioEnabled', 'audioPath', 'audioVolume'));
+        // Déterminer quelle page home afficher
+        $homePageType = SiteSetting::get('home_page_type', 'default');
+        
+        switch ($homePageType) {
+            case 'alternative':
+                $view = 'front-office.home.alternative';
+                break;
+            case 'premium':
+                $view = 'front-office.home.premium';
+                break;
+            default:
+                $view = 'front-office.home.index';
+                break;
+        }
+        
+        return view($view, compact('settings', 'featuredProducts', 'audioEnabled', 'audioPath', 'audioVolume'));
     }
 
     // public function about()

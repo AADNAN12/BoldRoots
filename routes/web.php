@@ -10,6 +10,7 @@ use App\Http\Controllers\FrontOffice\ProductController;
 use App\Http\Controllers\FrontOffice\AboutController;
 use App\Http\Controllers\FrontOffice\ContactController;
 use App\Http\Controllers\FrontOffice\ArtistsCollabsController;
+use App\Http\Controllers\FrontOffice\FaqController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,6 +34,9 @@ Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact/send', [ContactController::class, 'send'])->name('contact.send');
 Route::get('/artists-collabs', [ArtistsCollabsController::class, 'index'])->name('artists-collabs');
 Route::post('/artists-collabs/send', [ArtistsCollabsController::class, 'send'])->name('artists-collabs.send');
+Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
+Route::get('/faq/category/{category}', [FaqController::class, 'category'])->name('faq.category');
+Route::get('/faq/search', [FaqController::class, 'search'])->name('faq.search');
 Route::get('/packs', [HomeController::class, 'packs'])->name('packs');
 Route::get('/terms-conditions', [HomeController::class, 'terms_conditions'])->name('terms-conditions');
 Route::get('/privacy-policy', [HomeController::class, 'privacy_policy'])->name('privacy-policy');
@@ -92,6 +96,7 @@ Route::middleware(['admin.auth'])->prefix('admin')->name('admin.')->group(functi
     Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
     Route::delete('products/{product}/images/{image}', [\App\Http\Controllers\Admin\ProductController::class, 'deleteImage'])->name('products.images.destroy');
     Route::post('products/{product}/set-homepage-image', [\App\Http\Controllers\Admin\ProductController::class, 'setHomepageImage'])->name('products.set-homepage-image');
+    Route::get('products/check-sku', [\App\Http\Controllers\Admin\ProductController::class, 'checkSku'])->name('products.check-sku');
 
     // Gestion des promotions
     Route::resource('promotions', \App\Http\Controllers\Admin\PromotionController::class);
@@ -161,6 +166,9 @@ Route::middleware(['admin.auth'])->prefix('admin')->name('admin.')->group(functi
     // Gestion des pages CMS
     Route::resource('cms-pages', \App\Http\Controllers\Admin\CmsPagesController::class);
 
+    // Gestion des FAQs
+    Route::resource('faqs', \App\Http\Controllers\Admin\FaqController::class);
+    Route::post('faqs/{faq}/toggle-status', [\App\Http\Controllers\Admin\FaqController::class, 'toggleStatus'])->name('faqs.toggle-status');
 });
 
 // ===================================

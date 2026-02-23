@@ -998,7 +998,7 @@
 <!-- Animated Top Menu -->
 <div class="top-menu" style="background: {{ \App\Models\SiteSetting::get('top_bar_bg_color', '#000000') }}; @if(\App\Models\SiteSetting::where('key', 'top_bar_bg_image')->first() && \App\Models\SiteSetting::where('key', 'top_bar_bg_image')->first()->value) background-image: url('{{ asset('storage/' . \App\Models\SiteSetting::where('key', 'top_bar_bg_image')->first()->value) }}'); background-size: cover; background-position: center; @endif">
     <div class="top-menu-text" style="color: {{ \App\Models\SiteSetting::get('top_bar_text_color', '#FFFFFF') }};">
-        {{ \App\Models\SiteSetting::get('top_bar_text', 'DEVOTE YOURSELF TO THE BOLD ROOTS') }}
+        {!! \App\Models\SiteSetting::get('top_bar_text', 'DEVOTE YOURSELF TO THE BOLD ROOTS') !!}
     </div>
 </div>
 
@@ -1009,7 +1009,11 @@
     </div>
     <div class="logo">
         <a href="{{ route('home') }}">
-            <img src="{{ asset('images/BOLDROOTS-logo.avif') }}" alt="Logo">
+            @php
+    $siteLogo = \App\Models\SiteSetting::get('site_logo', 'images/BOLDROOTS-logo.avif');
+    $logoUrl = str_starts_with($siteLogo, 'images/') ? asset($siteLogo) : asset('storage/' . $siteLogo);
+@endphp
+            <img src="{{ $logoUrl }}" alt="Logo">
         </a>
     </div>
     <div class="header-right">
@@ -1138,11 +1142,11 @@
                 </div>
             </div>
             <div class="sidebar-user-links">
-                <a href="{{ route('account.orders') }}" class="sidebar-user-link">
+                <a href="{{ route('orders.index') }}" class="sidebar-user-link">
                     <i class="fas fa-shopping-bag"></i>
                     Mes Commandes
                 </a>
-                <a href="{{ route('account.profile') }}" class="sidebar-user-link">
+                <a href="{{ route('profile.index') }}" class="sidebar-user-link">
                     <i class="fas fa-user-circle"></i>
                     Mon Profil
                 </a>

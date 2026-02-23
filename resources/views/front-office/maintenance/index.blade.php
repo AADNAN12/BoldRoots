@@ -128,7 +128,7 @@
         }
 
         .password-form {
-            display: none;  
+            display: none;
         }
 
         .password-form.active {
@@ -387,7 +387,11 @@
 <body>
     <div class="maintenance-container">
         <div class="content">
-            <img src="{{ asset('storage/' . $companyInfo->logo_path) }}" alt="BOLDROOTS" class="logo">
+            @php
+                $siteLogo = \App\Models\SiteSetting::get('site_logo', 'images/BOLDROOTS-logo.avif');
+                $logoUrl = str_starts_with($siteLogo, 'images/') ? asset($siteLogo) : asset('storage/' . $siteLogo);
+            @endphp
+            <img src="{{ $logoUrl }}" alt="BOLDROOTS" class="logo">
 
             <h1 class="title">{{ $title }}</h1>
 
@@ -524,7 +528,7 @@
             try {
                 console.log('Sending request to:', '{{ route('newsletter.subscribe') }}');
                 console.log('Email:', email);
-                
+
                 const response = await fetch('{{ route('newsletter.subscribe') }}', {
                     method: 'POST',
                     headers: {

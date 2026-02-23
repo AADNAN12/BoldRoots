@@ -112,7 +112,7 @@
         @endif
     </div>
     <div class="footer-copyright">
-        <span style="color:white;">&copy; {{ date('Y') }} BOLDROOTS. Tous droits réservés.</span>
+        <span style="color:white;">{!! \App\Models\SiteSetting::get('footer_copyright', '&copy; ' . date('Y') . ' BOLDROOTS. Tous droits réservés.') !!}</span>
     </div>
     
 </footer>

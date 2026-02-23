@@ -22,7 +22,7 @@ class ProductController extends Controller
     public function __construct()
     {
         $this->middleware('permission:view_products,admin')->only(['index']);
-        $this->middleware('permission:create_products,admin')->only(['create', 'store']);
+        $this->middleware('permission:create_products,admin')->only(['create', 'store', 'checkSku']);
         $this->middleware('permission:edit_products,admin')->only(['edit', 'update', 'deleteImage', 'setHomepageImage']);
         $this->middleware('permission:delete_products,admin')->only(['destroy']);
     }
@@ -70,6 +70,7 @@ class ProductController extends Controller
                 'is_new' => 'boolean',
                 'is_featured' => 'boolean',
                 'is_active' => 'boolean',
+                'product_details_pdf' => 'nullable|file|mimes:pdf|max:10240',
                 'variants' => 'required|array|min:1',
                 'variants.*.color_id' => 'required|exists:attribute_values,id',
                 'variants.*.size_id' => 'required|exists:attribute_values,id',
@@ -101,6 +102,7 @@ class ProductController extends Controller
                 'is_new' => $request->boolean('is_new', true),
                 'is_featured' => $request->boolean('is_featured', false),
                 'is_active' => $request->boolean('is_active', true),
+                'product_details_pdf' => $this->handlePdfUpload($request, 'product_details_pdf'),
             ]);
             
             foreach ($validated['variants'] as $variantData) {
@@ -177,6 +179,7 @@ class ProductController extends Controller
                 
         } catch (Exception $e) {
             DB::rollBack();
+            // dd($e->getMessage());
             Log::error('Erreur lors de la création du produit', [
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
@@ -253,6 +256,7 @@ class ProductController extends Controller
                 'is_new' => $request->boolean('is_new'),
                 'is_featured' => $request->boolean('is_featured'),
                 'is_active' => $request->boolean('is_active'),
+                'product_details_pdf' => $this->handlePdfUpload($request, 'product_details_pdf', $product->product_details_pdf) ?? $product->product_details_pdf,
             ]);
             
             // Récupérer les IDs des variantes à conserver
@@ -525,5 +529,54 @@ class ProductController extends Controller
         $sizeCode = $size ? strtoupper(substr($size->value, 0, 2)) : 'XX';
         
         return $productSku . '-' . $colorCode . '-' . $sizeCode;
+    }
+
+    /**
+     * Gérer l'upload du fichier PDF des détails du produit
+     */
+    private function handlePdfUpload(Request $request, $fieldName, $currentPdfPath = null)
+    {
+        if ($request->hasFile($fieldName)) {
+            $file = $request->file($fieldName);
+            
+            // Valider le fichier
+            $request->validate([
+                $fieldName => 'nullable|file|mimes:pdf|max:10240'
+            ]);
+            
+            // Supprimer l'ancien PDF s'il existe
+            if ($currentPdfPath && Storage::disk('public')->exists($currentPdfPath)) {
+                Storage::disk('public')->delete($currentPdfPath);
+            }
+            
+            // Stocker le nouveau fichier
+            $path = $file->store('product_pdfs', 'public');
+            
+            return $path;
+        }
+        
+        return null;
+    }
+
+    /**
+     * Vérifier si un SKU existe déjà dans la base de données
+     */
+    public function checkSku(Request $request)
+    {
+        $sku = $request->get('sku');
+        
+        if (!$sku) {
+            return response()->json(['exists' => false]);
+        }
+        
+        // Vérifier dans la table products
+        $productExists = Product::where('sku', $sku)->exists();
+        
+        // Vérifier dans la table product_variants
+        $variantExists = ProductVariant::where('sku', $sku)->exists();
+        
+        return response()->json([
+            'exists' => $productExists || $variantExists
+        ]);
     }
 }

@@ -352,6 +352,12 @@
                                     <div class="validation-error" id="error_description">La description doit contenir au moins 50 caractères</div>
                                     <small class="text-muted">Minimum 50 caractères - <span id="char_count">0</span> caractères</small>
                                 </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">PDF des détails du produit</label>
+                                    <input type="file" class="form-control" name="product_details_pdf" accept="application/pdf" value="{{ old('product_details_pdf', $product->product_details_pdf ?? '') }}">
+                                    <small class="text-muted">Format: PDF (Max: 10MB). Ce PDF sera affiché dans la page produit.</small>
+                                </div>
                             </div>
                             
                             <div class="col-md-4">
@@ -1140,6 +1146,30 @@ function generateAllVariantsSku() {
         return;
     }
     
+    // Vérifier d'abord si le SKU produit existe déjà
+    fetch(`/admin/products/check-sku?sku=${encodeURIComponent(productSku)}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.exists) {
+                alert('Le SKU produit existe déjà dans la base de données. Veuillez en utiliser un autre.');
+                return;
+            }
+            
+            // Si le SKU produit est unique, générer les SKU des variantes
+            generateVariantSkus(productSku);
+        })
+        .catch(error => {
+            console.error('Erreur lors de la vérification du SKU:', error);
+            alert('Erreur lors de la vérification du SKU. Veuillez réessayer.');
+        });
+}
+
+// Fonction pour générer les SKU des variantes avec vérification
+function generateVariantSkus(productSku) {
+    const skuPromises = [];
+    const variantElements = [];
+    
+    // Collecter tous les SKU à vérifier
     $('.variant-sku').each(function() {
         const index = $(this).data('index');
         const variant = variantsData[index];
@@ -1150,9 +1180,66 @@ function generateAllVariantsSku() {
         const sizeCode = sizeName.substring(0, 2).toUpperCase();
         const sku = `${productSku}-${colorCode}-${sizeCode}`;
         
-        $(this).val(sku);
-        variantsData[index].sku = sku;
+        variantElements.push({
+            element: $(this),
+            index: index,
+            sku: sku
+        });
+        
+        skuPromises.push(
+            fetch(`/admin/products/check-sku?sku=${encodeURIComponent(sku)}`)
+                .then(response => response.json())
+        );
     });
+    
+    // Vérifier tous les SKU en parallèle
+    Promise.all(skuPromises)
+        .then(results => {
+            const conflicts = [];
+            const validSkus = [];
+            
+            results.forEach((result, i) => {
+                const variant = variantElements[i];
+                if (result.exists) {
+                    conflicts.push({
+                        index: variant.index,
+                        sku: variant.sku,
+                        color: $(`#color_${variantsData[variant.index].color_id}`).data('color-name'),
+                        size: $(`#size_${variantsData[variant.index].size_id}`).data('size-name')
+                    });
+                } else {
+                    validSkus.push(variant);
+                }
+            });
+            
+            // Afficher les conflits s'il y en a
+            if (conflicts.length > 0) {
+                let message = 'Les SKU suivants existent déjà dans la base de données:\n\n';
+                conflicts.forEach(conflict => {
+                    message += `- ${conflict.sku} (${conflict.color} / ${conflict.size})\n`;
+                });
+                message += '\nVeuillez modifier le SKU produit ou générer des SKU manuellement.';
+                alert(message);
+                
+                // Générer uniquement les SKU valides
+                validSkus.forEach(valid => {
+                    valid.element.val(valid.sku);
+                    variantsData[valid.index].sku = valid.sku;
+                });
+            } else {
+                // Tous les SKU sont valides, les générer
+                variantElements.forEach(variant => {
+                    variant.element.val(variant.sku);
+                    variantsData[variant.index].sku = variant.sku;
+                });
+                
+                alert('Tous les SKU ont été générés avec succès!');
+            }
+        })
+        .catch(error => {
+            console.error('Erreur lors de la vérification des SKU:', error);
+            alert('Erreur lors de la vérification des SKU. Veuillez réessayer.');
+        });
 }
 
 // Générer les sections d'upload d'images

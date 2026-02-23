@@ -7,6 +7,7 @@ use Database\Seeders\RolesAndPermissionsSeeder;
 use Database\Seeders\AdminUserSeeder;
 use Database\Seeders\CategoriesAndAttributesSeeder;
 use Database\Seeders\CompanyInfoSeeder;
+use Database\Seeders\FaqSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -25,6 +26,7 @@ class DatabaseSeeder extends Seeder
             CouponsSeeder::class,
             SiteSettingsSeeder::class,
             CmsPagesSeeder::class,
+            FaqSeeder::class,
         ]);
     }
 }

@@ -26,6 +26,10 @@ class SiteSettingsController extends Controller
     {
         // dd($request->all());
         $request->validate([
+            'site_logo' => 'nullable',
+            'footer_copyright' => 'nullable|string|max:255',
+            'about_text' => 'nullable|string',
+            'home_page_type' => 'nullable|in:default,alternative,premium',
             'top_bar_text' => 'nullable|string|max:255',
             'top_bar_bg_color' => 'nullable|string|max:7',
             'top_bar_text_color' => 'nullable|string|max:7',
@@ -51,6 +55,10 @@ class SiteSettingsController extends Controller
             'cursor_hover' => 'nullable|image|mimes:png,ico,cur,webp|max:1024',
         ]);
 
+        if ($request->filled('home_page_type')) {
+            SiteSetting::set('home_page_type', $request->home_page_type, 'text', 'home');
+        }
+
         if ($request->filled('top_bar_text')) {
             SiteSetting::set('top_bar_text', $request->top_bar_text, 'text', 'top_bar');
         }
@@ -64,6 +72,24 @@ class SiteSettingsController extends Controller
         }
 
         $imageService = app(ImageService::class);
+
+        if ($request->hasFile('site_logo')) {
+            $oldLogo = SiteSetting::where('key', 'site_logo')->first();
+            if ($oldLogo && $oldLogo->value && $oldLogo->value !== 'images/BOLDROOTS-logo.avif') {
+                Storage::disk('public')->delete($oldLogo->value);
+            }
+            
+            $path = $imageService->convertAndOptimize($request->file('site_logo'), 'settings', 'logo_', 400);
+            SiteSetting::set('site_logo', $path, 'image', 'identity');
+        }
+
+        if ($request->filled('footer_copyright')) {
+            SiteSetting::set('footer_copyright', $request->footer_copyright, 'text', 'identity');
+        }
+
+        if ($request->filled('about_text')) {
+            SiteSetting::set('about_text', $request->about_text, 'text', 'identity');
+        }
 
         if ($request->hasFile('top_bar_bg_image')) {
             $oldImage = SiteSetting::where('key', 'top_bar_bg_image')->first();
