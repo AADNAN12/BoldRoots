@@ -11,9 +11,8 @@ class FaqController extends Controller
     public function index()
     {
         $faqs = Faq::active()->ordered()->get();
-        $categories = Faq::active()->distinct()->pluck('category')->filter()->values();
         
-        return view('front-office.faq.index', compact('faqs', 'categories'));
+        return view('front-office.faq.index', compact('faqs'));
     }
 
 

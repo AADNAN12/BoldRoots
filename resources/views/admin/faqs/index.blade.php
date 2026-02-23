@@ -66,7 +66,6 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Question</th>
-                                <th>Catégorie</th>
                                 <th>Ordre</th>
                                 <th>Statut</th>
                                 <th>Créé le</th>
@@ -81,13 +80,6 @@
                                     <strong>{{ Str::limit($faq->question, 80) }}</strong>
                                     @if(strlen($faq->question) > 80)
                                     <br><small class="text-muted">{{ Str::limit($faq->question, 150) }}</small>
-                                    @endif
-                                </td>
-                                <td>
-                                    @if($faq->category)
-                                    <span class="badge bg-info">{{ $faq->category }}</span>
-                                    @else
-                                    <span class="text-muted">-</span>
                                     @endif
                                 </td>
                                 <td>

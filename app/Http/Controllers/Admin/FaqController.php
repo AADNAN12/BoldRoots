@@ -34,7 +34,6 @@ class FaqController extends Controller
         $faq = Faq::create([
             'question' => $request->question,
             'answer' => $request->answer,
-            'category' => $request->category,
             'order' => $request->order ?? 0,
             'is_active' => $request->has('is_active')
         ]);
