@@ -571,7 +571,7 @@
                                     @endif
                                 </div>
                                 <div class="product__item__text">
-                                    <h6><a href="{{ route('products.show', $related->id) }}">{{ $related->name }}</a></h6>
+                                    <h6>{{ $related->name }}</h6>
                                     <a href="{{ route("products.show", $related->id) }}" class="add-cart" >View Details</a>
                                     @if($relatedHasPromo)
                                         <h5>{{ number_format($relatedFinalPrice, 2) }} DH</h5>
