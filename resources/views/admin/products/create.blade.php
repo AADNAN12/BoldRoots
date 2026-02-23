@@ -946,7 +946,7 @@ function generateAllVariantsSku() {
         });
 }
 
-// Fonction pour générer les SKU des variantes avec vérification
+// Fonction pour générer les SKU des variantes avec vérification et unicité garantie
 function generateVariantSkus(productSku) {
     const skuPromises = [];
     const variantElements = [];
@@ -965,7 +965,10 @@ function generateVariantSkus(productSku) {
         variantElements.push({
             element: $(this),
             index: index,
-            sku: sku
+            sku: sku,
+            baseSku: sku,
+            colorName: colorName,
+            sizeName: sizeName
         });
         
         skuPromises.push(
@@ -979,35 +982,22 @@ function generateVariantSkus(productSku) {
         .then(results => {
             const conflicts = [];
             const validSkus = [];
+            const usedSkus = new Set();
             
             results.forEach((result, i) => {
                 const variant = variantElements[i];
-                if (result.exists) {
-                    conflicts.push({
-                        index: variant.index,
-                        sku: variant.sku,
-                        color: $(`#color_${variantsData[variant.index].color_id}`).data('color-name'),
-                        size: $(`#size_${variantsData[variant.index].size_id}`).data('size-name')
-                    });
+                if (result.exists || usedSkus.has(variant.sku)) {
+                    conflicts.push(variant);
+                    usedSkus.add(variant.sku);
                 } else {
                     validSkus.push(variant);
+                    usedSkus.add(variant.sku);
                 }
             });
             
-            // Afficher les conflits s'il y en a
+            // Si des conflits existent, générer des SKU uniques
             if (conflicts.length > 0) {
-                let message = 'Les SKU suivants existent déjà dans la base de données:\n\n';
-                conflicts.forEach(conflict => {
-                    message += `- ${conflict.sku} (${conflict.color} / ${conflict.size})\n`;
-                });
-                message += '\nVeuillez modifier le SKU produit ou générer des SKU manuellement.';
-                alert(message);
-                
-                // Générer uniquement les SKU valides
-                validSkus.forEach(valid => {
-                    valid.element.val(valid.sku);
-                    variantsData[valid.index].sku = valid.sku;
-                });
+                generateUniqueSkusForConflicts(conflicts, validSkus, productSku);
             } else {
                 // Tous les SKU sont valides, les générer
                 variantElements.forEach(variant => {
@@ -1021,6 +1011,80 @@ function generateVariantSkus(productSku) {
         .catch(error => {
             console.error('Erreur lors de la vérification des SKU:', error);
             alert('Erreur lors de la vérification des SKU. Veuillez réessayer.');
+        });
+}
+
+// Fonction pour générer des SKU uniques pour les variantes en conflit
+function generateUniqueSkusForConflicts(conflicts, validSkus, productSku) {
+    const allSkus = new Set();
+    
+    // Ajouter tous les SKU valides et de base au set
+    validSkus.forEach(valid => allSkus.add(valid.sku));
+    conflicts.forEach(conflict => allSkus.add(conflict.baseSku));
+    
+    const conflictPromises = [];
+    const resolvedVariants = [];
+    
+    conflicts.forEach(conflict => {
+        let newSku = conflict.baseSku;
+        let counter = 1;
+        
+        // Générer un SKU unique
+        while (allSkus.has(newSku)) {
+            const colorCode = conflict.colorName.substring(0, 2).toUpperCase();
+            const sizeCode = conflict.sizeName.substring(0, 2).toUpperCase();
+            newSku = `${productSku}-${colorCode}-${sizeCode}-${counter}`;
+            counter++;
+        }
+        
+        allSkus.add(newSku);
+        conflict.finalSku = newSku;
+        resolvedVariants.push(conflict);
+        
+        // Vérifier que le nouveau SKU n'existe pas en base
+        conflictPromises.push(
+            fetch(`{{ route('admin.products.check-sku') }}?sku=${encodeURIComponent(newSku)}`)
+                .then(response => response.json())
+        );
+    });
+    
+    // Vérifier tous les nouveaux SKU en parallèle
+    Promise.all(conflictPromises)
+        .then(results => {
+            const finalConflicts = [];
+            const finalValidSkus = [...validSkus];
+            
+            results.forEach((result, i) => {
+                const variant = resolvedVariants[i];
+                if (result.exists) {
+                    finalConflicts.push(variant);
+                } else {
+                    finalValidSkus.push(variant);
+                }
+            });
+            
+            // Si encore des conflits, réessayer avec des suffixes différents
+            if (finalConflicts.length > 0) {
+                generateUniqueSkusForConflicts(finalConflicts, finalValidSkus, productSku);
+            } else {
+                // Appliquer tous les SKU (valides + résolus)
+                [...validSkus, ...resolvedVariants].forEach(variant => {
+                    const finalSku = variant.finalSku || variant.sku;
+                    variant.element.val(finalSku);
+                    variantsData[variant.index].sku = finalSku;
+                });
+                
+                const changedCount = resolvedVariants.length;
+                if (changedCount > 0) {
+                    alert(`Tous les SKU ont été générés avec succès!\n${changedCount} SKU(s) modifié(s) pour garantir l'unicité.`);
+                } else {
+                    alert('Tous les SKU ont été générés avec succès!');
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Erreur lors de la vérification des SKU modifiés:', error);
+            alert('Erreur lors de la génération des SKU uniques. Veuillez réessayer.');
         });
 }
 
