@@ -93,10 +93,10 @@ Route::middleware(['admin.auth'])->prefix('admin')->name('admin.')->group(functi
     });
 
     // Gestion des produits
+    Route::get('products/check-sku', [\App\Http\Controllers\Admin\ProductController::class, 'checkSku'])->name('products.check-sku');
     Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
     Route::delete('products/{product}/images/{image}', [\App\Http\Controllers\Admin\ProductController::class, 'deleteImage'])->name('products.images.destroy');
     Route::post('products/{product}/set-homepage-image', [\App\Http\Controllers\Admin\ProductController::class, 'setHomepageImage'])->name('products.set-homepage-image');
-    Route::get('products/check-sku', [\App\Http\Controllers\Admin\ProductController::class, 'checkSku'])->name('products.check-sku');
 
     // Gestion des promotions
     Route::resource('promotions', \App\Http\Controllers\Admin\PromotionController::class);

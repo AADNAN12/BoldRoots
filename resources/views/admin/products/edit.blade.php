@@ -1147,7 +1147,7 @@ function generateAllVariantsSku() {
     }
     
     // Vérifier d'abord si le SKU produit existe déjà
-    fetch(`/admin/products/check-sku?sku=${encodeURIComponent(productSku)}`)
+    fetch(`{{ route('admin.products.check-sku') }}?sku=${encodeURIComponent(productSku)}`)
         .then(response => response.json())
         .then(data => {
             if (data.exists) {
@@ -1187,7 +1187,7 @@ function generateVariantSkus(productSku) {
         });
         
         skuPromises.push(
-            fetch(`/admin/products/check-sku?sku=${encodeURIComponent(sku)}`)
+            fetch(`{{ route('admin.products.check-sku') }}?sku=${encodeURIComponent(sku)}`)
                 .then(response => response.json())
         );
     });
