@@ -436,32 +436,36 @@
                                                         </label>
                                                     @endforeach
                                                 </div>
-                                            </div>
-                                        @endif
-                                    </div>
-                                @endif
-                                
-                                <div class="product__details__cart__option">
-                                    <div class="quantity">
-                                        <div class="pro-qty">
-                                            <input type="text" id="product-qty" value="1" min="1" max="{{ $product->stock_quantity }}">
+                                                </div>
+                                            @endif
                                         </div>
+                                    @endif
+                                    
+                                    <div class="product__details__cart__option">
+                                        <div class="quantity">
+                                            <div class="pro-qty">
+                                                <input type="text" id="product-qty" value="1" min="1" max="{{ $product->variants->sum('stock_quantity') }}">
+                                            </div>
+                                        </div>
+                                        <a href="#" class="primary-btn" onclick="addToCart({{ $product->id }}); return false;">add to cart</a>
                                     </div>
-                                    <a href="#" class="primary-btn" onclick="addToCart({{ $product->id }}); return false;">add to cart</a>
-                                </div>
-                                
-                                <div class="product__details__last__option">
-                                    <h5><span>Guaranteed Safe Checkout</span></h5>
-                                    <img src="{{ asset('img/shop-details/details-payment.png') }}" alt="">
-                                    <ul>
-                                        <li><span>SKU:</span> {{ $product->sku ?? 'N/A' }}</li>
-                                        <li><span>Categories:</span> {{ $product->category->name ?? 'N/A' }}</li>
-                                        @if($product->stock_quantity > 0)
-                                            <li><span>Stock:</span> <span class="text-success">{{ $product->stock_quantity }} disponible(s)</span></li>
-                                        @else
-                                            <li><span>Stock:</span> <span class="text-danger">Rupture de stock</span></li>
-                                        @endif
-                                    </ul>
+                                    
+                                    <div class="product__details__last__option">
+                                        <h5><span>Guaranteed Safe Checkout</span></h5>
+                                        <img src="{{ asset('img/shop-details/details-payment.png') }}" alt="">
+                                        <ul>
+                                            <li><span>SKU:</span> {{ $product->sku ?? 'N/A' }}</li>
+                                            <li><span>Categories:</span> {{ $product->category->name ?? 'N/A' }}</li>
+                                            @php
+                                                $totalStock = $product->variants->sum('quantity');
+                                            @endphp
+                                            @if($totalStock > 0)
+                                                <li><span>Stock:</span> <span class="text-success">{{ $totalStock }} disponible(s)</span></li>
+                                            @else
+                                                <li><span>Stock:</span> <span class="text-danger">Rupture de stock {{ $totalStock }}</span></li>
+                                            @endif
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
