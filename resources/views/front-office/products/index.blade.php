@@ -180,8 +180,8 @@
                                         @if($hasPromotion)
                                             <span class="label">-{{ number_format($discountPercent, 0) }}%</span>
                                         @endif
-                                        @if($product->is_new)
-                                            <span class="label-new">New</span>
+                                        @if($product->new_product_badge)
+                                            <span class="label-new">{{ $product->new_product_badge }}</span>
                                         @endif
                                     </div>
                                     </a>

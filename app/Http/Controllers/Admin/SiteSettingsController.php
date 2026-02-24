@@ -59,6 +59,19 @@ class SiteSettingsController extends Controller
             SiteSetting::set('home_page_type', $request->home_page_type, 'text', 'home');
         }
 
+        // Palette de couleurs principale
+        if ($request->filled('theme_primary_color')) {
+            SiteSetting::set('theme_primary_color', $request->theme_primary_color, 'color', 'theme');
+        }
+
+        if ($request->filled('theme_secondary_color')) {
+            SiteSetting::set('theme_secondary_color', $request->theme_secondary_color, 'color', 'theme');
+        }
+
+        if ($request->filled('theme_background_color')) {
+            SiteSetting::set('theme_background_color', $request->theme_background_color, 'color', 'theme');
+        }
+
         if ($request->filled('top_bar_text')) {
             SiteSetting::set('top_bar_text', $request->top_bar_text, 'text', 'top_bar');
         }

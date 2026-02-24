@@ -399,10 +399,23 @@
                                 </div>
                                 
                                 <div class="mb-3">
+                                    <label class="form-label">Badge Nouveau Produit</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="mdi mdi-tag"></i>
+                                        </span>
+                                        <input type="text" class="form-control" name="new_product_badge" id="product_new_product_badge" placeholder="Ex: Nouveau, Tendance, Exclusif" maxlength="50" value="{{ old('new_product_badge', $product->new_product_badge) }}">
+                                    </div>
+                                    <small class="form-text text-muted">Texte personnalisé pour le badge du produit (max 50 caractères)</small>
+                                </div>
+                                <div class="mb-3">
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input" name="is_new" id="product_is_new" value="1" {{ old('is_new', $product->is_new) ? 'checked' : '' }}>
                                         <label class="form-check-label" for="product_is_new">Nouveau produit</label>
                                     </div>
+                                </div>
+                                
+                                <div class="mb-3">
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input" name="is_featured" id="product_is_featured" value="1" {{ old('is_featured', $product->is_featured) ? 'checked' : '' }}>
                                         <label class="form-check-label" for="product_is_featured">Produit en vedette</label>

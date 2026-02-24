@@ -70,6 +70,7 @@ class ProductController extends Controller
                 'is_new' => 'boolean',
                 'is_featured' => 'boolean',
                 'is_active' => 'boolean',
+                'new_product_badge' => 'nullable|string|max:50',
                 'product_details_pdf' => 'nullable|file|mimes:pdf|max:10240',
                 'variants' => 'required|array|min:1',
                 'variants.*.color_id' => 'required|exists:attribute_values,id',
@@ -102,6 +103,7 @@ class ProductController extends Controller
                 'is_new' => $request->boolean('is_new', true),
                 'is_featured' => $request->boolean('is_featured', false),
                 'is_active' => $request->boolean('is_active', true),
+                'new_product_badge' => $validated['new_product_badge'] ?? null,
                 'product_details_pdf' => $this->handlePdfUpload($request, 'product_details_pdf'),
             ]);
             
@@ -227,6 +229,7 @@ class ProductController extends Controller
                 'is_new' => 'boolean',
                 'is_featured' => 'boolean',
                 'is_active' => 'boolean',
+                'new_product_badge' => 'nullable|string|max:50',
                 'variants' => 'required|array|min:1',
                 'variants.*.color_id' => 'required|exists:attribute_values,id',
                 'variants.*.size_id' => 'required|exists:attribute_values,id',
@@ -256,6 +259,7 @@ class ProductController extends Controller
                 'is_new' => $request->boolean('is_new'),
                 'is_featured' => $request->boolean('is_featured'),
                 'is_active' => $request->boolean('is_active'),
+                'new_product_badge' => $validated['new_product_badge'] ?? null,
                 'product_details_pdf' => $this->handlePdfUpload($request, 'product_details_pdf', $product->product_details_pdf) ?? $product->product_details_pdf,
             ]);
             

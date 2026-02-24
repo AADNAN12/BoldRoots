@@ -24,6 +24,7 @@ class Product extends Model
         'is_featured',
         'is_active',
         'product_details_pdf',
+        'new_product_badge',
     ];
 
     protected $casts = [
