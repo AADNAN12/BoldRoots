@@ -15,6 +15,30 @@ class SiteSettingsSeeder extends Seeder
     {
         $settings = [
             [
+                'key' => 'primary_color',
+                'value' => '#ff0000',
+                'type' => 'color',
+                'group' => 'colors'
+            ],
+            [
+                'key' => 'primary_text_color',
+                'value' => '#ffffff',
+                'type' => 'color',
+                'group' => 'colors'
+            ],
+            [
+                'key' => 'secondary_text_color',
+                'value' => '#000000',
+                'type' => 'color',
+                'group' => 'colors'
+            ],
+            [
+                'key' => 'background_color',
+                'value' => '#000000',
+                'type' => 'color',
+                'group' => 'colors'
+            ],
+            [
                 'key' => 'top_bar_text',
                 'value' => 'DEVOTE YOURSELF TO THE BOLD ROOTS',
                 'type' => 'text',

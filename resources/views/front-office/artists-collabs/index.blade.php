@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" type="text/css">
     <style>
         .collab-header {
-            background: linear-gradient(135deg, #000000 0%, #cc0000 100%);
-            color: #fff;
+            background: linear-gradient(135deg, var(--background-color) 0%, var(--primary-color) 100%);
+            color: var(--primary-text-color);
             padding: 60px 0;
             margin-top: 130px;
             text-align: center;
@@ -26,14 +26,14 @@
         
         .collab-header p {
             font-size: 18px;
-            color:#b6b6b6 !important;
+            color: var(--secondary-text-color) !important;
             letter-spacing: 1px;
             opacity: 0.9;
         }
         
         .info-box {
             background: #fff;
-            border: 1px solid #e3e6f0;
+            border: 1px solid var(--secondary-text-color);
             border-radius: 8px;
             padding: 30px;
             margin-bottom: 30px;
@@ -45,7 +45,7 @@
             letter-spacing: 2px;
             margin-bottom: 20px;
             padding-bottom: 15px;
-            border-bottom: 3px solid #000;
+            border-bottom: 3px solid var(--secondary-text-color);
             font-size: 24px;
         }
         
@@ -58,8 +58,8 @@
         .collab-icon {
             width: 50px;
             height: 50px;
-            background: #000;
-            color: #fff;
+            background: #fff;
+            color: var(--primary-text-color);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -76,14 +76,14 @@
         }
         
         .collab-details p {
-            color: #666;
+            color: var(--secondary-text-color);
             font-size: 14px;
             margin: 0;
             line-height: 1.6;
         }
         
         .form-control {
-            border: 2px solid #e3e6f0;
+            border: 2px solid var(--secondary-text-color);
             border-radius: 5px;
             padding: 12px 20px;
             font-size: 14px;
@@ -91,13 +91,13 @@
         }
         
         .form-control:focus {
-            border-color: #000;
-            box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.1);
+            border-color: var(--secondary-text-color);
+            box-shadow: 0 0 0 0.2rem color-mix(in srgb, var(--secondary-text-color) 10%, transparent);
         }
         
         .submit-btn {
-            background: #000;
-            color: #fff;
+            background: var(--primary-color);
+            color: white;
             padding: 15px 50px;
             border: none;
             border-radius: 5px;
@@ -109,9 +109,9 @@
         }
         
         .submit-btn:hover {
-            background: #cc0000;
+            background: color-mix(in srgb, var(--primary-color) 80%, white);
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(204, 0, 0, 0.3);
+            box-shadow: 0 5px 15px color-mix(in srgb, var(--primary-color) 30%, transparent);
         }
         
         .social-links {
@@ -123,8 +123,8 @@
         .social-link {
             width: 45px;
             height: 45px;
-            background: #000;
-            color: #fff;
+            background: var(--background-color);
+            color: var(--primary-text-color);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -135,7 +135,7 @@
         }
         
         .social-link:hover {
-            background: #cc0000;
+            background: var(--primary-color);
             color: #fff;
             transform: translateY(-3px);
         }

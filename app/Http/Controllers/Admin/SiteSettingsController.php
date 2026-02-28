@@ -30,6 +30,10 @@ class SiteSettingsController extends Controller
             'footer_copyright' => 'nullable|string|max:255',
             'about_text' => 'nullable|string',
             'home_page_type' => 'nullable|in:default,alternative,premium',
+            'primary_color' => 'nullable|string|max:7',
+            'primary_text_color' => 'nullable|string|max:7',
+            'secondary_text_color' => 'nullable|string|max:7',
+            'background_color' => 'nullable|string|max:7',
             'top_bar_text' => 'nullable|string|max:255',
             'top_bar_bg_color' => 'nullable|string|max:7',
             'top_bar_text_color' => 'nullable|string|max:7',
@@ -57,6 +61,23 @@ class SiteSettingsController extends Controller
 
         if ($request->filled('home_page_type')) {
             SiteSetting::set('home_page_type', $request->home_page_type, 'text', 'home');
+        }
+
+        // Couleurs dynamiques
+        if ($request->filled('primary_color')) {
+            SiteSetting::set('primary_color', $request->primary_color, 'color', 'colors');
+        }
+
+        if ($request->filled('primary_text_color')) {
+            SiteSetting::set('primary_text_color', $request->primary_text_color, 'color', 'colors');
+        }
+
+        if ($request->filled('secondary_text_color')) {
+            SiteSetting::set('secondary_text_color', $request->secondary_text_color, 'color', 'colors');
+        }
+
+        if ($request->filled('background_color')) {
+            SiteSetting::set('background_color', $request->background_color, 'color', 'colors');
         }
 
         // Palette de couleurs principale

@@ -19,12 +19,15 @@
         body {
             font-family: 'Arial', sans-serif;
             overflow-x: hidden;
-            
         }
 
         @php
             $cursorNormal = \App\Models\SiteSetting::get('cursor_normal');
             $cursorHover = \App\Models\SiteSetting::get('cursor_hover');
+            $primaryColor = \App\Models\SiteSetting::get('primary_color', '#ff0000');
+            $primaryTextColor = \App\Models\SiteSetting::get('primary_text_color', '#ffffff');
+            $secondaryTextColor = \App\Models\SiteSetting::get('secondary_text_color', '#000000');
+            $backgroundColor = \App\Models\SiteSetting::get('background_color', '#000000');
         @endphp
 
         @if($cursorNormal)
@@ -38,6 +41,13 @@
                 cursor: url('{{ asset('storage/' . $cursorHover) }}'), pointer !important;
             }
         @endif
+
+        :root {
+            --primary-color: {{ $primaryColor }};
+            --primary-text-color: {{ $primaryTextColor }};
+            --secondary-text-color: {{ $secondaryTextColor }};
+            --background-color: {{ $backgroundColor }};
+        }
 
         .menu-toggle {
             color: #000000ff !important;

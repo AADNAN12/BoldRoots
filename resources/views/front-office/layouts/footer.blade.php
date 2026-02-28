@@ -1,8 +1,8 @@
 <style>
     /* Footer */
     .main-footer {
-        background: #000;
-        border-top: 1px solid rgba(255, 0, 0, 0.3);
+        background: var(--background-color);
+        border-top: 1px solid var(--primary-color);
         padding: 15px 50px;
         display: flex;
         justify-content: center;
@@ -12,7 +12,7 @@
     }
 
     .main-footer a {
-        color: #fff;
+        color: var(--primary-text-color);
         text-decoration: none;
         font-size: 12px;
         letter-spacing: 1px;
@@ -21,14 +21,14 @@
     }
 
     .main-footer a:hover {
-        color: #ff0000;
+        color: var(--primary-color);
     }
 
     .main-footer a:not(:last-child)::after {
         content: '|';
         position: absolute;
         right: -18px;
-        color: #666;
+        color: var(--secondary-text-color);
     }
 
     .footer-social {
@@ -113,7 +113,7 @@
         @endif
     </div>
     <div class="footer-copyright">
-        <span style="color:white;">{!! \App\Models\SiteSetting::get('footer_copyright', '&copy; ' . date('Y') . ' BOLDROOTS. Tous droits réservés.') !!}</span>
+        <span style="color: var(--primary-text-color);">{!! \App\Models\SiteSetting::get('footer_copyright', '&copy; ' . date('Y') . ' BOLDROOTS. Tous droits réservés.') !!}</span>
     </div>
     
 </footer>

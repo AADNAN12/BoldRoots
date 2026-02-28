@@ -7,11 +7,43 @@
     <title>Maintenance - BOLDROOTS</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="{{ asset('images/BOLDROOTS-logo.avif') }}" rel="icon">
+    @php
+        // Get dynamic colors from SiteSettings
+        $primaryColor = \App\Models\SiteSetting::get('primary_color', '#ff0000');
+        $primaryTextColor = \App\Models\SiteSetting::get('primary_text_color', '#ffffff');
+        $secondaryTextColor = \App\Models\SiteSetting::get('secondary_text_color', '#cccccc');
+        $backgroundColor = \App\Models\SiteSetting::get('background_color', '#000000');
+        $cursorNormal = \App\Models\SiteSetting::get('cursor_normal');
+        $cursorHover = \App\Models\SiteSetting::get('cursor_hover');
+    @endphp
+
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        /* Dynamic cursors */
+        @if($cursorNormal)
+            * {
+                cursor: url('{{ asset('storage/' . $cursorNormal) }}'), auto !important;
+            }
+        @endif
+
+        @if($cursorHover)
+            a, button, .btn, img, input, [role="button"], .clickable, .password-toggle, .action-btn, .submit-btn, .newsletter-submit, .modal-close {
+                cursor: url('{{ asset('storage/' . $cursorHover) }}'), pointer !important;
+            }
+        @endif
+
+        /* CSS Variables */
+        :root {
+            --primary-color: {{ $primaryColor }};
+            --primary-text-color: {{ $primaryTextColor }};
+            --secondary-text-color: {{ $secondaryTextColor }};
+            --background-color: {{ $backgroundColor }};
+            --primary-color-rgb: {{ hex2rgb($primaryColor)[0] }}, {{ hex2rgb($primaryColor)[1] }}, {{ hex2rgb($primaryColor)[2] }};
         }
 
         body {
@@ -25,12 +57,12 @@
             position: relative;
             width: 100%;
             height: 100vh;
-            background: linear-gradient(135deg, #1a0000 0%, #4a0000 50%, #1a0000 100%);
+            background: linear-gradient(135deg, color-mix(in srgb, var(--background-color) 90%, black) 0%, color-mix(in srgb, var(--primary-color) 50%, var(--background-color)) 50%, color-mix(in srgb, var(--background-color) 90%, black) 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            color: white;
+            color: var(--primary-text-color);
             overflow: hidden;
         }
 
@@ -49,8 +81,8 @@
                 opacity: 0.3;
             @else
                 background-image:
-                    radial-gradient(circle at 20% 50%, rgba(255, 0, 0, 0.3) 0%, transparent 50%),
-                    radial-gradient(circle at 80% 50%, rgba(255, 0, 0, 0.3) 0%, transparent 50%);
+                    radial-gradient(circle at 20% 50%, rgba(var(--primary-color-rgb), 0.3) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 50%, rgba(var(--primary-color-rgb), 0.3) 0%, transparent 50%);
             @endif
             z-index: 1;
         }
@@ -74,13 +106,13 @@
             font-weight: bold;
             letter-spacing: 3px;
             margin-bottom: 30px;
-            text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            text-shadow: 0 0 20px rgba(var(--primary-color-rgb), 0.3);
         }
 
         .message {
             font-size: 18px;
             margin-bottom: 50px;
-            color: #ccc;
+            color: var(--secondary-text-color);
         }
 
         .countdown {
@@ -99,8 +131,8 @@
         .countdown-number {
             font-size: 60px;
             font-weight: bold;
-            color: #ffffff;
-            text-shadow: 0 0 20px #cc0000;
+            color: var(--primary-text-color);
+            text-shadow: 0 0 20px rgba(var(--primary-color-rgb), 0.4);
             margin-bottom: 10px;
         }
 
@@ -115,16 +147,17 @@
         }
 
         .password-toggle {
-            color: #fff;
+            color: var(--primary-text-color);
             cursor: pointer;
             text-decoration: underline;
             font-size: 14px;
             margin-bottom: 20px;
             display: inline-block;
+            transition: color 0.3s ease;
         }
 
         .password-toggle:hover {
-            color: #ff0000;
+            color: var(--primary-color);
         }
 
         .password-form {
@@ -146,9 +179,9 @@
         .password-input {
             flex: 1;
             padding: 15px 20px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 2px solid rgba(255, 0, 0, 0.3);
-            color: white;
+            background: color-mix(in srgb, var(--background-color) 50%, transparent);
+            border: 2px solid rgba(var(--primary-color-rgb), 0.3);
+            color: var(--primary-text-color);
             font-size: 16px;
             border-radius: 5px;
             outline: none;
@@ -156,19 +189,19 @@
         }
 
         .password-input:focus {
-            border-color: #ff0000;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 20px rgba(var(--primary-color-rgb), 0.1);
         }
 
         .password-input::placeholder {
-            color: #666;
+            color: color-mix(in srgb, var(--secondary-text-color) 60%, transparent);
         }
 
         .submit-btn {
             padding: 15px 30px;
-            background: #ff0000;
+            background: var(--primary-color);
             border: none;
-            color: white;
+            color: var(--primary-text-color);
             font-size: 16px;
             font-weight: bold;
             border-radius: 5px;
@@ -177,8 +210,8 @@
         }
 
         .submit-btn:hover {
-            background: #cc0000;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            background: color-mix(in srgb, var(--primary-color) 80%, black);
+            box-shadow: 0 0 20px rgba(var(--primary-color-rgb), 0.2);
         }
 
         .alert {
@@ -190,15 +223,15 @@
         }
 
         .alert-error {
-            background: rgba(255, 0, 0, 0.2);
-            border: 1px solid rgba(255, 0, 0, 0.5);
-            color: #ff6666;
+            background: rgba(var(--primary-color-rgb), 0.2);
+            border: 1px solid rgba(var(--primary-color-rgb), 0.5);
+            color: color-mix(in srgb, var(--primary-color) 70%, var(--primary-text-color));
         }
 
         .alert-success {
             background: rgba(0, 255, 0, 0.2);
             border: 1px solid rgba(0, 255, 0, 0.5);
-            color: #66ff66;
+            color: color-mix(in srgb, #00ff00 70%, var(--primary-text-color));
         }
 
         /* Action buttons */
@@ -211,9 +244,9 @@
 
         .action-btn {
             padding: 15px 40px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 2px solid #cc0000;
-            color: #ffffffff;
+            background: color-mix(in srgb, var(--background-color) 50%, transparent);
+            border: 2px solid var(--primary-color);
+            color: white;
             font-size: 16px;
             font-weight: bold;
             border-radius: 50px;
@@ -226,9 +259,9 @@
         }
 
         .action-btn:hover {
-            background: #cc0000;
-            color: #ffffff;
-            box-shadow: 0 0 20px #cc0000;
+            background: var(--primary-color);
+            color: white;
+            box-shadow: 0 0 20px rgba(var(--primary-color-rgb), 0.2);
             transform: translateY(-2px);
         }
 
@@ -255,14 +288,14 @@
         }
 
         .modal-content {
-            background: linear-gradient(135deg, #1a0000 0%, #4a0000 100%);
+            background: linear-gradient(135deg, color-mix(in srgb, var(--background-color) 90%, black) 0%, color-mix(in srgb, var(--primary-color) 50%, var(--background-color)) 100%);
             padding: 40px;
             border-radius: 10px;
-            border: 2px solid rgba(255, 0, 0, 0.3);
+            border: 2px solid rgba(var(--primary-color-rgb), 0.1);
             max-width: 500px;
             width: 90%;
             position: relative;
-            box-shadow: 0 0 40px rgba(255, 0, 0, 0.3);
+            box-shadow: 0 0 40px rgba(var(--primary-color-rgb), 0.1);
         }
 
         .modal-close {
@@ -271,7 +304,7 @@
             right: 15px;
             background: none;
             border: none;
-            color: #fff;
+            color: var(--primary-text-color);
             font-size: 30px;
             cursor: pointer;
             transition: all 0.3s;
@@ -285,7 +318,7 @@
         .modal-title {
             font-size: 28px;
             font-weight: bold;
-            color: #fff;
+            color: var(--primary-text-color);
             margin-bottom: 20px;
             text-align: center;
         }
@@ -304,9 +337,9 @@
 
         .newsletter-input {
             padding: 15px 20px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 2px solid rgba(255, 0, 0, 0.3);
-            color: white;
+            background: color-mix(in srgb, var(--background-color) 50%, transparent);
+            border: 2px solid rgba(var(--primary-color-rgb), 0.3);
+            color: var(--primary-text-color);
             font-size: 16px;
             border-radius: 5px;
             outline: none;
@@ -314,16 +347,16 @@
         }
 
         .newsletter-input:focus {
-            border-color: #cc0000;
+            border-color: var(--primary-color);
         }
 
         .newsletter-input::placeholder {
-            color: #666;
+            color: color-mix(in srgb, var(--secondary-text-color) 60%, transparent);
         }
 
         .newsletter-submit {
             padding: 15px 30px;
-            background: #cc0000;
+            background: var(--primary-color);
             border: none;
             color: #ffffffff;
             font-size: 16px;
@@ -334,12 +367,13 @@
         }
 
         .newsletter-submit:hover {
-            background: #ff0000;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            background: color-mix(in srgb, var(--primary-color) 80%, black);
+            color:white;
+            box-shadow: 0 0 20px rgba(var(--primary-color-rgb), 0.2);
         }
 
         .newsletter-message {
-            padding: 15px;
+            padding: 15px 20px;
             border-radius: 5px;
             margin-top: 15px;
             text-align: center;
@@ -349,20 +383,21 @@
         .newsletter-message.success {
             background: rgba(0, 255, 0, 0.2);
             border: 1px solid rgba(0, 255, 0, 0.5);
-            color: #66ff66;
+            color: color-mix(in srgb, #00ff00 70%, var(--primary-text-color));
             display: block;
         }
 
         .newsletter-message.error {
-            background: rgba(255, 0, 0, 0.2);
-            border: 1px solid rgba(255, 0, 0, 0.5);
-            color: #ff6666;
+            background: rgba(var(--primary-color-rgb), 0.2);
+            border: 1px solid rgba(var(--primary-color-rgb), 0.5);
+            color: color-mix(in srgb, var(--primary-color) 70%, var(--primary-text-color));
             display: block;
         }
 
+        /* Responsive */
         @media (max-width: 768px) {
             .title {
-                font-size: 32px;
+                font-size: 36px;
             }
 
             .countdown {
@@ -370,18 +405,38 @@
             }
 
             .countdown-number {
-                font-size: 40px;
+                font-size: 48px;
             }
 
-            .countdown-label {
-                font-size: 12px;
-            }
-
-            .password-input-group {
+            .action-buttons {
                 flex-direction: column;
+                align-items: center;
+            }
+
+            .modal-content {
+                padding: 30px 20px;
             }
         }
     </style>
+
+    @php
+        // Helper function to convert hex to RGB
+        function hex2rgb($hex) {
+            $hex = str_replace("#", "", $hex);
+            
+            if(strlen($hex) == 3) {
+                $r = hexdec(substr($hex,0,1).substr($hex,0,1));
+                $g = hexdec(substr($hex,1,1).substr($hex,1,1));
+                $b = hexdec(substr($hex,2,1).substr($hex,2,1));
+            } else {
+                $r = hexdec(substr($hex,0,2));
+                $g = hexdec(substr($hex,2,2));
+                $b = hexdec(substr($hex,4,2));
+            }
+            
+            return array($r, $g, $b);
+        }
+    @endphp
 </head>
 
 <body>

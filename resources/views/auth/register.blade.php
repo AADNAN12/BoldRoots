@@ -16,9 +16,11 @@
     
     <style>
         :root {
-            --primary-red: #cc0000;
-            --primary-black: #000000;
-            --gradient-primary: linear-gradient(135deg, #000000 0%, #cc0000 100%);
+            --primary-color: {{ \App\Models\SiteSetting::get('primary_color', '#ff0000') }};
+            --primary-text-color: {{ \App\Models\SiteSetting::get('primary_text_color', '#ffffff') }};
+            --secondary-text-color: {{ \App\Models\SiteSetting::get('secondary_text_color', '#000000') }};
+            --background-color: {{ \App\Models\SiteSetting::get('background_color', '#000000') }};
+            --gradient-primary: linear-gradient(135deg, var(--background-color) 0%, var(--primary-color) 100%);
             --bg-light: #f0f4f8;
             --text-dark: #1f2937;
             --text-muted: #6b7280;
@@ -42,7 +44,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 50%, #000000 100%);
+            background: linear-gradient(180deg, color-mix(in srgb, var(--background-color) 90%, #1a1a1a) 0%, color-mix(in srgb, var(--background-color) 80%, #2d2d2d) 50%, var(--background-color) 100%);
             position: relative;
             overflow-x: hidden;
             padding: 20px 0;
@@ -62,7 +64,7 @@
         .bg-circle {
             position: absolute;
             border-radius: 50%;
-            border: 1px solid rgba(204, 0, 0, 0.2);
+            border: 1px solid color-mix(in srgb, var(--primary-color) 20%, transparent);
         }
 
         .bg-circle-1 {
@@ -90,7 +92,7 @@
         /* Cloud decorations */
         .cloud {
             position: absolute;
-            background: rgba(204, 0, 0, 0.1);
+            background: color-mix(in srgb, var(--primary-color) 10%, transparent);
             border-radius: 100px;
             filter: blur(1px);
         }
@@ -212,9 +214,9 @@
         .input-group input:focus,
         .input-group textarea:focus {
             outline: none;
-            border-color: var(--primary-red);
+            border-color: var(--primary-color);
             background: var(--white);
-            box-shadow: 0 0 0 3px rgba(204, 0, 0, 0.1);
+            box-shadow: 0 0 3px color-mix(in srgb, var(--primary-color) 10%, transparent);
         }
 
         .input-group input::placeholder,
@@ -236,7 +238,7 @@
         }
 
         .toggle-password:hover {
-            color: var(--primary-red);
+            color: var(--primary-color);
         }
 
         /* Row for side by side inputs */
@@ -253,7 +255,7 @@
         .btn-submit {
             width: 100%;
             padding: 14px 24px;
-            background: var(--primary-black);
+            background: var(--primary-text-color);
             color: var(--white);
             border: none;
             border-radius: 12px;
@@ -270,9 +272,9 @@
         }
 
         .btn-submit:hover {
-            background: var(--primary-red);
+            background: var(--primary-color);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(204, 0, 0, 0.4);
+            box-shadow: 0 4px 12px color-mix(in srgb, var(--primary-color) 40%, transparent);
         }
 
         .btn-submit:active {
@@ -310,14 +312,14 @@
         }
 
         .login-link a {
-            color: var(--primary-red);
+            color: var(--primary-color);
             text-decoration: none;
             font-weight: 600;
             transition: color 0.3s ease;
         }
 
         .login-link a:hover {
-            color: #990000;
+            color: color-mix(in srgb, var(--primary-color) 60%, #000000);
         }
 
         /* Error Alert */
@@ -583,12 +585,12 @@
             inputs.forEach(input => {
                 input.addEventListener('focus', function() {
                     const icon = this.parentElement.querySelector('.input-icon');
-                    if (icon) icon.style.color = '#cc0000';
+                    if (icon) icon.style.color = 'var(--primary-color)';
                 });
                 
                 input.addEventListener('blur', function() {
                     const icon = this.parentElement.querySelector('.input-icon');
-                    if (icon) icon.style.color = '#6b7280';
+                    if (icon) icon.style.color = 'var(--text-muted)';
                 });
             });
 

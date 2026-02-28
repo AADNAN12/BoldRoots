@@ -5,20 +5,20 @@
 @section('styles')
     <style>
         .menu-toggle {
-            color: #fff !important;
+            color: var(--primary-text-color) !important;
         }
         .header-right a {
-            color: #fff!important;
+            color: var(--primary-text-color)!important;
         }
 
         .header-right a:hover {
-            color: #ff0000 !important;
+            color: var(--primary-color) !important;
         }
         #cartToggle{
-            color: #fff !important; 
+            color: var(--primary-text-color) !important; 
         }
         .faq-hero {
-            background: linear-gradient(135deg, #000000 0%, #1a0000 100%);
+            background: linear-gradient(135deg, var(--background-color) 0%, color-mix(in srgb, var(--background-color) 50%, black) 100%);
             padding: 80px 0;
             margin-top:40px;
             text-align: center;
@@ -33,7 +33,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at 50% 50%, rgba(255, 0, 0, 0.1) 0%, transparent 70%);
+            background: radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--primary-color) 10%, transparent) 0%, transparent 70%);
             animation: pulse 4s ease-in-out infinite;
         }
 
@@ -50,14 +50,14 @@
         .faq-hero h1 {
             font-size: 3rem;
             font-weight: 900;
-            color: #ffffff;
+            color: var(--primary-text-color);
             margin-bottom: 20px;
             text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
         }
 
         .faq-hero p {
             font-size: 1.2rem;
-            color: #cccccc;
+            color: var(--primary-text-color);
             max-width: 600px;
             margin: 0 auto;
         }
@@ -76,16 +76,16 @@
         }
 
         .faq-item {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 0, 0, 0.2);
+            background: color-mix(in srgb, var(--primary-text-color) 5%, transparent);
+            border: 1px solid color-mix(in srgb, var(--primary-color) 20%, transparent);
             border-radius: 15px;
             overflow: hidden;
             transition: all 0.3s ease;
         }
 
         .faq-item:hover {
-            border-color: rgba(255, 0, 0, 0.5);
-            background: rgba(255, 255, 255, 0.08);
+            border-color: color-mix(in srgb, var(--primary-color) 50%, transparent);
+            background: color-mix(in srgb, var(--primary-text-color) 8%, transparent);
         }
 
         .faq-question {
@@ -94,19 +94,19 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            color: #dc3545;
+            color: var(--primary-color);
             font-weight: 600;
             font-size: 1.1rem;
             transition: all 0.3s ease;
         }
 
         .faq-question:hover {
-            color: #ff0000;
+            color: var(--primary-text-color);
         }
 
         .faq-icon {
             transition: transform 0.3s ease;
-            color: #ff0000;
+            color: var(--primary-text-color);
         }
 
         .faq-item.active .faq-icon {

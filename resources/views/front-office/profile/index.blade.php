@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" type="text/css">
     <style>
         .profile-header {
-            background: #000;
-            color: #fff;
+            background: var(--background-color);
+            color: var(--primary-text-color);
             padding: 40px;
             border-radius: 8px;
             margin-bottom: 30px;
@@ -33,9 +33,9 @@
             justify-content: center;
             margin: 0 auto 15px;
             font-size: 36px;
-            color: #000;
+            color: var(--secondary-text-color);
             font-weight: bold;
-            border: 3px solid #ca1515;
+            border: 3px solid var(--primary-color);
         }
         .info-box {
             background: #fff;
@@ -49,7 +49,7 @@
             letter-spacing: 1px;
             margin-bottom: 20px;
             padding-bottom: 12px;
-            border-bottom: 2px solid #000;
+            border-bottom: 2px solid var(--secondary-text-color);
             font-size: 16px;
         }
         .info-row {
@@ -70,13 +70,13 @@
         }
         .info-value {
             font-size: 14px;
-            color: #000;
+            color: var(--secondary-text-color);
             font-weight: 500;
             flex: 1;
         }
         .btn-action {
-            background: #000;
-            color: #fff;
+            background: var(--background-color);
+            color: var(--primary-text-color);
             padding: 10px 25px;
             border: none;
             border-radius: 25px;
@@ -89,22 +89,22 @@
             font-size: 13px;
         }
         .btn-action:hover {
-            background: #ca1515;
+            background: var(--primary-color);
             color: #fff;
             transform: scale(1.05);
         }
         .btn-secondary-action {
             background: transparent;
-            color: #000;
-            border: 2px solid #000;
+            color: var(--secondary-text-color);
+            border: 2px solid var(--secondary-text-color);
         }
         .btn-secondary-action:hover {
-            background: #000;
+            background: var(--secondary-text-color);
             color: #fff;
         }
         .stats-card {
-            background: linear-gradient(135deg, #000 0%, #333 100%);
-            color: #fff;
+            background: linear-gradient(135deg, var(--background-color) 0%, color-mix(in srgb, var(--background-color) 70%, white) 100%);
+            color: var(--primary-text-color);
             padding: 25px;
             border-radius: 8px;
             text-align: center;
@@ -113,7 +113,7 @@
         .stats-number {
             font-size: 28px;
             font-weight: bold;
-            color: #ca1515;
+            color: var(--primary-color);
             margin-bottom: 5px;
         }
         .stats-label {
@@ -129,8 +129,8 @@
             font-size: 14px;
         }
         .form-control:focus {
-            border-color: #000;
-            box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.1);
+            border-color: var(--secondary-text-color);
+            box-shadow: 0 0 0 0.2rem color-mix(in srgb, var(--secondary-text-color) 10%, transparent);
         }
         .form-label {
             font-weight: 600;

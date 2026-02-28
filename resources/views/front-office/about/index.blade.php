@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" type="text/css">
     <style>
         .about-header {
-            background: linear-gradient(135deg, #000000 0%, #cc0000 100%);
-            color: #fff;
+            background: linear-gradient(135deg, var(--background-color) 0%, var(--primary-color) 100%);
+            color: var(--primary-text-color);
             padding: 60px 0;
             margin-top: 130px;
             text-align: center;
@@ -26,14 +26,14 @@
         
         .about-header p {
             font-size: 18px;
-            color:#b6b6b6 !important;
+            color: var(--secondary-text-color) !important;
             letter-spacing: 1px;
             opacity: 0.9;
         }
         
         .info-box {
             background: #fff;
-            border: 1px solid #e3e6f0;
+            border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 30px;
             margin-bottom: 30px;
@@ -50,19 +50,19 @@
             letter-spacing: 2px;
             margin-bottom: 20px;
             padding-bottom: 15px;
-            border-bottom: 3px solid #000;
+            border-bottom: 3px solid var(--secondary-text-color);
             font-size: 24px;
         }
         
         .info-box p {
             font-size: 15px;
             line-height: 1.8;
-            color: #666;
+            color: var(--secondary-text-color);
             margin-bottom: 15px;
         }
         .about-content {
             line-height: 1.8;
-            color: #666;
+            color: var(--secondary-text-color);
             font-size: 16px;
         }
         
@@ -71,8 +71,8 @@
         }
         
         .stats-section {
-            background: #000;
-            color: #fff;
+            background: var(--background-color);
+            color: var(--primary-text-color);
             padding: 60px 0;
             margin: 50px 0;
         }
@@ -85,7 +85,7 @@
         .stat-number {
             font-size: 48px;
             font-weight: bold;
-            color: #cc0000;
+            color: var(--primary-color);
             margin-bottom: 10px;
         }
         
@@ -104,8 +104,8 @@
         .action-btn {
             display: inline-block;
             padding: 15px 40px;
-            background: #000;
-            color: #fff;
+            background: var(--background-color);
+            color: var(--primary-text-color);
             font-weight: bold;
             letter-spacing: 2px;
             text-transform: uppercase;
@@ -116,10 +116,10 @@
         }
         
         .action-btn:hover {
-            background: #cc0000;
+            background: var(--primary-color);
             color: #fff;
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(204, 0, 0, 0.3);
+            box-shadow: 0 5px 15px color-mix(in srgb, var(--primary-color) 30%, transparent);
         }
        
     </style>
@@ -129,8 +129,7 @@
     <!-- Header Section -->
     <section class="about-header">
         <div class="container">
-            <h1>ABOUT BOLDROOTS</h1>
-            <p>STRUGGLE | ENDURE | WIN</p>
+            <h1>ABOUT US</h1>
         </div>
     </section>
 

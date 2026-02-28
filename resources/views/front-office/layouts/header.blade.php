@@ -5,10 +5,11 @@
         top: 0;
         left: 0;
         right: 0;
-        background: rgba(0, 0, 0, 0.95);
+        background: var(--background-color);
         padding: 10px 0;
         z-index: 1000;
-        border-bottom: 1px solid rgba(255, 0, 0, 0.3);
+        border-bottom: 1px solid var(--primary-color);
+        opacity: 0.95;
     }
 
     .top-menu-text {
@@ -16,7 +17,7 @@
         font-weight: bold;
         font-size: 14px;
         letter-spacing: 2px;
-        color: #fff;
+        color: var(--primary-text-color);
         animation: slideText 20s linear infinite;
         white-space: nowrap;
     }
@@ -48,12 +49,12 @@
     .menu-toggle {
         cursor: pointer;
         font-size: 24px;
-        color: #fff;
+        color: var(--primary-text-color);
         transition: all 0.3s;
     }
 
     .menu-toggle:hover {
-        color: #ff0000;
+        color: var(--primary-color);
         transform: scale(1.1);
     }
 
@@ -75,7 +76,7 @@
     }
 
     .header-right a {
-        color: #fff;
+        color: var(--primary-text-color);
         text-decoration: none;
         font-weight: bold;
         transition: all 0.3s;
@@ -84,7 +85,7 @@
     }
 
     .header-right a:hover {
-        color: #ff0000;
+        color: var(--primary-color);
     }
 
     .cart-icon {
@@ -100,7 +101,7 @@
     .user-dropdown-btn {
         background: transparent;
         border: 1px solid rgba(0, 0, 0, 0.3);
-        color: #000000ff;
+        color: var(--primary-text-color);
         padding: 8px 15px;
         border-radius: 5px;
         cursor: pointer;
@@ -114,9 +115,10 @@
     }
 
     .user-dropdown-btn:hover {
-        border-color: #ff0000;
-        background: rgba(255, 0, 0, 0.1);
-        color: #ff0000;
+        border-color: var(--primary-color);
+        background: var(--primary-color);
+        background: color-mix(in srgb, var(--primary-color) 10%, transparent);
+        color: var(--primary-color);
     }
 
     .user-dropdown-btn i {
@@ -127,8 +129,8 @@
         position: absolute;
         top: calc(100% + 10px);
         right: 0;
-        background: rgba(0, 0, 0, 0.95);
-        border: 1px solid rgba(255, 0, 0, 0.3);
+        background: var(--background-color);
+        border: 1px solid var(--primary-color);
         border-radius: 8px;
         min-width: 220px;
         opacity: 0;
@@ -148,7 +150,7 @@
     .dropdown-header {
         padding: 15px;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        color: #fff;
+        color: var(--primary-text-color);
         font-size: 14px;
     }
 
@@ -157,7 +159,7 @@
         align-items: center;
         gap: 10px;
         padding: 12px 15px;
-        color: #fff !important;
+        color: var(--primary-text-color) !important;
         text-decoration: none;
         transition: all 0.3s;
         border: none;
@@ -169,8 +171,8 @@
     }
 
     .dropdown-item:hover {
-        background: rgba(255, 0, 0, 0.1);
-        color: #ff0000;
+        background: color-mix(in srgb, var(--primary-color) 10%, transparent);
+        color: var(--primary-color);
     }
 
     .dropdown-item i {
@@ -190,7 +192,7 @@
     }
 
     .header-link {
-        color: #fff;
+        color: var(--primary-text-color);
         text-decoration: none;
         font-weight: bold;
         transition: all 0.3s;
@@ -199,7 +201,7 @@
     }
 
     .header-link:hover {
-        color: #ff0000;
+        color: var(--primary-color);
     }
 
     /* Cart Sidebar */
@@ -227,11 +229,12 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background: #111111;
-        color: #ffffff;
+        background: var(--background-color);
+        color: var(--primary-text-color);
     }
 
     .cart-sidebar-header h3 {
+        color:white;
         margin: 0;
         font-size: 20px;
         font-weight: 700;
@@ -241,12 +244,12 @@
     .cart-close {
         cursor: pointer;
         font-size: 24px;
-        color: #ffffff;
+        color: var(--primary-text-color);
         transition: all 0.3s;
     }
 
     .cart-close:hover {
-        color: #ff0000;
+        color: var(--primary-color);
         transform: rotate(90deg);
     }
 
@@ -277,7 +280,7 @@
         display: flex;
         gap: 15px;
         padding: 20px 0;
-        border-bottom: 1px solid #f0f0f0;
+        border-bottom: 1px solid var(--primary-color);
         position: relative;
     }
 
@@ -302,7 +305,7 @@
     .cart-item-title {
         font-size: 15px;
         font-weight: 600;
-        color: #111111;
+        color: var(--secondary-text-color);
         margin-bottom: 8px;
     }
 
@@ -315,7 +318,7 @@
     .cart-item-price {
         font-size: 16px;
         font-weight: 700;
-        color: #111111;
+        color: var(--secondary-text-color);
     }
 
     .cart-item-remove {
@@ -329,7 +332,7 @@
     }
 
     .cart-item-remove:hover {
-        color: #ff0000;
+        color: var(--primary-color);
     }
 
     .cart-item-quantity {
@@ -342,8 +345,8 @@
     .qty-btn {
         width: 28px;
         height: 28px;
-        border: 1px solid #e0e0e0;
-        background: #ffffff;
+        border: 1px solid var(--primary-color);
+        background: var(--background-color);
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -354,9 +357,9 @@
     }
 
     .qty-btn:hover {
-        background: #111111;
-        color: #ffffff;
-        border-color: #111111;
+        background: var(--primary-color);
+        color: var(--primary-text-color);
+        border-color: var(--primary-color);
     }
 
     .qty-value {
@@ -368,8 +371,8 @@
 
     .cart-sidebar-footer {
         padding: 25px 30px;
-        border-top: 2px solid #f0f0f0;
-        background: #fafafa;
+        border-top: 2px solid var(--primary-color);
+        background: var(--background-color);
     }
 
     .cart-subtotal {
@@ -382,14 +385,14 @@
 
     .cart-subtotal-label {
         font-weight: 600;
-        color: #111111;
+        color: var(--secondary-text-color);
         letter-spacing: 1px;
     }
 
     .cart-subtotal-amount {
         font-size: 22px;
         font-weight: 700;
-        color: #ff0000;
+        color: var(--primary-color);
     }
 
     .cart-actions {
@@ -413,24 +416,24 @@
     }
 
     .cart-btn-primary {
-        background: #111111;
-        color: #ffffff;
+        background: var(--background-color);
+        color: var(--primary-text-color);
     }
 
     .cart-btn-primary:hover {
-        background: #ff0000;
-        color: #ffffff;
+        background: var(--primary-color);
+        color: var(--primary-text-color);
     }
 
     .cart-btn-secondary {
         background: transparent;
-        color: #111111;
-        border: 2px solid #111111;
+        color: var(--background-color);
+        border: 2px solid var(--background-color);
     }
 
     .cart-btn-secondary:hover {
-        background: #111111;
-        color: #ffffff;
+        background: var(--background-color);
+        color: var(--primary-text-color);
     }
 
     .cart-overlay {
@@ -461,7 +464,7 @@
         background: rgba(0, 0, 0, 0.98);
         z-index: 1001;
         transition: left 0.4s ease;
-        border-right: 1px solid rgba(255, 0, 0, 0.3);
+        border-right: 1px solid color-mix(in srgb, var(--primary-color) 30%, transparent);
         display: flex;
         flex-direction: column;
     }
@@ -509,8 +512,8 @@
     }
 
     .sidebar-close:hover {
-        color: #ff0000;
-        background: rgba(255, 0, 0, 0.1);
+        color: var(--primary-color);
+        background: color-mix(in srgb, var(--primary-color) 10%, transparent);
         transform: rotate(90deg);
     }
 
@@ -539,19 +542,19 @@
     }
 
     .sidebar-menu-container::-webkit-scrollbar-thumb {
-        background: rgba(204, 0, 0, 0.6);
+        background: color-mix(in srgb, var(--primary-color) 60%, transparent);
         border-radius: 10px;
         transition: background 0.3s;
     }
 
     .sidebar-menu-container::-webkit-scrollbar-thumb:hover {
-        background: rgba(204, 0, 0, 0.9);
+        background: color-mix(in srgb, var(--primary-color) 90%, transparent);
     }
 
     /* Firefox Scrollbar */
     .sidebar-menu-container {
         scrollbar-width: thin;
-        scrollbar-color: rgba(204, 0, 0, 0.6) rgba(255, 255, 255, 0.05);
+        scrollbar-color: color-mix(in srgb, var(--primary-color) 60%, transparent) rgba(255, 255, 255, 0.05);
     }
 
     .sidebar-menu {
@@ -587,7 +590,7 @@
     }
 
     .sidebar-menu>li>a:hover {
-        color: #ff0000;
+        color: var(--primary-color);
         padding-left: 10px;
     }
 
@@ -671,10 +674,10 @@
     }
 
     .submenu li a:hover {
-        color: #ff0000;
-        border-left-color: #ff0000;
+        color: var(--primary-color);
+        border-left-color: var(--primary-color);
         padding-left: 25px;
-        background: rgba(255, 0, 0, 0.05);
+        background: color-mix(in srgb, var(--primary-color) 5%, transparent);
     }
 
     .submenu li a:hover::before {
@@ -730,15 +733,15 @@
     }
 
     .sidebar-auth-btn.register {
-        background: #ff0000;
-        color: #fff;
-        border-color: #ff0000;
+        background: var(--primary-color);
+        color: var(--primary-text-color);
+        border-color: var(--primary-color);
     }
 
     .sidebar-auth-btn.register:hover {
         background: transparent;
-        color: #ff0000;
-        border-color: #ff0000;
+        color: var(--primary-color);
+        border-color: var(--primary-color);
     }
 
     .sidebar-user-section {
@@ -766,12 +769,12 @@
     .sidebar-user-icon {
         width: 40px;
         height: 40px;
-        background: rgba(255, 0, 0, 0.2);
+        background: color-mix(in srgb, var(--primary-color) 20%, transparent);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #ff0000;
+        color: var(--primary-color);
         font-size: 18px;
     }
 
@@ -801,7 +804,7 @@
     }
 
     .sidebar-user-link:hover {
-        color: #ff0000;
+        color: var(--primary-color);
         padding-left: 10px;
     }
 
@@ -813,8 +816,8 @@
         margin-top: 10px;
         padding: 10px;
         background: transparent;
-        border: 1px solid rgba(255, 0, 0, 0.5);
-        color: #ff0000;
+        border: 1px solid color-mix(in srgb, var(--primary-color) 50%, transparent);
+        color: var(--primary-color);
         font-size: 12px;
         font-weight: 600;
         letter-spacing: 1.5px;
@@ -829,9 +832,9 @@
     }
 
     .sidebar-logout-btn:hover {
-        background: #ff0000;
-        color: #fff;
-        border-color: #ff0000;
+        background: var(--primary-color);
+        color: var(--primary-text-color);
+        border-color: var(--primary-color);
     }
 
     /* Media Queries pour masquer uniquement les éléments d'authentification sur mobile */
@@ -1069,7 +1072,7 @@
         <div class="cart-icon" id="cartToggle">
             <i class="fas fa-shopping-cart"></i>
             <span id="cartCount"
-                style="position: absolute; top: -8px; right: -8px; background: #ff0000; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; font-size: 10px;">0</span>
+                style="position: absolute; top: -8px; right: -8px; background: var(--primary-text-color); border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; font-size: 10px;">0</span>
         </div>
     </div>
 </header>

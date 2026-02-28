@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" type="text/css">
     <style>
         .order-header {
-            background: #000;
-            color: #fff;
+            background: var(--background-color);
+            color: var(--primary-text-color);
             padding: 30px;
             border-radius: 8px;
             margin-bottom: 30px;
@@ -33,7 +33,7 @@
             letter-spacing: 1px;
             margin-bottom: 20px;
             padding-bottom: 15px;
-            border-bottom: 2px solid #000;
+            border-bottom: 2px solid var(--secondary-text-color);
         }
         .product-item {
             display: flex;
@@ -65,8 +65,8 @@
         .status-delivered { background: #d4edda; color: #155724; }
         .status-cancelled { background: #f8d7da; color: #721c24; }
         .btn-action {
-            background: #000;
-            color: #fff;
+            background: var(--background-color);
+            color: var(--primary-text-color);
             padding: 12px 30px;
             border: none;
             border-radius: 25px;
@@ -77,17 +77,17 @@
             display: inline-block;
         }
         .btn-action:hover {
-            background: #ca1515;
+            background: var(--primary-color);
             color: #fff;
             transform: scale(1.05);
         }
         .btn-back {
             background: transparent;
-            color: #000 !important;
-            border: 2px solid #000;
+            color: var(--secondary-text-color) !important;
+            border: 2px solid var(--secondary-text-color);
         }
         .btn-back:hover {
-            background: #000;
+            background: var(--secondary-text-color);
             color: #fff;
         }
         .total-section {
@@ -103,12 +103,12 @@
             font-size: 16px;
         }
         .total-row.final {
-            border-top: 2px solid #000;
+            border-top: 2px solid var(--secondary-text-color);
             padding-top: 15px;
             margin-top: 10px;
             font-size: 24px;
             font-weight: bold;
-            color: #ca1515;
+            color: var(--primary-color);
         }
         .info-label {
             font-weight: 600;

@@ -14,13 +14,13 @@
 @section('styles')
     <style>
         .menu-toggle {
-            color: #000000ff !important;
+            color: var(--secondary-text-color) !important;
         }
         .header-right a {
-            color: #000000ff !important;
+            color: var(--secondary-text-color) !important;
         }
         .header-right a:hover {
-            color: #ff0000 !important;
+            color: var(--primary-color) !important;
         }
         
         /* Product Gallery Styles */
@@ -77,13 +77,13 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         .product-gallery-thumbs img:hover {
-            border-color: #ca1515;
+            border-color: var(--primary-color);
             transform: translateY(-3px);
-            box-shadow: 0 4px 12px rgba(202, 21, 21, 0.3);
+            box-shadow: 0 4px 12px color-mix(in srgb, var(--primary-color) 30%, transparent);
         }
         .product-gallery-thumbs img.active {
-            border-color: #ca1515;
-            box-shadow: 0 4px 12px rgba(202, 21, 21, 0.4);
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 12px color-mix(in srgb, var(--primary-color) 40%, transparent);
         }
         
         /* Promotion Badge */
@@ -91,14 +91,14 @@
             position: absolute;
             top: 20px;
             left: 20px;
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            background: linear-gradient(135deg, var(--primary-color) 0%, color-mix(in srgb, var(--primary-color) 80%, black) 100%);
             color: white;
             padding: 8px 16px;
             border-radius: 25px;
             font-weight: bold;
             font-size: 14px;
             z-index: 10;
-            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+            box-shadow: 0 4px 15px color-mix(in srgb, var(--primary-color) 40%, transparent);
         }
         
         /* Price Section */
@@ -111,7 +111,7 @@
         .product-price .current-price {
             font-size: 36px;
             font-weight: bold;
-            color: #ca1515;
+            color: var(--primary-color);
         }
         .product-price .old-price {
             font-size: 24px;
@@ -119,7 +119,7 @@
             text-decoration: line-through;
         }
         .product-price .save-amount {
-            background: #28a745;
+            background: var(--primary-color);
             color: white;
             padding: 5px 12px;
             border-radius: 20px;
@@ -137,12 +137,12 @@
             transition: all 0.3s ease;
         }
         .variant-option:hover {
-            border-color: #ca1515;
-            background: #fff5f5;
+            border-color: var(--primary-color);
+            background: color-mix(in srgb, var(--primary-color) 5%, white);
         }
         .variant-option.active {
-            border-color: #ca1515;
-            background: #ca1515;
+            border-color: var(--primary-color);
+            background: var(--primary-color);
             color: white;
         }
         .variant-option.disabled {
@@ -188,8 +188,8 @@
             transition: all 0.3s ease;
         }
         .qty-selector button:hover {
-            border-color: #ca1515;
-            color: #ca1515;
+            border-color: var(--primary-color);
+            color: var(--primary-color);
         }
         .qty-selector input {
             width: 80px;
@@ -203,7 +203,7 @@
         
         /* Add to Cart Button */
         .btn-add-cart {
-            background: linear-gradient(135deg, #ca1515 0%, #a01212 100%);
+            background: linear-gradient(135deg, var(--primary-color) 0%, color-mix(in srgb, var(--primary-color) 70%, black) 100%);
             color: white;
             padding: 15px 40px;
             border: none;
@@ -212,11 +212,11 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(202, 21, 21, 0.3);
+            box-shadow: 0 4px 15px color-mix(in srgb, var(--primary-color) 30%, transparent);
         }
         .btn-add-cart:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(202, 21, 21, 0.4);
+            box-shadow: 0 6px 20px color-mix(in srgb, var(--primary-color) 40%, transparent);
         }
         .btn-add-cart:disabled {
             background: #ccc;
@@ -239,8 +239,8 @@
             border-bottom: 3px solid transparent;
         }
         .product-tabs .nav-link.active {
-            color: #ca1515;
-            border-bottom-color: #ca1515;
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
         }
         
         /* Related Products */
@@ -266,7 +266,7 @@
         }
         
         .pdf-info h5 {
-            color: #ca1515;
+            color: var(--primary-color);
             margin-bottom: 5px;
             font-weight: 600;
         }

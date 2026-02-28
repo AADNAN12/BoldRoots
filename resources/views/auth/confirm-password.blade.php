@@ -16,9 +16,11 @@
     
     <style>
         :root {
-            --primary-red: #cc0000;
-            --primary-black: #000000;
-            --gradient-primary: linear-gradient(135deg, #000000 0%, #cc0000 100%);
+            --primary-color: {{ \App\Models\SiteSetting::get('primary_color', '#ff0000') }};
+            --primary-text-color: {{ \App\Models\SiteSetting::get('primary_text_color', '#ffffff') }};
+            --secondary-text-color: {{ \App\Models\SiteSetting::get('secondary_text_color', '#000000') }};
+            --background-color: {{ \App\Models\SiteSetting::get('background_color', '#000000') }};
+            --gradient-primary: linear-gradient(135deg, var(--background-color) 0%, var(--primary-color) 100%);
             --bg-light: #f0f4f8;
             --text-dark: #1f2937;
             --text-muted: #6b7280;
@@ -42,7 +44,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 50%, #000000 100%);
+            background: linear-gradient(180deg, color-mix(in srgb, var(--background-color) 90%, #1a1a1a) 0%, color-mix(in srgb, var(--background-color) 80%, #2d2d2d) 50%, var(--background-color) 100%);
             position: relative;
         }
 
@@ -150,8 +152,8 @@
 
         .form-input:focus {
             outline: none;
-            border-color: var(--primary-red);
-            box-shadow: 0 0 0 3px rgba(204, 0, 0, 0.1);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 3px color-mix(in srgb, var(--primary-color) 10%, transparent);
         }
 
         .input-group {
@@ -234,7 +236,7 @@
         }
 
         .back-to-login a:hover {
-            color: var(--primary-red);
+            color: var(--primary-color);
         }
 
         /* Alert Styles */
