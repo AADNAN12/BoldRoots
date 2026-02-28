@@ -87,9 +87,23 @@
 
     <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-
+<!-- Chatra {literal} -->
+<script>
+    (function(d, w, c) {
+        w.ChatraID = 'wQm2XkcKEfNnrk6xi';
+        var s = d.createElement('script');
+        w[c] = w[c] || function() {
+            (w[c].q = w[c].q || []).push(arguments);
+        };
+        s.async = true;
+        s.src = 'https://call.chatra.io/chatra.js';
+        if (d.head) d.head.appendChild(s);
+    })(document, window, 'Chatra');
+</script>
+<!-- /Chatra {/literal} -->
     @if($audioEnabled == '1' && $audioPath)
     <script>
+        
         document.addEventListener('DOMContentLoaded', function() {
             const audio = document.getElementById('backgroundAudio');
             
