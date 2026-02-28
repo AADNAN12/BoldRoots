@@ -16,13 +16,15 @@
         .menu-toggle {
             color: var(--secondary-text-color) !important;
         }
+
         .header-right a {
             color: var(--secondary-text-color) !important;
         }
+
         .header-right a:hover {
             color: var(--primary-color) !important;
         }
-        
+
         /* Product Gallery Styles */
         .product-gallery-main {
             position: relative;
@@ -30,6 +32,7 @@
             border-radius: 10px;
             margin-bottom: 20px;
         }
+
         .product-gallery-main img {
             width: 100%;
             height: auto;
@@ -38,10 +41,11 @@
             cursor: zoom-in;
             transition: transform 0.3s ease;
         }
+
         .product-gallery-main img:hover {
             transform: scale(1.02);
         }
-        
+
         .product__details__pic__item {
             background: #f8f9fa;
             border-radius: 10px;
@@ -51,7 +55,7 @@
             justify-content: center;
             min-height: 400px;
         }
-        
+
         #main-product-image {
             max-width: 100%;
             max-height: 400px;
@@ -59,6 +63,51 @@
             height: auto;
             object-fit: contain;
         }
+
+        .primary-btn {
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            padding: 16px 32px;
+            color: white;
+            background: linear-gradient(135deg, var(--primary-color) 0%, color-mix(in srgb, var(--primary-color) 70%, white) 100%);
+            border: none;
+            border-radius: 30px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px color-mix(in srgb, var(--primary-color) 30%, transparent);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .primary-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .primary-btn:hover::before {
+            left: 100%;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px color-mix(in srgb, var(--primary-color) 40%, transparent);
+            background: linear-gradient(135deg, var(--primary-color) 0%, color-mix(in srgb, var(--primary-color) 90%, white) 100%);
+        }
+
+        .primary-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 10px color-mix(in srgb, var(--primary-color) 20%, transparent);
+        }
+
         .product-gallery-thumbs {
             display: flex;
             gap: 12px;
@@ -66,6 +115,7 @@
             justify-content: center;
             margin-top: 15px;
         }
+
         .product-gallery-thumbs img {
             width: 90px;
             height: 90px;
@@ -74,18 +124,20 @@
             cursor: pointer;
             border: 3px solid #e0e0e0;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
+
         .product-gallery-thumbs img:hover {
             border-color: var(--primary-color);
             transform: translateY(-3px);
             box-shadow: 0 4px 12px color-mix(in srgb, var(--primary-color) 30%, transparent);
         }
+
         .product-gallery-thumbs img.active {
             border-color: var(--primary-color);
             box-shadow: 0 4px 12px color-mix(in srgb, var(--primary-color) 40%, transparent);
         }
-        
+
         /* Promotion Badge */
         .promo-badge {
             position: absolute;
@@ -100,7 +152,7 @@
             z-index: 10;
             box-shadow: 0 4px 15px color-mix(in srgb, var(--primary-color) 40%, transparent);
         }
-        
+
         /* Price Section */
         .product-price {
             display: flex;
@@ -108,16 +160,19 @@
             gap: 15px;
             margin: 20px 0;
         }
+
         .product-price .current-price {
             font-size: 36px;
             font-weight: bold;
             color: var(--primary-color);
         }
+
         .product-price .old-price {
             font-size: 24px;
             color: #999;
             text-decoration: line-through;
         }
+
         .product-price .save-amount {
             background: var(--primary-color);
             color: white;
@@ -125,7 +180,7 @@
             border-radius: 20px;
             font-size: 14px;
         }
-        
+
         /* Variant Selection */
         .variant-option {
             display: inline-block;
@@ -136,20 +191,23 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
+
         .variant-option:hover {
             border-color: var(--primary-color);
             background: color-mix(in srgb, var(--primary-color) 5%, white);
         }
+
         .variant-option.active {
             border-color: var(--primary-color);
             background: var(--primary-color);
             color: white;
         }
+
         .variant-option.disabled {
             opacity: 0.5;
             cursor: not-allowed;
         }
-        
+
         /* Stock Badge */
         .stock-badge {
             display: inline-block;
@@ -158,25 +216,29 @@
             font-size: 13px;
             font-weight: 600;
         }
+
         .stock-badge.in-stock {
             background: #d4edda;
             color: #155724;
         }
+
         .stock-badge.low-stock {
             background: #fff3cd;
             color: #856404;
         }
+
         .stock-badge.out-of-stock {
             background: #f8d7da;
             color: #721c24;
         }
-        
+
         /* Quantity Selector */
         .qty-selector {
             display: flex;
             align-items: center;
             gap: 10px;
         }
+
         .qty-selector button {
             width: 40px;
             height: 40px;
@@ -187,10 +249,12 @@
             font-size: 18px;
             transition: all 0.3s ease;
         }
+
         .qty-selector button:hover {
             border-color: var(--primary-color);
             color: var(--primary-color);
         }
+
         .qty-selector input {
             width: 80px;
             height: 40px;
@@ -200,7 +264,7 @@
             font-size: 16px;
             font-weight: 600;
         }
-        
+
         /* Add to Cart Button */
         .btn-add-cart {
             background: linear-gradient(135deg, var(--primary-color) 0%, color-mix(in srgb, var(--primary-color) 70%, black) 100%);
@@ -214,23 +278,27 @@
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px color-mix(in srgb, var(--primary-color) 30%, transparent);
         }
+
         .btn-add-cart:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px color-mix(in srgb, var(--primary-color) 40%, transparent);
         }
+
         .btn-add-cart:disabled {
             background: #ccc;
             cursor: not-allowed;
             box-shadow: none;
         }
-        
+
         /* Product Info Tabs */
         .product-tabs {
             margin-top: 50px;
         }
+
         .product-tabs .nav-tabs {
             border-bottom: 2px solid #ddd;
         }
+
         .product-tabs .nav-link {
             color: #666;
             font-weight: 600;
@@ -238,24 +306,25 @@
             border: none;
             border-bottom: 3px solid transparent;
         }
+
         .product-tabs .nav-link.active {
             color: var(--primary-color);
             border-bottom-color: var(--primary-color);
         }
-        
+
         /* Related Products */
         .related-products {
             margin-top: 60px;
         }
-        
+
         /* PDF Viewer Styles */
         .pdf-viewer-container {
             background: #f8f9fa;
             border-radius: 10px;
             padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
-        
+
         .pdf-header {
             display: flex;
             justify-content: space-between;
@@ -264,46 +333,46 @@
             padding-bottom: 15px;
             border-bottom: 1px solid #e9ecef;
         }
-        
+
         .pdf-info h5 {
             color: var(--primary-color);
             margin-bottom: 5px;
             font-weight: 600;
         }
-        
+
         .pdf-info p {
             font-size: 14px;
             margin: 0;
         }
-        
+
         .pdf-actions {
             display: flex;
             gap: 10px;
         }
-        
+
         .pdf-viewer {
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
-        
+
         .pdf-embed {
             border: none;
             background: white;
         }
-        
+
         @media (max-width: 768px) {
             .pdf-header {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 15px;
             }
-            
+
             .pdf-actions {
                 width: 100%;
                 justify-content: center;
             }
-            
+
             .pdf-viewer {
                 height: 400px !important;
             }
@@ -311,7 +380,7 @@
     </style>
 @endsection
 @section('content')
-   <!-- Shop Details Section Begin -->
+    <!-- Shop Details Section Begin -->
     <section class="shop-details" style="margin-top: 130px;">
         <div class="container">
             <!-- Breadcrumb -->
@@ -324,13 +393,13 @@
                     </div>
                 </div>
             </div>
-            
+
             @php
                 $hasPromotion = $product->promotions->isNotEmpty();
                 $finalPrice = $product->price;
                 $discountPercent = 0;
                 $promotion = null;
-                
+
                 if ($hasPromotion) {
                     $promotion = $product->promotions->first();
                     if ($promotion->discount_type === 'percentage') {
@@ -338,12 +407,13 @@
                         $finalPrice = $product->price * (1 - $promotion->discount_value / 100);
                     } else {
                         $finalPrice = max(0, $product->price - $promotion->discount_value);
-                        $discountPercent = $product->price > 0 ? (($product->price - $finalPrice) / $product->price) * 100 : 0;
+                        $discountPercent =
+                            $product->price > 0 ? (($product->price - $finalPrice) / $product->price) * 100 : 0;
                     }
                 }
-                
-                $mainImage = $product->images->first() 
-                    ? asset('storage/' . $product->images->first()->image_path) 
+
+                $mainImage = $product->images->first()
+                    ? asset('storage/' . $product->images->first()->image_path)
                     : asset('img/shop-details/product-big-2.png');
             @endphp
 
@@ -352,7 +422,7 @@
                 <!-- Image Section - Left -->
                 <div class="col-lg-6 col-md-6">
                     <div class="product__details__pic">
-                        @if($hasPromotion)
+                        @if ($hasPromotion)
                             <span class="promo-badge">-{{ number_format($discountPercent, 0) }}%</span>
                         @endif
                         <div class="tab-content">
@@ -362,178 +432,189 @@
                                 </div>
                             </div>
                         </div>
-                        @if($product->images->count() > 1)
+                        @if ($product->images->count() > 1)
                             <div class="product-gallery-thumbs mt-3" id="image-gallery">
-                                @foreach($product->images as $index => $image)
-                                    <img src="{{ asset('storage/' . $image->image_path) }}" 
-                                         alt="{{ $product->name }}" 
-                                         class="gallery-thumb {{ $index === 0 ? 'active' : '' }}"
-                                         data-color-id="{{ $image->color_id ?? 'all' }}"
-                                         onclick="changeMainImage(this, '{{ asset('storage/' . $image->image_path) }}')">
+                                @foreach ($product->images as $index => $image)
+                                    <img src="{{ asset('storage/' . $image->image_path) }}" alt="{{ $product->name }}"
+                                        class="gallery-thumb {{ $index === 0 ? 'active' : '' }}"
+                                        data-color-id="{{ $image->color_id ?? 'all' }}"
+                                        onclick="changeMainImage(this, '{{ asset('storage/' . $image->image_path) }}')">
                                 @endforeach
                             </div>
                         @endif
                     </div>
-                    
-                   
+
+
                 </div>
-                 <!-- Product Details - Right -->
-                    <div class="col-lg-6 col-md-6">
-                        <div class="product__details__content">
-                            <div class="product__details__text">
-                                <h4>{{ $product->name }}</h4>
-                                
-                                @if($hasPromotion)
-                                    <h3>{{ number_format($finalPrice, 2) }} DH <span>{{ number_format($product->price, 2) }} DH</span></h3>
-                                    <div class="alert alert-success py-2 px-3 d-inline-block mb-3">
-                                        <i class="fa fa-tags"></i> <strong>{{ $promotion->name }}</strong>
-                                        @if($promotion->description)
-                                            <br><small>{!! $promotion->description !!}</small>
-                                        @endif
-                                        <br><small>Économisez {{ number_format($product->price - $finalPrice, 2) }} DH (-{{ number_format($discountPercent, 0) }}%)</small>
-                                    </div>
-                                @else
-                                    <h3>{{ number_format($product->price, 2) }} DH</h3>
-                                @endif
-                                
-                                
-                                
-                                @if($product->variants->isNotEmpty())
-                                    <div class="product__details__option">
-                                        @php
-                                            // Récupérer les tailles uniques via la relation size
-                                            $sizes = $product->variants
-                                                ->filter(fn($v) => $v->size)
-                                                ->map(fn($v) => $v->size)
-                                                ->unique('id');
-                                            
-                                            // Récupérer les couleurs uniques via la relation color
-                                            $colors = $product->variants
-                                                ->filter(fn($v) => $v->color)
-                                                ->map(fn($v) => $v->color)
-                                                ->unique('id');
-                                        @endphp
-                                        
-                                        @if($sizes->isNotEmpty())
-                                            <div class="product__details__option__size">
-                                                <span>Size:</span>
-                                                @foreach($sizes as $size)
-                                                    <label for="size-{{ $size->id }}" class="{{ $loop->first ? 'active' : '' }}">
-                                                        {{ $size->value }}
-                                                        <input type="radio" name="size" id="size-{{ $size->id }}" value="{{ $size->id }}" {{ $loop->first ? 'checked' : '' }}>
+                <!-- Product Details - Right -->
+                <div class="col-lg-6 col-md-6">
+                    <div class="product__details__content">
+                        <div class="product__details__text">
+                            <h4>{{ $product->name }}</h4>
+
+                            @if ($hasPromotion)
+                                <h3>{{ number_format($finalPrice, 2) }} DH <span>{{ number_format($product->price, 2) }}
+                                        DH</span></h3>
+                                <div class="alert alert-success py-2 px-3 d-inline-block mb-3">
+                                    <i class="fa fa-tags"></i> <strong>{{ $promotion->name }}</strong>
+                                    @if ($promotion->description)
+                                        <br><small>{!! $promotion->description !!}</small>
+                                    @endif
+                                    <br><small>Économisez {{ number_format($product->price - $finalPrice, 2) }} DH
+                                        (-{{ number_format($discountPercent, 0) }}%)</small>
+                                </div>
+                            @else
+                                <h3>{{ number_format($product->price, 2) }} DH</h3>
+                            @endif
+
+
+
+                            @if ($product->variants->isNotEmpty())
+                                <div class="product__details__option">
+                                    @php
+                                        // Récupérer les tailles uniques via la relation size
+                                        $sizes = $product->variants
+                                            ->filter(fn($v) => $v->size)
+                                            ->map(fn($v) => $v->size)
+                                            ->unique('id');
+
+                                        // Récupérer les couleurs uniques via la relation color
+                                        $colors = $product->variants
+                                            ->filter(fn($v) => $v->color)
+                                            ->map(fn($v) => $v->color)
+                                            ->unique('id');
+                                    @endphp
+
+                                    @if ($sizes->isNotEmpty())
+                                        <div class="product__details__option__size">
+                                            <span>Size:</span>
+                                            @foreach ($sizes as $size)
+                                                <label for="size-{{ $size->id }}"
+                                                    class="{{ $loop->first ? 'active' : '' }}">
+                                                    {{ $size->value }}
+                                                    <input type="radio" name="size" id="size-{{ $size->id }}"
+                                                        value="{{ $size->id }}" {{ $loop->first ? 'checked' : '' }}>
+                                                </label>
+                                            @endforeach
+                                        </div>
+                                    @endif
+
+                                    @if ($colors->isNotEmpty())
+                                        <div class="product__details__option__color"
+                                            style="display: block; margin-top: 15px;">
+                                            <span>Color:</span>
+                                            <div class="color-options"
+                                                style="display: inline-flex; gap: 10px; margin-left: 10px;">
+                                                @foreach ($colors as $color)
+                                                    <label class="color-option {{ $loop->first ? 'selected' : '' }}"
+                                                        for="color-{{ $color->id }}"
+                                                        style="background-color: {{ $color->color_code ?? '#000' }}; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; display: inline-block; border: 3px solid {{ $loop->first ? '#ca1515' : 'transparent' }}; box-shadow: 0 0 0 1px #ddd;"
+                                                        title="{{ $color->value }}"
+                                                        onclick="selectColor(this, {{ $color->id }})">
+                                                        <input type="radio" name="color" id="color-{{ $color->id }}"
+                                                            value="{{ $color->id }}"
+                                                            {{ $loop->first ? 'checked' : '' }} style="display: none;">
                                                     </label>
                                                 @endforeach
                                             </div>
-                                        @endif
-                                        
-                                        @if($colors->isNotEmpty())
-                                            <div class="product__details__option__color" style="display: block; margin-top: 15px;">
-                                                <span>Color:</span>
-                                                <div class="color-options" style="display: inline-flex; gap: 10px; margin-left: 10px;">
-                                                    @foreach($colors as $color)
-                                                        <label class="color-option {{ $loop->first ? 'selected' : '' }}" for="color-{{ $color->id }}" style="background-color: {{ $color->color_code ?? '#000' }}; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; display: inline-block; border: 3px solid {{ $loop->first ? '#ca1515' : 'transparent' }}; box-shadow: 0 0 0 1px #ddd;" title="{{ $color->value }}" onclick="selectColor(this, {{ $color->id }})">
-                                                            <input type="radio" name="color" id="color-{{ $color->id }}" value="{{ $color->id }}" {{ $loop->first ? 'checked' : '' }} style="display: none;">
-                                                        </label>
-                                                    @endforeach
-                                                </div>
-                                                </div>
-                                            @endif
                                         </div>
                                     @endif
-                                    
-                                    <div class="product__details__cart__option">
-                                        <div class="quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" id="product-qty" value="1" min="1" max="{{ $product->variants->sum('stock_quantity') }}">
-                                            </div>
-                                        </div>
-                                        <a href="#" class="primary-btn" onclick="addToCart({{ $product->id }}); return false;">add to cart</a>
-                                    </div>
-                                    
-                                    <div class="product__details__last__option">
-                                        <h5><span>Guaranteed Safe Checkout</span></h5>
-                                        <img src="{{ asset('img/shop-details/details-payment.png') }}" alt="">
-                                        <ul>
-                                            <li><span>SKU:</span> {{ $product->sku ?? 'N/A' }}</li>
-                                            <li><span>Categories:</span> {{ $product->category->name ?? 'N/A' }}</li>
-                                            @php
-                                                $totalStock = $product->variants->sum('quantity');
-                                            @endphp
-                                            @if($totalStock > 0)
-                                                <li><span>Stock:</span> <span class="text-success">{{ $totalStock }} disponible(s)</span></li>
-                                            @else
-                                                <li><span>Stock:</span> <span class="text-danger">Rupture de stock {{ $totalStock }}</span></li>
-                                            @endif
-                                        </ul>
+                                </div>
+                            @endif
+
+                            <div class="product__details__cart__option">
+                                <div class="quantity">
+                                    <div class="pro-qty mt-2">
+                                        <input type="text" id="product-qty" value="1" min="1"
+                                            max="{{ $product->variants->sum('stock_quantity') }}">
                                     </div>
                                 </div>
+                                <button class="primary-btn" onclick="addToCart({{ $product->id }}); return false;"><i
+                                        class="fas fa-shopping-cart me-2"></i> add to cart</button>
                             </div>
-                        </div>
-                    </div>
-                <!-- Product Details Tabs - Below -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="product__details__tab">
-                            <ul class="nav nav-tabs" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" data-toggle="tab" href="#tabs-5"
-                                    role="tab">Description</a>
-                                </li>
-                                @if($product->product_details_pdf)
-                                    <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab" href="#tabs-6"
-                                        role="tab">
-                                            <i class="fas fa-file-pdf"></i> PDF Détails
-                                        </a>
-                                    </li>
-                                @endif
-                            </ul>
-                            <div class="tab-content">
-                                <div class="tab-pane active" id="tabs-5" role="tabpanel">
-                                   <p>{!! $product->description !!}</p>
-                                </div>
-                                @if($product->product_details_pdf)
-                                    <div class="tab-pane" id="tabs-6" role="tabpanel">
-                                        <div class="pdf-viewer-container">
-                                            <div class="pdf-header">
-                                                <div class="pdf-info">
-                                                    <h5><i class="fas fa-file-pdf"></i> Document PDF des détails du produit</h5>
-                                                    <p class="text-muted mb-0">Consultez le PDF pour plus d'informations sur ce produit</p>
-                                                </div>
-                                                <div class="pdf-actions">
-                                                    <a href="{{ asset('storage/' . $product->product_details_pdf) }}" 
-                                                       target="_blank" 
-                                                       class="btn btn-outline-primary btn-sm">
-                                                        <i class="fas fa-external-link-alt"></i> Ouvrir dans un nouvel onglet
-                                                    </a>
-                                                    <a href="{{ asset('storage/' . $product->product_details_pdf) }}" 
-                                                       download="{{ $product->name }}-details.pdf" 
-                                                       class="btn btn-primary btn-sm">
-                                                        <i class="fas fa-download"></i> Télécharger
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="pdf-viewer">
-                                                <embed src="{{ asset('storage/' . $product->product_details_pdf) }}" 
-                                                       type="application/pdf" 
-                                                       width="100%" 
-                                                       height="600px"
-                                                       class="pdf-embed">
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
-                                </div>
+
+                            <div class="product__details__last__option">
+                                {{-- <h5><span>Guaranteed Safe Checkout</span></h5>
+                                        <img src="{{ asset('img/shop-details/details-payment.png') }}" alt=""> --}}
+                                <ul>
+                                    <li><span>SKU:</span> {{ $product->sku ?? 'N/A' }}</li>
+                                    <li><span>Categories:</span> {{ $product->category->name ?? 'N/A' }}</li>
+                                    @php
+                                        $totalStock = $product->variants->sum('quantity');
+                                    @endphp
+                                    @if ($totalStock > 0)
+                                        <li><span>Stock:</span> <span class="text-success">{{ $totalStock }}
+                                                disponible(s)</span></li>
+                                    @else
+                                        <li><span>Stock:</span> <span class="text-danger">Rupture de stock
+                                                {{ $totalStock }}</span></li>
+                                    @endif
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-        <!-- Shop Details Section End -->
+            <!-- Product Details Tabs - Below -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="product__details__tab">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#tabs-5" role="tab">Description</a>
+                            </li>
+                            @if ($product->product_details_pdf)
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#tabs-6" role="tab">
+                                        <i class="fas fa-file-pdf"></i> PDF Détails
+                                    </a>
+                                </li>
+                            @endif
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tabs-5" role="tabpanel">
+                                <p>{!! $product->description !!}</p>
+                            </div>
+                            @if ($product->product_details_pdf)
+                                <div class="tab-pane" id="tabs-6" role="tabpanel">
+                                    <div class="pdf-viewer-container">
+                                        <div class="pdf-header">
+                                            <div class="pdf-info">
+                                                <h5><i class="fas fa-file-pdf"></i> Document PDF des détails du produit
+                                                </h5>
+                                                <p class="text-muted mb-0">Consultez le PDF pour plus d'informations sur ce
+                                                    produit</p>
+                                            </div>
+                                            <div class="pdf-actions">
+                                                <a href="{{ asset('storage/' . $product->product_details_pdf) }}"
+                                                    target="_blank" class="btn btn-outline-primary btn-sm">
+                                                    <i class="fas fa-external-link-alt"></i> Ouvrir dans un nouvel onglet
+                                                </a>
+                                                <a href="{{ asset('storage/' . $product->product_details_pdf) }}"
+                                                    download="{{ $product->name }}-details.pdf"
+                                                    class="btn btn-primary btn-sm">
+                                                    <i class="fas fa-download"></i> Télécharger
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="pdf-viewer">
+                                            <embed src="{{ asset('storage/' . $product->product_details_pdf) }}"
+                                                type="application/pdf" width="100%" height="600px" class="pdf-embed">
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+    <!-- Shop Details Section End -->
 
-        <!-- Related Section Begin -->
-        @if(isset($relatedProducts) && $relatedProducts->isNotEmpty())
+    <!-- Related Section Begin -->
+    @if (isset($relatedProducts) && $relatedProducts->isNotEmpty())
         <section class="related spad">
             <div class="container">
                 <div class="row">
@@ -542,12 +623,12 @@
                     </div>
                 </div>
                 <div class="row">
-                    @foreach($relatedProducts as $related)
+                    @foreach ($relatedProducts as $related)
                         @php
                             $relatedHasPromo = $related->promotions->isNotEmpty();
                             $relatedFinalPrice = $related->price;
                             $relatedDiscountPercent = 0;
-                            
+
                             if ($relatedHasPromo) {
                                 $relatedPromo = $related->promotions->first();
                                 if ($relatedPromo->discount_type === 'percentage') {
@@ -555,27 +636,33 @@
                                     $relatedFinalPrice = $related->price * (1 - $relatedPromo->discount_value / 100);
                                 } else {
                                     $relatedFinalPrice = max(0, $related->price - $relatedPromo->discount_value);
-                                    $relatedDiscountPercent = $related->price > 0 ? (($related->price - $relatedFinalPrice) / $related->price) * 100 : 0;
+                                    $relatedDiscountPercent =
+                                        $related->price > 0
+                                            ? (($related->price - $relatedFinalPrice) / $related->price) * 100
+                                            : 0;
                                 }
                             }
-                            
-                            $relatedImage = $related->images->first() 
-                                ? asset('storage/' . $related->images->first()->image_path) 
+
+                            $relatedImage = $related->images->first()
+                                ? asset('storage/' . $related->images->first()->image_path)
                                 : asset('images/No-Product-Image-Available.webp');
                         @endphp
                         <div class="col-lg-3 col-md-6 col-sm-6">
                             <div class="product__item {{ $relatedHasPromo ? 'sale' : '' }}">
                                 <div class="product__item__pic set-bg" data-setbg="{{ $relatedImage }}">
-                                    @if($relatedHasPromo)
+                                    @if ($relatedHasPromo)
                                         <span class="label">-{{ number_format($relatedDiscountPercent, 0) }}%</span>
                                     @endif
                                 </div>
                                 <div class="product__item__text">
                                     <h6>{{ $related->name }}</h6>
-                                    <a href="{{ route("products.show", $related->id) }}" class="add-cart" >View Details</a>
-                                    @if($relatedHasPromo)
+                                    <a href="{{ route('products.show', $related->id) }}" class="add-cart">View
+                                        Details</a>
+                                    @if ($relatedHasPromo)
                                         <h5>{{ number_format($relatedFinalPrice, 2) }} DH</h5>
-                                        <span class="text-muted" style="text-decoration: line-through; font-size: 12px;">{{ number_format($related->price, 2) }} DH</span>
+                                        <span class="text-muted"
+                                            style="text-decoration: line-through; font-size: 12px;">{{ number_format($related->price, 2) }}
+                                            DH</span>
                                     @else
                                         <h5>{{ number_format($related->price, 2) }} DH</h5>
                                     @endif
@@ -586,73 +673,74 @@
                 </div>
             </div>
         </section>
-        @endif
-        <!-- Related Section End -->
+    @endif
+    <!-- Related Section End -->
 
-    @endsection
+@endsection
 
-    @section('scripts')
-        <!-- Js Plugins -->
-        <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
-        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('js/jquery.nice-select.min.js') }}"></script>
-        <script src="{{ asset('js/jquery.nicescroll.min.js') }}"></script>
-        <script src="{{ asset('js/jquery.magnific-popup.min.js') }}"></script>
-        <script src="{{ asset('js/jquery.countdown.min.js') }}"></script>
-        <script src="{{ asset('js/jquery.slicknav.js') }}"></script>
-        <script src="{{ asset('js/mixitup.min.js') }}"></script>
-        <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
-        <script src="{{ asset('js/main.js') }}"></script>
-        
-        <script>
+@section('scripts')
+    <!-- Js Plugins -->
+    <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.nice-select.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.nicescroll.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.countdown.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.slicknav.js') }}"></script>
+    <script src="{{ asset('js/mixitup.min.js') }}"></script>
+    <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
+
+    <script>
         // Changer l'image principale
         function changeMainImage(thumb, imageUrl) {
             document.getElementById('main-product-image').src = imageUrl;
             document.querySelectorAll('.product-gallery-thumbs img').forEach(img => img.classList.remove('active'));
             thumb.classList.add('active');
         }
-        
+
         // Ajouter au panier
         function addToCart(productId) {
-            const quantity = document.getElementById('product-qty') ? parseInt(document.getElementById('product-qty').value) || 1 : 1;
+            const quantity = document.getElementById('product-qty') ? parseInt(document.getElementById('product-qty')
+                .value) || 1 : 1;
             const size = document.querySelector('input[name="size"]:checked')?.value || null;
             const color = document.querySelector('input[name="color"]:checked')?.value || null;
-            
+
             fetch('/cart/add', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({
-                    product_id: productId,
-                    quantity: quantity,
-                    size: size,
-                    color: color
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        product_id: productId,
+                        quantity: quantity,
+                        size: size,
+                        color: color
+                    })
                 })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Ouvrir le panier automatiquement
-                    if (typeof openCart === 'function') {
-                        openCart();
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Ouvrir le panier automatiquement
+                        if (typeof openCart === 'function') {
+                            openCart();
+                        }
+                    } else {
+                        alert('Erreur: ' + (data.message || 'Une erreur est survenue'));
                     }
-                } else {
-                    alert('Erreur: ' + (data.message || 'Une erreur est survenue'));
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Erreur lors de l\'ajout au panier');
-            });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Erreur lors de l\'ajout au panier');
+                });
         }
-        
+
         // Ajouter à la wishlist
         function addToWishlist(productId) {
             alert('Fonctionnalité wishlist à venir!');
         }
-        
+
         // Mettre à jour le compteur du panier
         function updateCartCount() {
             fetch('/cart/count')
@@ -665,7 +753,7 @@
                 })
                 .catch(error => console.error('Error updating cart count:', error));
         }
-        
+
         // Sélectionner une couleur et afficher les images correspondantes
         function selectColor(element, colorId) {
             // Mettre à jour la sélection visuelle de la couleur
@@ -676,15 +764,15 @@
             element.style.border = '3px solid #ca1515';
             element.classList.add('selected');
             element.querySelector('input').checked = true;
-            
+
             // Filtrer et afficher les images correspondant à la couleur sélectionnée
             const allThumbs = document.querySelectorAll('.gallery-thumb');
             let colorImages = [];
             let firstVisibleImage = null;
-            
+
             allThumbs.forEach(thumb => {
                 const thumbColorId = thumb.getAttribute('data-color-id');
-                
+
                 // Afficher les images qui correspondent à la couleur ou qui n'ont pas de couleur spécifique
                 if (thumbColorId === colorId.toString() || thumbColorId === 'all') {
                     thumb.style.display = 'inline-block';
@@ -696,7 +784,7 @@
                     thumb.style.display = 'none';
                 }
             });
-            
+
             // Si aucune image spécifique à la couleur, afficher toutes les images
             if (colorImages.length === 0) {
                 allThumbs.forEach(thumb => {
@@ -706,12 +794,12 @@
                     }
                 });
             }
-            
+
             // Changer l'image principale pour la première image visible
             if (firstVisibleImage) {
                 const imageUrl = firstVisibleImage.getAttribute('src');
                 changeMainImage(firstVisibleImage, imageUrl);
             }
         }
-        </script>
-    @endsection
+    </script>
+@endsection

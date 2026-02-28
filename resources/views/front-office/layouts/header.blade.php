@@ -346,7 +346,7 @@
         width: 28px;
         height: 28px;
         border: 1px solid var(--primary-color);
-        background: var(--background-color);
+        background: white;
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -358,7 +358,7 @@
 
     .qty-btn:hover {
         background: var(--primary-color);
-        color: var(--primary-text-color);
+        color: white;
         border-color: var(--primary-color);
     }
 
@@ -372,7 +372,7 @@
     .cart-sidebar-footer {
         padding: 25px 30px;
         border-top: 2px solid var(--primary-color);
-        background: var(--background-color);
+        background: white;
     }
 
     .cart-subtotal {
@@ -417,12 +417,12 @@
 
     .cart-btn-primary {
         background: var(--background-color);
-        color: var(--primary-text-color);
+        color: #fff;
     }
 
     .cart-btn-primary:hover {
         background: var(--primary-color);
-        color: var(--primary-text-color);
+        color: white;
     }
 
     .cart-btn-secondary {
@@ -1072,7 +1072,7 @@
         <div class="cart-icon" id="cartToggle">
             <i class="fas fa-shopping-cart"></i>
             <span id="cartCount"
-                style="position: absolute; top: -8px; right: -8px; background: var(--primary-text-color); border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; font-size: 10px;">0</span>
+                style="position: absolute; top: -8px; right: -8px; background: var(--primary-text-color);color:white; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; font-size: 10px;">0</span>
         </div>
     </div>
 </header>
