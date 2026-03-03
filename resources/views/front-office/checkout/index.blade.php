@@ -113,13 +113,13 @@
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>First Name<span>*</span></p>
-                                        <input type="text" name="first_name" value="{{ old('first_name', auth()->user()->name ?? '') }}" required>
+                                        <input type="text" name="first_name" value="{{ old('first_name', auth()->user()->name ?? '') }}" maxlength="255" placeholder="Enter your first name" required>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Last Name<span>*</span></p>
-                                        <input type="text" name="last_name" value="{{ old('last_name') }}" required>
+                                        <input type="text" name="last_name" value="{{ old('last_name') }}" maxlength="255" placeholder="Enter your last name" required>
                                     </div>
                                 </div>
                             </div>
@@ -129,7 +129,7 @@
                             </div> --}}
                             <div class="checkout__input">
                                 <p>Address<span>*</span></p>
-                                <input type="text" name="address" placeholder="Street Address" class="checkout__input__add" value="{{ old('address') }}" required>
+                                <input type="text" name="address" placeholder="Street Address" class="checkout__input__add" value="{{ old('address') }}" maxlength="500" required>
                             </div>
                             {{-- <div class="row">
                                 <div class="col-lg-6">
@@ -161,13 +161,15 @@
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Phone<span>*</span></p>
-                                        <input type="tel" name="phone" value="{{ old('phone') }}" required>
+                                        <input type="tel" name="phone" value="{{ old('phone') }}" maxlength="20" placeholder="0123456789"
+                                               onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0"
+                                               oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Email<span>*</span></p>
-                                        <input type="email" name="email" value="{{ old('email', auth()->user()->email ?? '') }}" required>
+                                        <input type="email" name="email" value="{{ old('email', auth()->user()->email ?? '') }}" maxlength="255" placeholder="your.email@example.com" required>
                                     </div>
                                 </div>
                             </div>
@@ -183,7 +185,7 @@
                             </div>
                             <div class="checkout__input" id="passwordField" style="display: none;">
                                 <p>Account Password<span>*</span></p>
-                                <input type="password" name="password" id="accountPassword">
+                                <input type="password" name="password" id="accountPassword" minlength="8" maxlength="255" placeholder="Min. 8 characters">
                             </div>
                             @endguest
                             <div class="checkout__input__checkbox">
@@ -195,7 +197,7 @@
                             </div>
                             <div class="checkout__input" id="notesField" style="display: none;">
                                 <p>Order notes</p>
-                                <input type="text" name="notes" id="orderNotes"
+                                <input type="text" name="notes" id="orderNotes" maxlength="1000"
                                     placeholder="Notes about your order, e.g. special notes for delivery.">
                             </div>
                         </div>
@@ -343,6 +345,14 @@
         } else {
             $('#notesField').slideUp();
         }
+    });
+
+    // Phone input validation - only allow numbers, +, -, space, parentheses
+    document.querySelector('input[name="phone"]').addEventListener('input', function(e) {
+        let value = e.target.value;
+        // Remove any character that is not a digit, +, -, space, or parentheses
+        value = value.replace(/[^0-9+\s\-\(\)]/g, '');
+        e.target.value = value;
     });
 
     // Form validation

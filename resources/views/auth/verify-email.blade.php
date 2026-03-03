@@ -3,10 +3,10 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Verify Email | BOLDROOTS</title>
+    <title>Verify Email | {{ env("APP_NAME") }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="BOLDROOTS - Urban Streetwear Brand" name="description" />
-    <meta content="BOLDROOTS" name="author" />
+    <meta content="{{ env("APP_NAME") }} - Urban Streetwear Brand" name="description" />
+    <meta content="{{ env("APP_NAME") }}" name="author" />
     <link rel="shortcut icon" href="{{ asset('images/BOLDROOTS-logo.avif') }}">
     
     <!-- Google Fonts -->
@@ -210,7 +210,7 @@
                     $siteLogo = \App\Models\SiteSetting::get('site_logo', 'images/BOLDROOTS-logo.avif');
                     $logoUrl = str_starts_with($siteLogo, 'images/') ? asset($siteLogo) : asset('storage/' . $siteLogo);
                 @endphp
-                <img src="{{ $logoUrl }}" alt="BOLDROOTS">
+                <img src="{{ $logoUrl }}" alt="{{ env("APP_NAME") }}">
                 <h1>Verify Email</h1>
                 <p>Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another.</p>
             </div>

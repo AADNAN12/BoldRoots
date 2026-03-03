@@ -1,6 +1,6 @@
 @extends('front-office.layouts.app')
 
-@section('title', 'Contact Us - BOLDROOTS')
+@section('title', 'Contact Us - {{ env("APP_NAME") }}')
 
 @section('head')
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" type="text/css">
@@ -182,7 +182,7 @@
                             </div>
                             <div class="contact-details">
                                 <h5>Address</h5>
-                                <p>{{ $companyInfo->address ?? 'BOLDROOTS HQ, Fashion District' }}</p>
+                                <p>{{ $companyInfo->address ?? '{{ env("APP_NAME") }} HQ, Fashion District' }}</p>
                             </div>
                         </div>
                         
@@ -292,7 +292,7 @@
                                 <div class="col-md-6 mb-3">
                                     <label for="phone" class="form-label">Phone Number</label>
                                     <input type="tel" class="form-control @error('phone') is-invalid @enderror" 
-                                           id="phone" name="phone" value="{{ old('phone') }}">
+                                           id="phone" name="phone" value="{{ old('phone') }}" maxlength="20" onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="0123456789">
                                     @error('phone')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror

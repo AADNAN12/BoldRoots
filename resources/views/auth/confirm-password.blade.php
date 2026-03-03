@@ -3,10 +3,10 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Confirm Password | BOLDROOTS</title>
+    <title>Confirm Password | {{ env("APP_NAME") }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="BOLDROOTS - Urban Streetwear Brand" name="description" />
-    <meta content="BOLDROOTS" name="author" />
+    <meta content="{{ env("APP_NAME") }} - Urban Streetwear Brand" name="description" />
+    <meta content="{{ env("APP_NAME") }}" name="author" />
     <link rel="shortcut icon" href="{{ asset('images/BOLDROOTS-logo.avif') }}">
     
     <!-- Google Fonts -->
@@ -289,7 +289,7 @@
                     $siteLogo = \App\Models\SiteSetting::get('site_logo', 'images/BOLDROOTS-logo.avif');
                     $logoUrl = str_starts_with($siteLogo, 'images/') ? asset($siteLogo) : asset('storage/' . $siteLogo);
                 @endphp
-                <img src="{{ $logoUrl }}" alt="BOLDROOTS">
+                <img src="{{ $logoUrl }}" alt="{{ env("APP_NAME") }}">
                 <h1>Confirm Password</h1>
                 <p>Please confirm your password to continue</p>
             </div>

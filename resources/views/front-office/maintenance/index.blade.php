@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maintenance - BOLDROOTS</title>
+    <title>Maintenance - {{ env("APP_NAME") }}</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="{{ asset('images/BOLDROOTS-logo.avif') }}" rel="icon">
     @php
@@ -446,7 +446,7 @@
                 $siteLogo = \App\Models\SiteSetting::get('site_logo', 'images/BOLDROOTS-logo.avif');
                 $logoUrl = str_starts_with($siteLogo, 'images/') ? asset($siteLogo) : asset('storage/' . $siteLogo);
             @endphp
-            <img src="{{ $logoUrl }}" alt="BOLDROOTS" class="logo">
+            <img src="{{ $logoUrl }}" alt="{{ env("APP_NAME") }}" class="logo">
 
             <h1 class="title">{{ $title }}</h1>
 

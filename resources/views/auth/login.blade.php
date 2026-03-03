@@ -3,10 +3,10 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Login | BOLDROOTS</title>
+    <title>Login | {{ env("APP_NAME") }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="BOLDROOTS - Urban Streetwear Brand" name="description" />
-    <meta content="BOLDROOTS" name="author" />
+    <meta content="{{ env("APP_NAME") }} - Urban Streetwear Brand" name="description" />
+    <meta content="{{ env("APP_NAME") }}" name="author" />
     <link rel="shortcut icon" href="{{ asset('images/BOLDROOTS-logo.avif') }}">
     
     <!-- Google Fonts -->

@@ -1,5 +1,5 @@
 @extends('front-office.layouts.app')
-@section('title', 'Premium Collection - BOLDROOTS')
+@section('title', 'WELCOME TO - {{ env("APP_NAME") }}')
 @section('head')
 @endsection
 @section('styles')
@@ -392,7 +392,7 @@
                 <div class="col-md-10 col-lg-8">
                     <p class="philosophy-text">
                          {!! \App\Models\SiteSetting::get('about_text', '
-                            BOLDROOTS was born from a vision to create more than just clothing – we create a lifestyle. 
+                            {{ env("APP_NAME") }} was born from a vision to create more than just clothing – we create a lifestyle. 
                             Our journey began with a simple belief: that fashion should empower, inspire, and reflect 
                             the bold spirit within each of us.
                             <br><br>
@@ -400,7 +400,7 @@
                             We don\'t just follow trends; we set them. Our collections are crafted for those who dare 
                             to be different, who embrace challenges, and who live by the mantra: Struggle, Endure, Win.
                             <br><br>
-                            From our humble beginnings to becoming a recognized name in urban fashion, BOLDROOTS has 
+                            From our humble beginnings to becoming a recognized name in urban fashion, {{ env("APP_NAME") }} has 
                             remained committed to quality, innovation, and the relentless pursuit of excellence. 
                             We are more than a brand – we are a movement.
                             ') !!}

@@ -1,5 +1,5 @@
 @extends('front-office.layouts.app')
-@section('title', 'Welcome To BOLDROOTS - The Eclipse Collection')
+@section('title', 'Welcome To {{ env("APP_NAME") }} - The Eclipse Collection')
 @section('head')
 @endsection
 @section('styles')

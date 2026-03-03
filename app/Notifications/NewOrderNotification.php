@@ -27,7 +27,7 @@ class NewOrderNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('New Order #' . $this->order->order_number)
+            ->subject('New Order #' . $this->order->order_number. ' (' . env("APP_NAME").')')
             ->view('emails.new-order', [
                 'order' => $this->order,
             ]);

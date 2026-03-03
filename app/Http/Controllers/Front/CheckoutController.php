@@ -232,15 +232,35 @@ class CheckoutController extends Controller
             
             Log::info('Commande créée avec succès', ['order_id' => $order->id]);
 
-            // Envoyer notification à TOUS les Super Admins
+            // Envoyer notification aux Super Admins avec emails valides
             $order->load(['items.product', 'user']);
-            $superAdmins = User::role('Super Admin')->get();
-            if ($superAdmins->isEmpty()) {
-                Notification::route('mail', config('mail.from.address'))
-                    ->notify(new NewOrderNotification($order));
+            $superAdmins = User::role('Super Admin')
+                ->whereNotNull('email')
+                ->where('email', '!=', '')
+                ->get();
+
+            // Filtrer les admins avec des emails valides
+            $validAdmins = $superAdmins->filter(function ($admin) {
+                return filter_var($admin->email, FILTER_VALIDATE_EMAIL) !== false;
+            });
+
+            if ($validAdmins->isEmpty()) {
+                $fallbackEmail = config('mail.from.address');
+                if (filter_var($fallbackEmail, FILTER_VALIDATE_EMAIL)) {
+                    try {
+                        Notification::route('mail', $fallbackEmail)
+                            ->notify(new NewOrderNotification($order));
+                    } catch (\Exception $e) {
+                        Log::error('Failed to send order notification to fallback email: ' . $e->getMessage());
+                    }
+                }
             } else {
-                foreach ($superAdmins as $admin) {
-                    $admin->notify(new NewOrderNotification($order));
+                foreach ($validAdmins as $admin) {
+                    try {
+                        $admin->notify(new NewOrderNotification($order));
+                    } catch (\Exception $e) {
+                        Log::error('Failed to send order notification to admin ' . $admin->email . ': ' . $e->getMessage());
+                    }
                 }
             }
 

@@ -65,7 +65,7 @@
 </head>
 <body>
     <div class="header">
-        <h1>BOLDROOTS - CONTACT MESSAGE</h1>
+        <h1>{{ env("APP_NAME") }} - CONTACT MESSAGE</h1>
     </div>
     
     <div class="content">
@@ -98,7 +98,7 @@
     </div>
     
     <div class="footer">
-        <p>This email was sent from the BOLDROOTS Contact form.</p>
+        <p>This email was sent from the {{ env("APP_NAME") }} Contact form.</p>
     </div>
 </body>
 </html>

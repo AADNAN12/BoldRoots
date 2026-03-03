@@ -596,7 +596,7 @@
                                         <input type="text"
                                             class="form-control @error('maintenance_password') is-invalid @enderror"
                                             id="maintenance_password" name="maintenance_password"
-                                            value="{{ old('maintenance_password', $settings['maintenance_password']->value ?? 'boldroots2024') }}"
+                                            value="{{ old('maintenance_password', $settings['maintenance_password']->value ?? '') }}"
                                             placeholder="boldroots2024">
                                         @error('maintenance_password')
                                             <div class="invalid-feedback">{{ $message }}</div>

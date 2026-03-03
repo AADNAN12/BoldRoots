@@ -158,7 +158,7 @@ ol {
 
 .primary-btn {
 	display: inline-block;
-	font-size: 14px;
+	font-size: 10px !important;
 	font-weight: 600;
 	text-transform: uppercase;
 	padding: 16px 32px;
@@ -210,6 +210,7 @@ ol {
 	display: inline-block;
 	padding: 14px 30px;
 }
+
 
 /* Preloder */
 
@@ -991,7 +992,7 @@ ol {
 }
 
 .product__item:hover .product__item__text a {
-	top: 12px;
+	top: 0px;
 	opacity: 1;
 	visibility: visible;
 }
@@ -2707,7 +2708,6 @@ ol {
 	width: 100%;
 	margin-top: 8px;
 }
-
 .checkout__order__products {
 	font-size: 16px;
 	color: #111111;

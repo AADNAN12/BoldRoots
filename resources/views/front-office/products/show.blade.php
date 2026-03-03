@@ -1,5 +1,5 @@
 @extends('front-office.layouts.app')
-@section('title', $product->name . ' - BOLDROOTS')
+@section('title', $product->name . ' - {{ env("APP_NAME") }}')
 @section('head')
     <!-- Css Styles -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" type="text/css">

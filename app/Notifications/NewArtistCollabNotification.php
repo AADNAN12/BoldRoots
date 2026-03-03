@@ -29,7 +29,7 @@ class NewArtistCollabNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Nouvelle demande de Collab : ' . $this->data['first_name'])
+            ->subject('Nouvelle demande de Collab : ' . $this->data['first_name']. ' (' . env("APP_NAME").')')
             // On réutilise votre vue existante 'emails.artists-collab'
             ->view('emails.artists-collab', [
                 'first_name' => $this->data['first_name'],

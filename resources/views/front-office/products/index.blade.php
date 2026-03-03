@@ -1,5 +1,5 @@
 @extends('front-office.layouts.app')
-@section('title', 'Welcome To BOLDROOTS')
+@section('title', 'Welcome To {{ env("APP_NAME") }}')
 @section('head')
     <!-- Css Styles -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" type="text/css">
@@ -17,7 +17,7 @@
             pointer-events: none;
             background-color: #f5f5f5;
         }
-        
+
         .product__pagination a.disabled:hover {
             border-color: #e5e5e5;
         }
@@ -61,6 +61,42 @@
         .product__item__pic .label-new {
             z-index: 3;
         }
+
+        /* Shop Now / View Details Button */
+        .shop-now {
+            display: inline-block !important;
+            font-size: 12px !important;
+            font-weight: 700 !important;
+            letter-spacing: 1px !important;
+            text-transform: uppercase !important;
+            padding: 12px 28px !important;
+            color: var(--primary-text-color) !important;
+            background: linear-gradient(135deg, var(--primary-color) 10%, var(--primary-text-color) 100%) !important;
+            border: none !important;
+            border-radius: 30px !important;
+            cursor: pointer !important;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            position: absolute !important;
+            overflow: hidden !important;
+            text-decoration: none !important;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+        }
+
+        .shop-now:hover {
+            color: var(--primary-text-color) !important;
+            transform: translateY(-3px) !important;
+            box-shadow: 0 8px 25px rgba(var(--primary-color-rgb), 0.4) !important;
+        }
+
+        .shop-now:active {
+            transform: translateY(-1px) !important;
+            box-shadow: 0 4px 15px rgba(var(--primary-color-rgb), 0.3) !important;
+        }
+
+        .shop-now span {
+            position: relative !important;
+            z-index: 1 !important;
+        }
     </style>
 @endsection
 @section('content')
@@ -90,7 +126,8 @@
                     <div class="shop__sidebar">
                         <div class="shop__sidebar__search">
                             <form action="{{ route('products.index') }}" method="GET">
-                                <input type="text" name="search" placeholder="Search..." value="{{ request('search') }}">
+                                <input type="text" name="search" placeholder="Search..."
+                                    value="{{ request('search') }}">
                                 <button type="submit"><span class="icon_search"></span></button>
                             </form>
                         </div>
@@ -105,14 +142,15 @@
                                             <div class="shop__sidebar__categories">
                                                 <ul class="nice-scroll">
                                                     <li>
-                                                        <a href="{{ route('products.index') }}" class="{{ !request('category') ? 'active' : '' }}">
+                                                        <a href="{{ route('products.index') }}"
+                                                            class="{{ !request('category') ? 'active' : '' }}">
                                                             Tous les produits ({{ $products->total() }})
                                                         </a>
                                                     </li>
-                                                    @foreach($categories as $cat)
+                                                    @foreach ($categories as $cat)
                                                         <li>
-                                                            <a href="{{ route('products.index', ['category' => $cat->slug]) }}" 
-                                                               class="{{ request('category') == $cat->slug ? 'active' : '' }}">
+                                                            <a href="{{ route('products.index', ['category' => $cat->slug]) }}"
+                                                                class="{{ request('category') == $cat->slug ? 'active' : '' }}">
                                                                 {{ $cat->name }} ({{ $cat->products_count }})
                                                             </a>
                                                         </li>
@@ -131,7 +169,8 @@
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="shop__product__option__left">
-                                    <p>Showing {{ $products->firstItem() ?? 0 }}–{{ $products->lastItem() ?? 0 }} of {{ $products->total() }} results</p>
+                                    <p>Showing {{ $products->firstItem() ?? 0 }}–{{ $products->lastItem() ?? 0 }} of
+                                        {{ $products->total() }} results</p>
                                 </div>
                             </div>
                         </div>
@@ -142,7 +181,7 @@
                                 $hasPromotion = $product->promotions->isNotEmpty();
                                 $finalPrice = $product->price;
                                 $discountPercent = 0;
-                                
+
                                 if ($hasPromotion) {
                                     $promotion = $product->promotions->first();
                                     if ($promotion->discount_type === 'percentage') {
@@ -153,12 +192,12 @@
                                         $discountPercent = (($product->price - $finalPrice) / $product->price) * 100;
                                     }
                                 }
-                                
+
                                 $homepageImg = $product->images->where('is_homepage_image', 1)->first();
-                                $imageUrl = $homepageImg 
-                                    ? asset('storage/' . $homepageImg->image_path) 
+                                $imageUrl = $homepageImg
+                                    ? asset('storage/' . $homepageImg->image_path)
                                     : asset('images/No-Product-Image-Available.webp');
-                                
+
                                 $backImg = null;
                                 if ($homepageImg) {
                                     $backImg = $product->images
@@ -172,26 +211,30 @@
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="product__item {{ $hasPromotion ? 'sale' : '' }}">
                                     <a href="{{ route('products.show', $product) }}">
-                                    <div class="product__item__pic" style="position: relative;">
-                                        <div class="product-img-front" style="background-image: url('{{ $imageUrl }}');"></div>
-                                        @if($backImageUrl)
-                                            <div class="product-img-back" style="background-image: url('{{ $backImageUrl }}');"></div>
-                                        @endif
-                                        @if($hasPromotion)
-                                            <span class="label">-{{ number_format($discountPercent, 0) }}%</span>
-                                        @endif
-                                        @if($product->new_product_badge)
-                                            <span class="label-new">{{ $product->new_product_badge }}</span>
-                                        @endif
-                                    </div>
+                                        <div class="product__item__pic" style="position: relative;">
+                                            <div class="product-img-front"
+                                                style="background-image: url('{{ $imageUrl }}');"></div>
+                                            @if ($backImageUrl)
+                                                <div class="product-img-back"
+                                                    style="background-image: url('{{ $backImageUrl }}');"></div>
+                                            @endif
+                                            @if ($hasPromotion)
+                                                <span class="label">-{{ number_format($discountPercent, 0) }}%</span>
+                                            @endif
+                                            @if ($product->new_product_badge)
+                                                <span class="label-new">{{ $product->new_product_badge }}</span>
+                                            @endif
+                                        </div>
                                     </a>
                                     <div class="product__item__text">
                                         <h6>{{ $product->name }}</h6>
-                                        <a href="{{ route('products.show', $product) }}" class="add-cart" >View Details</a>
+                                        <a href="{{ route('products.show', $product) }}" class="shop-now">Shop Now</a>
                                         <div class="product__price">
-                                            @if($hasPromotion)
+                                            @if ($hasPromotion)
                                                 <h5>{{ number_format($finalPrice, 2) }} DH</h5>
-                                                <span class="text-muted" style="text-decoration: line-through;">{{ number_format($product->price, 2) }} DH</span>
+                                                <span class="text-muted"
+                                                    style="text-decoration: line-through;">{{ number_format($product->price, 2) }}
+                                                    DH</span>
                                             @else
                                                 <h5>{{ number_format($product->price, 2) }} DH</h5>
                                             @endif
@@ -207,14 +250,15 @@
                             </div>
                         @endforelse
                     </div>
-                    @if($products->hasPages())
+                    @if ($products->hasPages())
                         <div class="row mb-4">
                             <div class="col-lg-12">
                                 <div class="product__pagination">
                                     @if ($products->onFirstPage())
                                         <a href="#" class="disabled"><i class="fa fa-long-arrow-left"></i></a>
                                     @else
-                                        <a href="{{ $products->previousPageUrl() }}"><i class="fa fa-long-arrow-left"></i></a>
+                                        <a href="{{ $products->previousPageUrl() }}"><i
+                                                class="fa fa-long-arrow-left"></i></a>
                                     @endif
 
                                     @foreach ($products->getUrlRange(1, $products->lastPage()) as $page => $url)
@@ -226,7 +270,8 @@
                                     @endforeach
 
                                     @if ($products->hasMorePages())
-                                        <a href="{{ $products->nextPageUrl() }}"><i class="fa fa-long-arrow-right"></i></a>
+                                        <a href="{{ $products->nextPageUrl() }}"><i
+                                                class="fa fa-long-arrow-right"></i></a>
                                     @else
                                         <a href="#" class="disabled"><i class="fa fa-long-arrow-right"></i></a>
                                     @endif

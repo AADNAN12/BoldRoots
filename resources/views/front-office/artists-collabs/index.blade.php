@@ -1,6 +1,6 @@
 @extends('front-office.layouts.app')
 
-@section('title', 'Artists Collabs - BOLDROOTS')
+@section('title', 'Artists Collabs - {{ env("APP_NAME") }}')
 
 @section('head')
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" type="text/css">
@@ -147,7 +147,7 @@
     <section class="collab-header">
         <div class="container">
             <h1>ARTISTS COLLABS</h1>
-            <p>Join forces with BOLDROOTS and create something unique</p>
+            <p>Join forces with {{ env("APP_NAME") }} and create something unique</p>
         </div>
     </section>
 
@@ -274,7 +274,7 @@
                                 <div class="col-md-6 mb-3">
                                     <label for="first_name" class="form-label">First Name *</label>
                                     <input type="text" class="form-control @error('first_name') is-invalid @enderror" 
-                                           id="first_name" name="first_name" value="{{ old('first_name') }}" required>
+                                           id="first_name" name="first_name" value="{{ old('first_name') }}" maxlength="255" pattern="[A-Za-z\s\-\.]+" placeholder="Enter your first name" required>
                                     @error('first_name')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -283,7 +283,7 @@
                                 <div class="col-md-6 mb-3">
                                     <label for="last_name" class="form-label">Last Name *</label>
                                     <input type="text" class="form-control @error('last_name') is-invalid @enderror" 
-                                           id="last_name" name="last_name" value="{{ old('last_name') }}" required>
+                                           id="last_name" name="last_name" value="{{ old('last_name') }}" maxlength="255" pattern="[A-Za-z\s\-\.]+" placeholder="Enter your last name" required>
                                     @error('last_name')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -293,6 +293,7 @@
                                     <label for="social_handle" class="form-label">Instagram or TikTok Handle *</label>
                                     <input type="text" class="form-control @error('social_handle') is-invalid @enderror" 
                                            id="social_handle" name="social_handle" value="{{ old('social_handle') }}" 
+                                           maxlength="50" pattern="[@_a-zA-Z0-9\.]+"
                                            placeholder="@yourusername" required>
                                     @error('social_handle')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -311,7 +312,7 @@
                                 <div class="col-12 mb-3">
                                     <label for="message" class="form-label">Tell us about yourself and your collaboration idea *</label>
                                     <textarea class="form-control @error('message') is-invalid @enderror" 
-                                              id="message" name="message" rows="6" required 
+                                              id="message" name="message" rows="6" maxlength="5000" required 
                                               placeholder="Share your artistic background, style, and what kind of collaboration you have in mind...">{{ old('message') }}</textarea>
                                     @error('message')
                                         <div class="invalid-feedback">{{ $message }}</div>

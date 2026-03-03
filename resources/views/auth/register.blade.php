@@ -3,10 +3,10 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Sign Up | BOLDROOTS</title>
+    <title>Sign Up | {{ env("APP_NAME") }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="BOLDROOTS - Urban Streetwear Brand" name="description" />
-    <meta content="BOLDROOTS" name="author" />
+    <meta content="{{ env("APP_NAME") }} - Urban Streetwear Brand" name="description" />
+    <meta content="{{ env("APP_NAME") }}" name="author" />
     <link rel="shortcut icon" href="{{ asset('images/BOLDROOTS-logo.avif') }}">
     
     <!-- Google Fonts -->
@@ -413,12 +413,12 @@
         <div class="register-card">
             <!-- Logo -->
             <a href="{{ route('home') }}" class="logo-link">
-                <img src="{{ asset('images/BOLDROOTS-logo.avif') }}" alt="BOLDROOTS">
+                <img src="{{ asset('images/BOLDROOTS-logo.avif') }}" alt="{{ env("APP_NAME") }}">
             </a>
 
             <!-- Title -->
             <h1 class="register-title">CREATE ACCOUNT</h1>
-            <p class="register-subtitle">Join BOLDROOTS and enjoy our premium urban streetwear collection.</p>
+            <p class="register-subtitle">Join {{ env("APP_NAME") }} and enjoy our premium urban streetwear collection.</p>
 
             <!-- Error Messages -->
             @if ($errors->any())

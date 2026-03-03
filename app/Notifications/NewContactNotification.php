@@ -26,7 +26,7 @@ class NewContactNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('New Contact Message: ' . $this->data['subject'])
+            ->subject('New Contact Message: ' . $this->data['subject']. ' (' . env("APP_NAME").')')
             ->view('emails.contact', [
                 'name' => $this->data['name'],
                 'email' => $this->data['email'],

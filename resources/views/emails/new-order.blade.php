@@ -92,7 +92,7 @@
 </head>
 <body>
     <div class="header">
-        <h1>BOLDROOTS - NEW ORDER</h1>
+        <h1>{{ env("APP_NAME") }} - NEW ORDER</h1>
     </div>
     
     <div class="content">
@@ -207,7 +207,7 @@
     </div>
     
     <div class="footer">
-        <p>This email was sent from the BOLDROOTS order system.</p>
+        <p>This email was sent from the {{ env("APP_NAME") }} order system.</p>
     </div>
 </body>
 </html>
