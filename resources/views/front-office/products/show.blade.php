@@ -47,7 +47,7 @@
         }
 
         .product__details__pic__item {
-            background: #f8f9fa;
+            background: #ffffffff;
             border-radius: 10px;
             padding: 20px;
             display: flex;
