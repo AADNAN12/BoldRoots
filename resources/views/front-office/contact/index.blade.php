@@ -182,7 +182,7 @@
                             </div>
                             <div class="contact-details">
                                 <h5>Address</h5>
-                                <p>{{ $companyInfo->address ?? '{{ env("APP_NAME") }} HQ, Fashion District' }}</p>
+                                <p>{{ $companyInfo->address ?? 'BOLDROOTS HQ, Fashion District' }}</p>
                             </div>
                         </div>
                         
