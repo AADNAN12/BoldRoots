@@ -81,43 +81,21 @@
 <div class="wrapper">
     <table class="table header-table">
         <tr>
-            <td class="invoice-info-section">
+            <td class="logo-section" style="width: 50%; text-align: left; vertical-align: top;">
+                @if($company && $company->logo_path)
+                    <div style="margin-bottom: 10px;">
+                        <img src="{{ public_path('storage/' . $company->logo_path) }}" alt="Logo" style="max-width: 200px; max-height: 100px;">
+                    </div>
+                @else
+                    <div class="company-name">{{ $company->company_name ?? 'VOTRE ENTREPRISE' }}</div>
+                @endif
+            </td>
+            <td class="facture-section" style="width: 50%; text-align: right; vertical-align: top;">
                 <div class="invoice-label">FACTURE</div>
                 <div style="font-size: 12px;">
                     <strong>N°:</strong> {{ $invoice->invoice_number }}<br>
                     <strong>Date:</strong> {{ $invoice->invoice_date->format('d/m/Y') }}<br>
                     <strong>Échéance:</strong> {{ $invoice->due_date->format('d/m/Y') }}
-                </div>
-            </td>
-            <td class="company-info-section">
-                @if($company && $company->logo_path)
-                    <div style="margin-bottom: 10px;">
-                        <img src="{{ public_path('storage/' . $company->logo_path) }}" alt="Logo" style="max-width: 120px; max-height: 60px;">
-                    </div>
-                @endif
-                <div class="company-name">{{ $company->company_name ?? 'VOTRE ENTREPRISE' }}</div>
-                <div style="color: #555; font-size: 10px;">
-                    @if($company)
-                        {{ $company->address_line1 }}<br>
-                        @if($company->address_line2)
-                            {{ $company->address_line2 }}<br>
-                        @endif
-                        {{ $company->city }}, {{ $company->postal_code }}<br>
-                        @if($company->tax_number)
-                            ICE: {{ $company->tax_number }}<br>
-                        @endif
-                        @if($company->phone)
-                            Tél: {{ $company->phone }}<br>
-                        @endif
-                        @if($company->email)
-                            Email: {{ $company->email }}
-                        @endif
-                    @else
-                        Ville, Pays<br>
-                        ICE: 00000000000000<br>
-                        Tél: +212 6 00 00 00 00<br>
-                        Email: contact@votre-entreprise.com
-                    @endif
                 </div>
             </td>
         </tr>
@@ -223,3 +201,4 @@
 
 </body>
 </html>
+

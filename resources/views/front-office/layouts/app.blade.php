@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ env("APP_NAME") }} - @yield('title')</title>
+    
+    {{-- Tracking Pixels (Google Analytics, Facebook, TikTok) --}}
+    @include('front-office.partials.tracking-pixels')
+    
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="{{ asset('images/BOLDROOTS-logo.avif') }}" rel="icon">

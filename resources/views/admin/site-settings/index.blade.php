@@ -64,6 +64,11 @@
                                 <i class="mdi mdi-music me-2 fs-5"></i>
                                 <span>Audio d'Arrière-plan</span>
                             </a>
+                            <a class="nav-link d-flex align-items-center" id="v-pills-tracking-tab" data-bs-toggle="pill"
+                                href="#v-pills-tracking" role="tab" aria-controls="v-pills-tracking" aria-selected="false">
+                                <i class="mdi mdi-chart-bar me-2 fs-5"></i>
+                                <span>Pixels de Suivi</span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -736,6 +741,75 @@
                             <div class="d-grid gap-2 mb-4">
                                 <button type="submit" class="btn btn-primary btn-lg">
                                     <i class="mdi mdi-content-save me-2"></i> Enregistrer les Paramètres Audio
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- TAB 5: Pixels de Suivi -->
+                    <div class="tab-pane fade" id="v-pills-tracking" role="tabpanel" aria-labelledby="v-pills-tracking-tab">
+                        <form action="{{ route('admin.settings.update') }}" method="POST">
+                            @csrf
+
+                            <div class="card border-0 shadow-sm mb-4">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="bg-info bg-opacity-10 rounded p-2 me-2">
+                                            <i class="mdi mdi-chart-bar text-info fs-4"></i>
+                                        </div>
+                                        <h5 class="mb-0">Pixels de Suivi</h5>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="google_analytics_id" class="form-label">
+                                            <i class="mdi mdi-google-analytics me-1"></i> Google Analytics ID
+                                        </label>
+                                        <input type="text"
+                                            class="form-control @error('google_analytics_id') is-invalid @enderror"
+                                            id="google_analytics_id" name="google_analytics_id"
+                                            value="{{ old('google_analytics_id', $settings['google_analytics_id']->value ?? '') }}"
+                                            placeholder="G-XXXXXXXXXX ou UA-XXXXXXXX-X">
+                                        @error('google_analytics_id')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                        <small class="text-muted">Entrez votre ID de mesure Google Analytics 4 (ex: G-XXXXXXXXXX) ou Universal Analytics (UA-XXXXXXXX-X)</small>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="facebook_pixel_id" class="form-label">
+                                            <i class="mdi mdi-facebook me-1"></i> Facebook (Meta) Pixel ID
+                                        </label>
+                                        <input type="text"
+                                            class="form-control @error('facebook_pixel_id') is-invalid @enderror"
+                                            id="facebook_pixel_id" name="facebook_pixel_id"
+                                            value="{{ old('facebook_pixel_id', $settings['facebook_pixel_id']->value ?? '') }}"
+                                            placeholder="XXXXXXXXXXXXXXXX">
+                                        @error('facebook_pixel_id')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                        <small class="text-muted">Entrez votre ID de pixel Facebook (ex: 1234567890123456). Disponible dans Events Manager.</small>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="tiktok_pixel_id" class="form-label">
+                                            <i class="mdi mdi-music-note me-1"></i> TikTok Pixel ID
+                                        </label>
+                                        <input type="text"
+                                            class="form-control @error('tiktok_pixel_id') is-invalid @enderror"
+                                            id="tiktok_pixel_id" name="tiktok_pixel_id"
+                                            value="{{ old('tiktok_pixel_id', $settings['tiktok_pixel_id']->value ?? '') }}"
+                                            placeholder="XXXXXXXXXXXXXXXX">
+                                        @error('tiktok_pixel_id')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                        <small class="text-muted">Entrez votre ID de pixel TikTok. Disponible dans TikTok Ads Manager > Assets > Pixels.</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-grid gap-2 mb-4">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="mdi mdi-content-save me-2"></i> Enregistrer les Pixels de Suivi
                                 </button>
                             </div>
                         </form>

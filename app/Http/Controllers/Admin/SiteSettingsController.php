@@ -57,6 +57,9 @@ class SiteSettingsController extends Controller
             'maintenance_bg_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'cursor_normal' => 'nullable|image|mimes:png,ico,cur,webp|max:1024',
             'cursor_hover' => 'nullable|image|mimes:png,ico,cur,webp|max:1024',
+            'google_analytics_id' => 'nullable|string|max:50',
+            'facebook_pixel_id' => 'nullable|string|max:50',
+            'tiktok_pixel_id' => 'nullable|string|max:50',
         ]);
 
         if ($request->filled('home_page_type')) {
@@ -239,6 +242,19 @@ class SiteSettingsController extends Controller
             
             $path = $request->file('cursor_hover')->store('cursors', 'public');
             SiteSetting::set('cursor_hover', $path, 'image', 'appearance');
+        }
+
+        // Sauvegarder les IDs des pixels de suivi
+        if ($request->has('google_analytics_id')) {
+            SiteSetting::set('google_analytics_id', $request->google_analytics_id, 'text', 'tracking');
+        }
+        
+        if ($request->has('facebook_pixel_id')) {
+            SiteSetting::set('facebook_pixel_id', $request->facebook_pixel_id, 'text', 'tracking');
+        }
+        
+        if ($request->has('tiktok_pixel_id')) {
+            SiteSetting::set('tiktok_pixel_id', $request->tiktok_pixel_id, 'text', 'tracking');
         }
 
         return redirect()->route('admin.settings.index')->with('success', 'Paramètres mis à jour avec succès');

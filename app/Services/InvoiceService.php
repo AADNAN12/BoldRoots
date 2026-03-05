@@ -107,24 +107,23 @@ class InvoiceService
                 'margin_footer' => 10,
             ]);
 
-            // En-tête personnalisé
+            // En-tête personnalisé - Logo gauche, Infos entreprise droite
             $mpdf->SetHTMLHeader('
                 <div style="width: 100%;">
                     <table style="width: 100%;">
                         <tr>
-                            <td style="width: 60%; vertical-align: top;">
+                            <td style="width: 40%; vertical-align: top; text-align: left;">
                                 <div>
-                                    ' . ($companyInfo->logo_path ? '<img src="' . public_path('storage/' . $companyInfo->logo) . '" alt="Logo" width="200">' : '') . '
+                                    ' . ($companyInfo->logo_path ? '<img src="' . public_path('storage/' . $companyInfo->logo) . '" alt="Logo" width="200">' : '<div style="font-size: 24px; font-weight: bold;">' . ($companyInfo->name ?? '') . '</div>') . '
                                 </div>
                             </td>
-                            <td style="width: 40%; text-align: right; vertical-align: top;">
+                            <td style="width: 60%; text-align: right; vertical-align: top; font-size: 10px; line-height: 1.6;">
                                 <div>
-                                    <h3 style="margin: 0;">' . ($companyInfo->name ?? '') . '</h3>
-                                    <p style="font-size: 12px; margin: 2px 0;">' . ($companyInfo->address ?? '') . '</p>
-                                    <p style="font-size: 12px; margin: 2px 0;">' . ($companyInfo->city ?? '') . ', ' . ($companyInfo->postal_code ?? '') . '</p>
-                                    ' . ($companyInfo->phone ? '<p style="font-size: 12px; margin: 2px 0;">Tél: ' . $companyInfo->phone . '</p>' : '') . '
-                                    ' . ($companyInfo->email ? '<p style="font-size: 12px; margin: 2px 0;">Email: ' . $companyInfo->email . '</p>' : '') . '
-                                    ' . ($companyInfo->tax_number ? '<p style="font-size: 12px; margin: 2px 0;">N° TVA: ' . $companyInfo->tax_number . '</p>' : '') . '
+                                    <h3 style="margin: 0 0 8px 0; font-size: 14px; text-transform: uppercase;">' . ($companyInfo->name ?? 'VOTRE ENTREPRISE') . '</h3>
+                                    <p style="margin: 2px 0;">' . ($companyInfo->address ?? '123 Avenue Mohammed V') . ', ' . ($companyInfo->city ?? 'Hay Riad') . ', ' . ($companyInfo->postal_code ?? 'Rabat') . '</p>
+                                    ' . ($companyInfo->tax_number ? '<p style="margin: 2px 0;"><strong>Registre de Commerce:</strong> ' . substr($companyInfo->tax_number, 0, 5) . '</p><p style="margin: 2px 0;"><strong>Identification Fiscale:</strong> ' . substr($companyInfo->tax_number, 0, 7) . '</p><p style="margin: 2px 0;"><strong>ICE :</strong> ' . $companyInfo->tax_number . '</p>' : '<p style="margin: 2px 0;"><strong>Registre de Commerce:</strong> 12345</p><p style="margin: 2px 0;"><strong>Identification Fiscale:</strong> 1234567</p><p style="margin: 2px 0;"><strong>ICE :</strong> 001234567890123</p>') . '
+                                    <p style="margin: 2px 0;"><strong>Rib:</strong> 007 780 1234567891234561 2</p>
+                                    <p style="margin: 2px 0;"><strong>Téléphone1:</strong> ' . ($companyInfo->phone ?? '05 2212-3456') . '</p>
                                 </div>
                             </td>
                         </tr>
@@ -310,5 +309,97 @@ class InvoiceService
         }
 
         return $query->orderBy('invoice_date', 'desc')->paginate($filters['per_page'] ?? 20);
+    }
+
+    
+    /**
+     * Generate PDF for invoice as string (for email attachment)
+     */
+    public function generateInvoicePDFAsString($invoiceId)
+    {
+        try {
+            set_time_limit(120);
+            
+            $invoice = Invoice::with([
+                'order.user',
+                'order.items.product',
+                'order.promotion',
+                'order.coupon'
+            ])->findOrFail($invoiceId);
+
+            $companyInfo = CompanyInfo::first();
+
+            $mpdf = new Mpdf([
+                'mode' => 'utf-8',
+                'format' => 'A4',
+                'margin_left' => 10,
+                'margin_right' => 10,
+                'margin_top' => 60,
+                'margin_bottom' => 20,
+                'margin_header' => 10,
+                'margin_footer' => 10,
+            ]);
+
+            // En-tête personnalisé - Logo gauche, Infos entreprise droite
+            $mpdf->SetHTMLHeader('
+                <div style="width: 100%;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td style="width: 40%; vertical-align: top; text-align: left;">
+                                <div>
+                                    ' . ($companyInfo->logo_path ? '<img src="' . public_path('storage/' . $companyInfo->logo) . '" alt="Logo" width="200">' : '<div style="font-size: 24px; font-weight: bold;">' . ($companyInfo->name ?? '') . '</div>') . '
+                                </div>
+                            </td>
+                            <td style="width: 60%; text-align: right; vertical-align: top; font-size: 10px; line-height: 1.6;">
+                                <div>
+                                    <h3 style="margin: 0 0 8px 0; font-size: 14px; text-transform: uppercase;">' . ($companyInfo->name ?? 'VOTRE ENTREPRISE') . '</h3>
+                                    <p style="margin: 2px 0;">' . ($companyInfo->address ?? '123 Avenue Mohammed V') . ', ' . ($companyInfo->city ?? 'Hay Riad') . ', ' . ($companyInfo->postal_code ?? 'Rabat') . '</p>
+                                    ' . ($companyInfo->tax_number ? '<p style="margin: 2px 0;"><strong>Registre de Commerce:</strong> ' . substr($companyInfo->tax_number, 0, 5) . '</p><p style="margin: 2px 0;"><strong>Identification Fiscale:</strong> ' . substr($companyInfo->tax_number, 0, 7) . '</p><p style="margin: 2px 0;"><strong>ICE :</strong> ' . $companyInfo->tax_number . '</p>' : '<p style="margin: 2px 0;"><strong>Registre de Commerce:</strong> 12345</p><p style="margin: 2px 0;"><strong>Identification Fiscale:</strong> 1234567</p><p style="margin: 2px 0;"><strong>ICE :</strong> 001234567890123</p>') . '
+                                    <p style="margin: 2px 0;"><strong>Rib:</strong> 007 780 1234567891234561 2</p>
+                                    <p style="margin: 2px 0;"><strong>Téléphone1:</strong> ' . ($companyInfo->phone ?? '05 2212-3456') . '</p>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            ');
+
+            // Pied de page personnalisé
+            $mpdf->SetHTMLFooter('
+                <table style="width: 100%; margin-bottom: 10px;">
+                    <tr>
+                        <td style="width: 100%; text-align: center;">
+                            <p style="font-size: 12px;">Page {PAGENO} sur {nbpg}</p>
+                        </td>
+                    </tr>
+                </table>
+                <table style="width: 100%; background-color: #f0f0f4;">
+                    <tr>
+                        <td style="width: 100%; padding: 5px 10px; background-color: #f0f0f4;">
+                            <p style="font-size: 11px; margin: 2px 0;"><strong>' . ($companyInfo->name ?? '') . '</strong> - ' . ($companyInfo->address ?? '') . ', ' . ($companyInfo->city ?? '') . '</p>
+                            ' . ($companyInfo->phone ? '<p style="font-size: 11px; margin: 2px 0;">Tél: ' . $companyInfo->phone . ' - Email: ' . ($companyInfo->email ?? '') . '</p>' : '') . '
+                        </td>
+                    </tr>
+                </table>
+            ');
+
+            $data = [
+                'invoice' => $invoice,
+                'order' => $invoice->order,
+                'company' => $companyInfo,
+            ];
+
+            // Rendre la vue en HTML
+            $html = view('admin.invoices.pdf.invoice', $data)->render();
+
+            // Écrire le HTML dans le PDF
+            $mpdf->WriteHTML($html);
+
+            // Return PDF as string
+            return $mpdf->Output('', 'S');
+
+        } catch (Exception $e) {
+            throw new Exception('Erreur lors de la génération du PDF: ' . $e->getMessage());
+        }
     }
 }

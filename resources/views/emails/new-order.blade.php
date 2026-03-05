@@ -171,29 +171,29 @@
                         @endif
                     </td>
                     <td>{{ $item->quantity }}</td>
-                    <td>{{ number_format($item->price, 2) }} €</td>
-                    <td>{{ number_format($item->quantity * $item->price, 2) }} €</td>
+                    <td>{{ number_format($item->price, 2) }} DH</td>
+                    <td>{{ number_format($item->quantity * $item->price, 2) }} DH</td>
                 </tr>
                 @endforeach
                 <tr>
                     <td colspan="3" style="text-align: right;">Subtotal</td>
-                    <td>{{ number_format($order->subtotal, 2) }} €</td>
+                    <td>{{ number_format($order->subtotal, 2) }} DH</td>
                 </tr>
                 @if($order->shipping_cost > 0)
                 <tr>
                     <td colspan="3" style="text-align: right;">Shipping</td>
-                    <td>{{ number_format($order->shipping_cost, 2) }} €</td>
+                    <td>{{ number_format($order->shipping_cost, 2) }} DH</td>
                 </tr>
                 @endif
                 @if($order->discount > 0)
                 <tr>
                     <td colspan="3" style="text-align: right;">Discount</td>
-                    <td>-{{ number_format($order->discount, 2) }} €</td>
+                    <td>-{{ number_format($order->discount, 2) }} DH</td>
                 </tr>
                 @endif
                 <tr class="total-row">
                     <td colspan="3" style="text-align: right;">TOTAL</td>
-                    <td>{{ number_format($order->total, 2) }} €</td>
+                    <td>{{ number_format($order->total, 2) }} DH</td>
                 </tr>
             </tbody>
         </table>

@@ -9,7 +9,9 @@ use App\Models\ShippingMethod;
 use App\Models\User;
 use App\Services\CartService;
 use App\Services\OrderService;
+use App\Services\InvoiceService;
 use App\Notifications\NewOrderNotification;
+use App\Notifications\OrderConfirmationNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -22,11 +24,13 @@ class CheckoutController extends Controller
 {
     protected $cartService;
     protected $orderService;
+    protected $invoiceService;
 
-    public function __construct(CartService $cartService, OrderService $orderService)
+    public function __construct(CartService $cartService, OrderService $orderService, InvoiceService $invoiceService)
     {
         $this->cartService = $cartService;
         $this->orderService = $orderService;
+        $this->invoiceService = $invoiceService;
     }
 
     public function index()
@@ -262,6 +266,58 @@ class CheckoutController extends Controller
                         Log::error('Failed to send order notification to admin ' . $admin->email . ': ' . $e->getMessage());
                     }
                 }
+            }
+
+            // Envoyer email de confirmation au client avec facture PDF
+            $customerEmail = $order->user ? $order->user->email : $order->guest_email;
+            if ($customerEmail && filter_var($customerEmail, FILTER_VALIDATE_EMAIL)) {
+                try {
+                    // Generate invoice for the order
+                    $invoice = null;
+                    $pdfContent = null;
+                    $pdfFileName = null;
+                    
+                    try {
+                        // For cash on delivery, mark as paid to generate invoice
+                        if ($order->payment_method === 'cash_on_delivery') {
+                            $order->update(['payment_status' => 'paid']);
+                        }
+                        
+                        // Generate invoice
+                        $invoice = $this->invoiceService->generateInvoice($order->id);
+                        
+                        if ($invoice) {
+                            // Generate PDF as string
+                            $pdfContent = $this->invoiceService->generateInvoicePDFAsString($invoice->id);
+                            $pdfFileName = "invoice_{$invoice->invoice_number}.pdf";
+                            
+                            // Update invoice status to sent
+                            $invoice->update(['status' => 'sent']);
+                        }
+                    } catch (\Exception $invoiceError) {
+                        Log::warning('Failed to generate invoice for customer email: ' . $invoiceError->getMessage(), [
+                            'order_id' => $order->id
+                        ]);
+                    }
+                    
+                    // Send notification with PDF attachment
+                    Notification::route('mail', $customerEmail)
+                        ->notify(new OrderConfirmationNotification($order, $pdfContent, $pdfFileName));
+                    
+                    Log::info('Order confirmation email sent to customer', [
+                        'email' => $customerEmail, 
+                        'order_id' => $order->id,
+                        'has_invoice' => $invoice ? true : false,
+                        'has_pdf' => $pdfContent ? true : false
+                    ]);
+                } catch (\Exception $e) {
+                    Log::error('Failed to send order confirmation to customer: ' . $e->getMessage(), [
+                        'email' => $customerEmail,
+                        'order_id' => $order->id
+                    ]);
+                }
+            } else {
+                Log::warning('No valid customer email found for order confirmation', ['order_id' => $order->id]);
             }
 
             // Process payment based on method

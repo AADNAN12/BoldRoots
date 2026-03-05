@@ -992,7 +992,6 @@ ol {
 }
 
 .product__item:hover .product__item__text a {
-	top: 0px;
 	opacity: 1;
 	visibility: visible;
 }
@@ -1108,8 +1107,8 @@ ol {
 	color: #e53637;
 	font-weight: 700;
 	position: absolute;
-	left: 0;
-	top: 0;
+	right: 0;
+	bottom: 0;
 	opacity: 0;
 	visibility: hidden;
 	-webkit-transition: all, 0.3s;

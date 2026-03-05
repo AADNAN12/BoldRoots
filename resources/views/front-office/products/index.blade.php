@@ -78,8 +78,9 @@
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
             position: absolute !important;
             overflow: hidden !important;
+            right:0 !important;
+            bottom:0 !important;
             text-decoration: none !important;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
         }
 
         .shop-now:hover {
@@ -227,7 +228,7 @@
                                         </div>
                                     </a>
                                     <div class="product__item__text">
-                                        <h6>{{ $product->name }}</h6>
+                                        <h5>{{ $product->name }}</h5>
                                         <a href="{{ route('products.show', $product) }}" class="shop-now">Shop Now</a>
                                         <div class="product__price">
                                             @if ($hasPromotion)
