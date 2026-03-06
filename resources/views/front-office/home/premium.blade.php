@@ -11,6 +11,21 @@
             color: #333;
         }
 
+         .menu-toggle {
+            color: #ffffffff !important;
+        }
+
+        .header-right a {
+            color: #ffffffff !important;
+        }
+
+        .header-right a:hover {
+            color: var(--primary-color) !important;
+        }
+        .cart-icon {
+            color: white !important;
+        }
+
         /* Centered brand name absolute */
         .brand-center {
             position: absolute;
@@ -66,9 +81,9 @@
         }
 
         .hero-image {
-            width: 60%;
+            width: 100%;
             height: 100%;
-            padding:50px;
+            padding:42px 0px 0px 0px;
             object-fit: cover;
             object-position: center;
         }
@@ -261,69 +276,38 @@
         <div class="hero-section">
             <div class="hero-slider">
                 @php
-                    $featuredProducts = \App\Models\Product::where('is_featured', true)->take(3)->get();
+                    $heroSlide1 = \App\Models\SiteSetting::get('hero_slide_1_image');
+                    $heroSlide2 = \App\Models\SiteSetting::get('hero_slide_2_image');
+                    $heroSlide3 = \App\Models\SiteSetting::get('hero_slide_3_image');
+                    
+                    $heroImages = [];
+                    if ($heroSlide1) $heroImages[] = asset('storage/' . $heroSlide1);
+                    if ($heroSlide2) $heroImages[] = asset('storage/' . $heroSlide2);
+                    if ($heroSlide3) $heroImages[] = asset('storage/' . $heroSlide3);
+                    
+                    // Fallback images if no settings configured
+                    if (empty($heroImages)) {
+                        $heroImages = [
+                            'https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&q=80&w=1920',
+                            'https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&q=80&w=1920',
+                            'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=1920'
+                        ];
+                    }
                 @endphp
                 
-                @foreach($featuredProducts as $index => $product)
+                @foreach($heroImages as $index => $image)
                     <div class="hero-slide {{ $index === 0 ? 'active' : '' }}">
-                        <img src="{{'storage/'. $product->homepageImage()?->image_path ?? 'https://images.unsplash.com/photo-' . (1552374196 + $index) . '-1ab2a1c593e8?auto=format&fit=crop&q=80&w=1920' }}" 
-                             alt="{{ $product->name ?? 'Premium Collection' }}" 
+                        <img src="{{ $image }}" 
+                             alt="Hero Slide {{ $index + 1 }}" 
                              class="hero-image">
-                        <div class="hero-overlay">
-                            <div class="hero-content">
-                                <h1 class="hero-title">{{ $product->name ?? 'Premium Collection' }}</h1>
-                                <p class="hero-subtitle">{{ $product->short_description ?? 'Discover our premium selection' }}</p>
-                                <a href="{{ route('products.show', $product->id) }}" class="hero-btn">
-                                    Discover the product
-                                </a>
-                            </div>
-                        </div>
                     </div>
                 @endforeach
-                
-                @if($featuredProducts->isEmpty())
-                    <!-- Fallback slides if no featured products -->
-                    <div class="hero-slide active">
-                        <img src="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&q=80&w=1920" 
-                             alt="Premium Collection" 
-                             class="hero-image">
-                        <div class="hero-overlay">
-                            <div class="hero-content">
-                                <h1 class="hero-title">Premium Collection</h1>
-                                <p class="hero-subtitle">Discover our exclusive selection</p>
-                                <a href="{{ route('products.index') }}" class="hero-btn">
-                                    View the collection
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="hero-slide">
-                        <img src="https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&q=80&w=1920" 
-                             alt="Premium Shoes" 
-                             class="hero-image">
-                        <div class="hero-overlay">
-                            <div class="hero-content">
-                                <h1 class="hero-title">Premium Shoes</h1>
-                                <p class="hero-subtitle">Unmatched quality and style</p>
-                                <a href="{{ route('products.index') }}" class="hero-btn">
-                                    Explore now
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                @endif
             </div>
             
             <div class="slider-dots">
-                @foreach($featuredProducts as $index => $product)
+                @foreach($heroImages as $index => $image)
                     <span class="dot {{ $index === 0 ? 'active' : '' }}" data-slide="{{ $index }}"></span>
                 @endforeach
-                
-                @if($featuredProducts->isEmpty())
-                    <span class="dot active" data-slide="0"></span>
-                    <span class="dot" data-slide="1"></span>
-                @endif
             </div>
         </div>
 

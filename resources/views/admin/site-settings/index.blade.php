@@ -69,6 +69,11 @@
                                 <i class="mdi mdi-chart-bar me-2 fs-5"></i>
                                 <span>Pixels de Suivi</span>
                             </a>
+                            <a class="nav-link d-flex align-items-center" id="v-pills-hero-tab" data-bs-toggle="pill"
+                                href="#v-pills-hero" role="tab" aria-controls="v-pills-hero" aria-selected="false">
+                                <i class="mdi mdi-image-multiple me-2 fs-5"></i>
+                                <span>Hero Slider</span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -810,6 +815,94 @@
                             <div class="d-grid gap-2 mb-4">
                                 <button type="submit" class="btn btn-primary btn-lg">
                                     <i class="mdi mdi-content-save me-2"></i> Enregistrer les Pixels de Suivi
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- TAB 6: Hero Slider -->
+                    <div class="tab-pane fade" id="v-pills-hero" role="tabpanel" aria-labelledby="v-pills-hero-tab">
+                        <form action="{{ route('admin.settings.update') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+
+                            <div class="card border-0 shadow-sm mb-4">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="bg-primary bg-opacity-10 rounded p-2 me-2">
+                                            <i class="mdi mdi-image-multiple text-primary fs-4"></i>
+                                        </div>
+                                        <h5 class="mb-0">Hero Slider</h5>
+                                    </div>
+                                    <p class="text-muted mb-4">Configurez jusqu'à 3 images pour le slider de la page d'accueil Premium.</p>
+
+                                    <!-- Slide 1 -->
+                                    <div class="mb-4 border-bottom pb-4">
+                                        <h6 class="fw-bold mb-3">Slide 1</h6>
+                                        <div class="mb-3">
+                                            <label for="hero_slide_1_image" class="form-label">Image du Slide 1</label>
+                                            <input type="file" class="form-control @error('hero_slide_1_image') is-invalid @enderror"
+                                                id="hero_slide_1_image" name="hero_slide_1_image" accept="image/*">
+                                            @error('hero_slide_1_image')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                            <small class="text-muted">Dimensions recommandées: <strong>1920 × 800 px</strong> (ratio 2.4:1) | Format: JPG, PNG, WEBP</small>
+
+                                            @if (isset($settings['hero_slide_1_image']) && $settings['hero_slide_1_image']->value)
+                                                <div class="mt-2">
+                                                    <img src="{{ asset('storage/' . $settings['hero_slide_1_image']->value) }}" 
+                                                        alt="Hero Slide 1" class="img-thumbnail" style="max-height: 150px;">
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <!-- Slide 2 -->
+                                    <div class="mb-4 border-bottom pb-4">
+                                        <h6 class="fw-bold mb-3">Slide 2</h6>
+                                        <div class="mb-3">
+                                            <label for="hero_slide_2_image" class="form-label">Image du Slide 2</label>
+                                            <input type="file" class="form-control @error('hero_slide_2_image') is-invalid @enderror"
+                                                id="hero_slide_2_image" name="hero_slide_2_image" accept="image/*">
+                                            @error('hero_slide_2_image')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                            <small class="text-muted">Dimensions recommandées: <strong>1920 × 800 px</strong> (ratio 2.4:1) | Format: JPG, PNG, WEBP</small>
+
+                                            @if (isset($settings['hero_slide_2_image']) && $settings['hero_slide_2_image']->value)
+                                                <div class="mt-2">
+                                                    <img src="{{ asset('storage/' . $settings['hero_slide_2_image']->value) }}" 
+                                                        alt="Hero Slide 2" class="img-thumbnail" style="max-height: 150px;">
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <!-- Slide 3 -->
+                                    <div class="mb-4">
+                                        <h6 class="fw-bold mb-3">Slide 3</h6>
+                                        <div class="mb-3">
+                                            <label for="hero_slide_3_image" class="form-label">Image du Slide 3</label>
+                                            <input type="file" class="form-control @error('hero_slide_3_image') is-invalid @enderror"
+                                                id="hero_slide_3_image" name="hero_slide_3_image" accept="image/*">
+                                            @error('hero_slide_3_image')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                            <small class="text-muted">Dimensions recommandées: <strong>1920 × 800 px</strong> (ratio 2.4:1) | Format: JPG, PNG, WEBP</small>
+
+                                            @if (isset($settings['hero_slide_3_image']) && $settings['hero_slide_3_image']->value)
+                                                <div class="mt-2">
+                                                    <img src="{{ asset('storage/' . $settings['hero_slide_3_image']->value) }}" 
+                                                        alt="Hero Slide 3" class="img-thumbnail" style="max-height: 150px;">
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-grid gap-2 mb-4">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="mdi mdi-content-save me-2"></i> Enregistrer les Images Hero
                                 </button>
                             </div>
                         </form>

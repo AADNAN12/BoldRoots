@@ -60,6 +60,9 @@ class SiteSettingsController extends Controller
             'google_analytics_id' => 'nullable|string|max:50',
             'facebook_pixel_id' => 'nullable|string|max:50',
             'tiktok_pixel_id' => 'nullable|string|max:50',
+            'hero_slide_1_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp',
+            'hero_slide_2_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp',
+            'hero_slide_3_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp',
         ]);
 
         if ($request->filled('home_page_type')) {
@@ -255,6 +258,36 @@ class SiteSettingsController extends Controller
         
         if ($request->has('tiktok_pixel_id')) {
             SiteSetting::set('tiktok_pixel_id', $request->tiktok_pixel_id, 'text', 'tracking');
+        }
+
+        // Gestion des images du Hero Slider
+        $imageService = app(ImageService::class);
+        
+        if ($request->hasFile('hero_slide_1_image')) {
+            $oldImage = SiteSetting::where('key', 'hero_slide_1_image')->first();
+            if ($oldImage && $oldImage->value) {
+                Storage::disk('public')->delete($oldImage->value);
+            }
+            $path = $imageService->convertAndOptimize($request->file('hero_slide_1_image'), 'hero', 'slide_1_', 1920);
+            SiteSetting::set('hero_slide_1_image', $path, 'image', 'hero');
+        }
+
+        if ($request->hasFile('hero_slide_2_image')) {
+            $oldImage = SiteSetting::where('key', 'hero_slide_2_image')->first();
+            if ($oldImage && $oldImage->value) {
+                Storage::disk('public')->delete($oldImage->value);
+            }
+            $path = $imageService->convertAndOptimize($request->file('hero_slide_2_image'), 'hero', 'slide_2_', 1920);
+            SiteSetting::set('hero_slide_2_image', $path, 'image', 'hero');
+        }
+
+        if ($request->hasFile('hero_slide_3_image')) {
+            $oldImage = SiteSetting::where('key', 'hero_slide_3_image')->first();
+            if ($oldImage && $oldImage->value) {
+                Storage::disk('public')->delete($oldImage->value);
+            }
+            $path = $imageService->convertAndOptimize($request->file('hero_slide_3_image'), 'hero', 'slide_3_', 1920);
+            SiteSetting::set('hero_slide_3_image', $path, 'image', 'hero');
         }
 
         return redirect()->route('admin.settings.index')->with('success', 'Paramètres mis à jour avec succès');
