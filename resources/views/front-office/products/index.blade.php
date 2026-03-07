@@ -1,5 +1,5 @@
 @extends('front-office.layouts.app')
-@section('title', 'Welcome To {{ env("APP_NAME") }}')
+@section('title', 'Welcome To ')
 @section('head')
     <!-- Css Styles -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" type="text/css">

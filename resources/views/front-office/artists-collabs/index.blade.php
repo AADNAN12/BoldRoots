@@ -1,6 +1,6 @@
 @extends('front-office.layouts.app')
 
-@section('title', 'Artists Collabs - {{ env("APP_NAME") }}')
+@section('title', 'Artists Collabs')
 
 @section('head')
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" type="text/css">

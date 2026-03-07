@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ env("APP_NAME") }} - @yield('title')</title>
+    <title> @yield('title') - {{ env("APP_NAME") }}</title>
     
     {{-- Tracking Pixels (Google Analytics, Facebook, TikTok) --}}
     @include('front-office.partials.tracking-pixels')

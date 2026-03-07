@@ -1,5 +1,5 @@
 @extends('front-office.layouts.app')
-@section('title', 'WELCOME TO - {{ env("APP_NAME") }}')
+@section('title', 'WELCOME TO ')
 @section('head')
 @endsection
 @section('styles')
